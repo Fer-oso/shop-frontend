@@ -1,0 +1,12 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.general{
+    display: grid;
+    min-height: 100dvh;
+    grid-template-rows: auto 1fr auto;
+}
+
+

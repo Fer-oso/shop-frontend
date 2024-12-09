@@ -3,10 +3,14 @@ import axios from "axios";
 const API_URL = "http://localhost:8080/api/shop/users/";
 
 export const loadUser = async ({ params }) => {
+
   try {
+
     const response = await axios.get(`${API_URL}${params.id}`);
 
     const user = await response.data
+
+    console.log(user)
 
     return { user};
     
@@ -22,7 +26,7 @@ export const loadUser = async ({ params }) => {
       // No hubo respuesta del servidor
       console.log("No response received from server:", error.request);
 
-      return { error: "No response from server" };
+      return { error: { message: "No response from server" } };
 
     } else {
       // Error al configurar la solicitud

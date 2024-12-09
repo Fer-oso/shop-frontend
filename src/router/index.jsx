@@ -8,6 +8,10 @@ import { Users } from "../pages/users/Users";
 import { UserInfo } from "../pages/users/UserInfo";
 import { Products } from "../pages/products/Products";
 import { UserEdit } from "../pages/users/UserEdit";
+import { loadProducts } from "../providers/products/loadProducts";
+import { ProductInfo } from "../pages/products/ProductInfo";
+import { loadProduct } from "../providers/products/loadProduct";
+
 
 export const router = createBrowserRouter([
   {
@@ -37,6 +41,12 @@ export const router = createBrowserRouter([
       {
         path: "/products",
         element: <Products />,
+        loader: loadProducts
+      },
+      {
+        path: "/products/:id",
+        element: <ProductInfo/>,
+        loader: loadProduct
       },
     ],
   },

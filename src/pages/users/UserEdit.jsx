@@ -14,17 +14,48 @@ export const UserEdit = () => {
     accountNonExpired,
     accountNonLocked,
     credentialsNonExpired,
+    profileImages,
   } = formState;
 
   const handleForm = (e) => {
     e.preventDefault();
-    console.log(values);
+    console.log(formState);
   };
 
+  const json = JSON.stringify(formState);
+  const blob = new Blob([json], {
+    type: "application/json",
+  });
+
+  const formDataToJson = (formData) => {
+    const json = {};
+    for (let [key, value] of formData.entries()) {
+      json[key] = value;
+    }
+    return json;
+  };
+
+  const editUser = (e) => {
+    e.preventDefault();
+    const formDataUserEdited = new FormData();
+    formDataUserEdited.append("user", blob);
+ /* formDataUserEdited.append("imagen", imagen);
+    CharacterService.editarPersonaje(id, formDataPersonaje)
+      .then((res) => {
+        console.log(res);
+        navigate("/personajes");
+      })
+      .catch((error) => {
+        console.log(error);
+      }); */
+
+      const json = formDataToJson(formDataUserEdited);
+      console.log(json);
+  };
   return (
     <div className="container align-content-center">
       <form onSubmit={handleForm} className="col-md-8">
-        <h1>Formulario Edicion personaje</h1>
+        <h1>Edit form user</h1>
 
         <div className="form-group">
           <label>Username</label>
@@ -50,18 +81,6 @@ export const UserEdit = () => {
           />
         </div>
 
-        <div className="form-group">
-          <label>edad</label>
-          <input
-            type="text"
-            className="form-control"
-            name="edad"
-            //  value={values.edad}
-            placeholder="ingrese edad del personaje"
-            onChange={onInputChange}
-          />
-        </div>
-
         <div className="row">
           <legend className="mt-4">status</legend>
           <div className="form-group col-md-3 col-12">
@@ -70,7 +89,7 @@ export const UserEdit = () => {
               <input
                 className="form-check-input"
                 type="checkbox"
-                id="flexSwitchCheckDefault"
+                id="flexSwitchUserEnabledCheckDefault"
                 name="enabled"
                 checked={enabled}
                 onChange={onCheckboxChange}
@@ -90,7 +109,7 @@ export const UserEdit = () => {
               <input
                 className="form-check-input"
                 type="checkbox"
-                id="flexSwitchCheckDefault"
+                id="flexSwitchExpiredAccountCheckDefault"
                 name="accountNonExpired"
                 checked={accountNonExpired}
                 onChange={onCheckboxChange}
@@ -110,7 +129,7 @@ export const UserEdit = () => {
               <input
                 className="form-check-input"
                 type="checkbox"
-                id="flexSwitchCheckDefault"
+                id="flexSwitchLockedAccountCheckDefault"
                 name="accountNonLocked"
                 checked={accountNonLocked}
                 onChange={onCheckboxChange}
@@ -130,7 +149,7 @@ export const UserEdit = () => {
               <input
                 className="form-check-input"
                 type="checkbox"
-                id="flexSwitchCheckDefault"
+                id="flexSwitchCredentialsExpiredCheckDefault"
                 name="credentialsNonExpired"
                 checked={credentialsNonExpired}
                 onChange={onCheckboxChange}
@@ -146,13 +165,14 @@ export const UserEdit = () => {
         </div>
 
         <div className="form-group">
-          <label>imagen</label>
+          <label>Image</label>
           <input
-            type="text"
+            type="file"
             className="form-control"
-            name="imagen"
-            //  value={values.imagen}
-            placeholder="ingrese imagen del personaje"
+            name="file"
+            lang="eng"
+            value={profileImages}
+            placeholder="Select a profile image"
             onChange={onInputChange}
           />
         </div>
@@ -175,14 +195,14 @@ export const UserEdit = () => {
         <button
           type="submit"
           className="btn btn-primary"
-          // onClick={(e) => editarPersonaje(e)}
+          onClick={(e) => editUser(e)}
         >
-          Editar
+          Edit
         </button>
 
         <div>
           <Link to="/users" className="card-link">
-            Volver
+            Back
           </Link>
         </div>
       </form>

@@ -24,9 +24,14 @@ export const useForm = (initialFormState = {}) => {
     });
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
   return {
     formState,
     onInputChange,
-    onCheckboxChange
+    onCheckboxChange,
+    handleSubmit
   };
 };

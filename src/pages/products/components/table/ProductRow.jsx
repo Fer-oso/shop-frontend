@@ -1,9 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { deleteProductById } from "../../../../providers/products/deleteProductById";
+import DeleteProductButton from "../buttons/DeleteProductButton";
 
 export const ProductRow = ({ product }) => {
 
-   const {id,name,brand,code,stock,price,category} = product 
+   const {id,name,brand,code,stock,price,category,images} = product;
+
   return (
     <>
       <tr >
@@ -14,6 +17,7 @@ export const ProductRow = ({ product }) => {
         <td>{stock}</td>
         <td>{price}</td>
         <td>{category?.name || "No category"}</td>
+        <td><div className="d-inline-block" style={{maxWidth: "120px"}}><img src={"http://localhost:8080/api/shop/images/"+ images[0].id} className="img-fluid" alt="..."/></div></td>
         <td>
           <Link to={`/products/${id}`} className="btn btn-info me-2">
             Ver
@@ -24,7 +28,7 @@ export const ProductRow = ({ product }) => {
           >
             Editar
           </Link>
-          <button className="btn btn-danger">Eliminar</button>
+          <DeleteProductButton onDelete={()=>deleteProductById(id)}/>
         </td>
       </tr>
     </>

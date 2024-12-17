@@ -1,11 +1,11 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8080/api/shop/products/";
+const API_URL = "http://localhost:8080/api/shop/products";
 
-export const loadProduct = async ({ params }) => {
-  
+export const createProduct = async (formDataProduct) => {
+
   try {
-    const response = await axios.get(`${API_URL}${params.id}`);
+    const response = await axios.post(`${API_URL}`, formDataProduct);
 
     const data = await response.data;
 

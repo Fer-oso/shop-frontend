@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 export const NavBar = () => {
   return (
@@ -30,10 +30,27 @@ export const NavBar = () => {
                   home
                 </NavLink>
               </li>
-              <li className="nav-item">
-                <NavLink to="/products" className="nav-link">
+              <li className="nav-item dropdown">
+                <a
+                  className="nav-link dropdown-toggle"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
                   Products
-                </NavLink>
+                </a>
+                <ul className="dropdown-menu">
+                  <li>
+                    <Link to="/products" className="dropdown-item">All products</Link>
+                  </li>
+                  <li>
+                  <Link to="/products/create" className="dropdown-item">Create</Link>
+                  </li>
+                  <li>
+                    <hr className="dropdown-divider" />
+                  </li>
+                </ul>
               </li>
               <li className="nav-item dropdown">
                 <a

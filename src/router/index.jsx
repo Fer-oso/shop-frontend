@@ -9,8 +9,11 @@ import { UserInfo } from "../pages/users/UserInfo";
 import { Products } from "../pages/products/Products";
 import { UserEdit } from "../pages/users/UserEdit";
 import { loadProducts } from "../providers/products/loadProducts";
-import { ProductInfo } from "../pages/products/ProductInfo";
 import { loadProduct } from "../providers/products/loadProduct";
+
+import { CreateProductForm } from "../pages/products/createproduct/CreateProductForm";
+import { ProductDetail } from "../pages/products/productdetails/ProductDetail";
+import { EditProductForm } from "../pages/products/editproduct/EditproductForm";
 
 
 export const router = createBrowserRouter([
@@ -45,7 +48,16 @@ export const router = createBrowserRouter([
       },
       {
         path: "/products/:id",
-        element: <ProductInfo/>,
+        element: <ProductDetail/>,
+        loader: loadProduct
+      },
+      {
+        path: "/products/create",
+        element: <CreateProductForm/>
+      },
+      {
+        path: "/products/:id/edit",
+        element: <EditProductForm/>,
         loader: loadProduct
       },
     ],

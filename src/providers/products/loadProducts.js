@@ -3,12 +3,13 @@ import axios from "axios";
 const API_URL = "http://localhost:8080/api/shop/products";
 
 export const loadProducts = async () => {
+
   try {
     const response = await axios.get(API_URL);
 
     const data = await response.data;
-    
-    return  {data} ;
+
+    return { data };
 
   } catch (error) {
     // Verificar si el error proviene de la respuesta del servidor
@@ -21,7 +22,7 @@ export const loadProducts = async () => {
       // No hubo respuesta del servidor
       console.log("No response received from server:", error.request);
 
-      return { error: {message :"No response from server"} };
+      return { error: { message: "No response from server" } };
     } else {
       // Error al configurar la solicitu
       console.log("Error setting up request:", error.message);

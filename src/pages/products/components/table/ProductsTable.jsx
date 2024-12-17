@@ -14,6 +14,7 @@ export const ProductsTable = ({products}) => {
                   <th scope="col">Stock</th>
                   <th scope="col">Price</th>
                   <th scope="col">Category</th>
+                  <th scope='col'>Image</th>
                   <th scope="col">Options</th>
                 </tr>
               </thead>

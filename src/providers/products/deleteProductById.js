@@ -2,10 +2,9 @@ import axios from "axios";
 
 const API_URL = "http://localhost:8080/api/shop/products/";
 
-export const loadProduct = async ({ params }) => {
-  
+export const deleteProductById = async (id) => {
   try {
-    const response = await axios.get(`${API_URL}${params.id}`);
+    const response = await axios.delete(`${API_URL}${id}`);
 
     const data = await response.data;
 

@@ -14,7 +14,7 @@ import { loadProduct } from "../providers/products/loadProduct";
 import { CreateProductForm } from "../pages/products/createproduct/CreateProductForm";
 import { ProductDetail } from "../pages/products/productdetails/ProductDetail";
 import { EditProductForm } from "../pages/products/editproduct/EditproductForm";
-
+import { LoginForm } from "../pages/login/LoginForm";
 
 export const router = createBrowserRouter([
   {
@@ -27,6 +27,10 @@ export const router = createBrowserRouter([
         element: <Home />,
       },
       {
+        path: "/login",
+        element: <LoginForm />,
+      },
+      {
         path: "/users",
         element: <Users />,
         loader: loadUsers,
@@ -34,31 +38,31 @@ export const router = createBrowserRouter([
       {
         path: "/users/:id",
         element: <UserInfo />,
-        loader: loadUser
+        loader: loadUser,
       },
       {
-        path:"/users/:id/edit",
-        element: <UserEdit/>,
-        loader: loadUser
+        path: "/users/:id/edit",
+        element: <UserEdit />,
+        loader: loadUser,
       },
       {
         path: "/products",
         element: <Products />,
-        loader: loadProducts
+        loader: loadProducts,
       },
       {
         path: "/products/:id",
-        element: <ProductDetail/>,
-        loader: loadProduct
+        element: <ProductDetail />,
+        loader: loadProduct,
       },
       {
         path: "/products/create",
-        element: <CreateProductForm/>
+        element: <CreateProductForm />,
       },
       {
         path: "/products/:id/edit",
-        element: <EditProductForm/>,
-        loader: loadProduct
+        element: <EditProductForm />,
+        loader: loadProduct,
       },
     ],
   },

@@ -15,8 +15,6 @@ export const useLoadUser = (id) => {
         
       const userResponse = await loadUser(id);
 
-      console.log(userResponse)
-
       setUser(userResponse);
 
       setIsLoading(user !=  null);

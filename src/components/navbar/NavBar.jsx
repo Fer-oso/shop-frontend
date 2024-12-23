@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
+import { UserNav } from "./users/UserNav";
 
 export const NavBar = () => {
   return (
@@ -52,35 +53,7 @@ export const NavBar = () => {
                   </li>
                 </ul>
               </li>
-              <li className="nav-item dropdown">
-                <a
-                  className="nav-link dropdown-toggle"
-                  href="#"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Users
-                </a>
-                <ul className="dropdown-menu">
-                  <li>
-                    <NavLink to="/users" className="dropdown-item">All users</NavLink>
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Another action
-                    </a>
-                  </li>
-                  <li>
-                    <hr className="dropdown-divider" />
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Something else here
-                    </a>
-                  </li>
-                </ul>
-              </li>
+             <UserNav/>
               <li className="nav-item">
                 <a className="nav-link disabled" aria-disabled="true">
                   Disabled

@@ -1,5 +1,5 @@
 import { loginWithEmailAndPassword } from "../providers/login/loginWithEmailAndPassword";
-import { login } from "./authSlice";
+import { login, logout } from "./authSlice";
 
 export const startLoginUserWithUsernameAndPassword = ({
   username,
@@ -21,3 +21,19 @@ export const startLoginUserWithUsernameAndPassword = ({
     }
   };
 };
+
+export const startLogoutUser = () => {
+
+  return (dispatch) => {
+
+    const status = "unauthenticated";
+    const userAuthenticated = {};
+
+    dispatch(logout({ status, userAuthenticated }));
+
+    localStorage.removeItem("auth");
+  }
+};
+
+
+

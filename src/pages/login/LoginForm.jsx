@@ -1,31 +1,25 @@
-import React, { useEffect } from "react";
-import { useForm } from "../../components/hooks/useForm";
+import React from "react";
 
 import "./LoginFormStyles.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useForm } from "../../components/hooks/useForm";
+
+import { useDispatch } from "react-redux";
 import { startLoginUserWithUsernameAndPassword } from "../../store/authThunk";
-import { checkUserauthenticated } from "../../providers/login/checkUserAuthenticated";
-import { useNavigate } from "react-router-dom";
+import { useCheckUserauthenticated } from "../../providers/hooks/useCheckUserAuthenticated";
 
 export const LoginForm = () => {
-  const { status } = useSelector((state) => state.authentication);
+
+  useCheckUserauthenticated();
+
+  const dispatch = useDispatch();
 
   const loginModel = {
     username: "",
     password: "",
   };
 
-  useEffect(() => {
-    if (status === "authenticated") {
-      navigate("/");
-    }
-  }, []);
-
-  const dispatch = useDispatch();
-
-  const navigate = useNavigate();
-
   const onClickLoginButton = () => {
+  
     dispatch(startLoginUserWithUsernameAndPassword(formState));
   };
 

@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import { Home } from "../pages/Home";
 import { NotFound } from "../pages/NotFound";
-import { PublicLayout } from "./layouts/PublicLayout";
 import { loadUsers } from "../providers/users/loadUsers";
 import { loadUser } from "../providers/users/loadUser";
 import { Users } from "../pages/users/Users";
@@ -15,55 +14,24 @@ import { CreateProductForm } from "../pages/products/createproduct/CreateProduct
 import { ProductDetail } from "../pages/products/productdetails/ProductDetail";
 import { EditProductForm } from "../pages/products/editproduct/EditproductForm";
 import { LoginForm } from "../pages/login/LoginForm";
+import { ProtectedRoute } from "./ProtectedRoute";
+import { PublicRoute } from "./PublicRoute";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <PublicLayout />,
+    element: <ProtectedRoute/> ,
     errorElement: <NotFound />,
     children: [
-      {
-        index: true,
-        element: <Home />,
-      },
-      {
-        path: "/users",
-        element:
-          <Users />,
-        loader: loadUsers,
-      },
-      {
-        path: "/users/:id",
-        element: <UserInfo />,
-        loader: loadUser,
-      },
-      {
-        path: "/users/:id/edit",
-        element: <UserEdit />,
-        loader: loadUser,
-      },
-      {
-        path: "/products",
-        element: <Products />,
-        loader: loadProducts,
-      },
-      {
-        path: "/products/:id",
-        element: <ProductDetail />,
-        loader: loadProduct,
-      },
-      {
-        path: "/products/create",
-        element: <CreateProductForm />,
-      },
-      {
-        path: "/products/:id/edit",
-        element: <EditProductForm />,
-        loader: loadProduct,
-      },
-    ],
+      { index: true, element: <Home /> },
+      { path: "/users", element:<Users />, loader: loadUsers},
+      { path: "/users/:id", element: <UserInfo />, loader: loadUser},
+      { path: "/users/:id/edit", element: <UserEdit />, loader: loadUser},
+      { path: "/products", element: <Products />, loader: loadProducts},
+      { path: "/products/:id", element: <ProductDetail />, loader: loadProduct},
+      { path: "/products/create", element: <CreateProductForm />},
+      { path: "/products/:id/edit", element: <EditProductForm />, loader: loadProduct},
+      ],
   },
-  { path: "/login",
-    element: <LoginForm />
-  },
+  { path: "/login", element: <PublicRoute> <LoginForm/> </PublicRoute>},
 ]);

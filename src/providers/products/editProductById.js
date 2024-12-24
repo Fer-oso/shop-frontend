@@ -1,11 +1,11 @@
-import axios from "axios";
+import { axiosInstance } from "../hooks/axiosInstace";
 
-const API_URL = "http://localhost:8080/api/shop/products/";
+const PATH_PRODUCTS = "products";
 
-export const editProduct = async (id, formDataProduct) => {
+export const editProductById = async (id, formDataProduct) => {
 
     try {
-        const response = await axios.put(`${API_URL}${id}`, formDataProduct);
+        const response = await axiosInstance.put(`${PATH_PRODUCTS}/${id}`, formDataProduct);
 
         const data = await response.data;
 

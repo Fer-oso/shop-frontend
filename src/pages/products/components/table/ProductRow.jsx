@@ -1,11 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { deleteProductById } from "../../../../providers/products/deleteProductById";
 import DeleteProductButton from "../buttons/DeleteProductButton";
+import { useDispatch } from "react-redux";
+import { startDeleteProduct } from "../../../../store/product/productThunk";
 
 export const ProductRow = ({ product }) => {
 
+  const dispatch = useDispatch();
+
   const { id, name, brand, code, stock, price, category, images } = product;
+
+  const deleteProductById = (id) =>{
+
+    dispatch(startDeleteProduct(id));
+  }
 
   return (
     <>

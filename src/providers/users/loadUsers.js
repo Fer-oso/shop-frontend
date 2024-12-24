@@ -1,19 +1,12 @@
-import axios from "axios";
+import { axiosInstance } from "../hooks/axiosInstace";
 
-const API_URL = "http://localhost:8080/api/shop/users";
+const PATH_USERS = "users";
 
 export const loadUsers = async () => {
-
-  const { userAuthenticated } = JSON.parse(localStorage.getItem("auth"));
-
-  const token = userAuthenticated.token;
-
+  
   try {
-    const response = await axios.get(API_URL, {
 
-      headers: {
-        Authorization: `Bearer ${token}`
-      }})
+    const response = await axiosInstance.get(PATH_USERS);
 
     const users = await response.data;
 

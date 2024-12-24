@@ -23,36 +23,14 @@ const EditProductButton = ({ editFunction }) => {
 
         if (result.isConfirmed) {
 
-            try {
-
-                const { data } = await editFunction();
-
-                if (data && data.code == '200') {
-
+                    editFunction();
+                    
                     await swalWithBootstrapButtons.fire({
                         title: "Edited!",
                         text: "Your product has been edited succesfully.",
                         icon: "success"
                     });
-                } else {
-
-                    await swalWithBootstrapButtons.fire({
-                        title: "Error",
-                        text: "There was an issue creating your product.",
-                        icon: "error",
-                    });
-                }
-            } catch (error) {
-
-                // Manejo de errores en caso de fallo en createFunction
-                console.error("Error editing product:", error);
-                await swalWithBootstrapButtons.fire({
-                    title: "Error",
-                    text: "There was an unexpected issue. Please try again.",
-                    icon: "error",
-                });
-            }
-
+                    
         } else if (
             /* Read more about handling dismissals below */
             result.dismiss === Swal.DismissReason.cancel

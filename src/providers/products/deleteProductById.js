@@ -1,12 +1,14 @@
-import axios from "axios";
+import { axiosInstance } from "../hooks/axiosInstace";
 
-const API_URL = "http://localhost:8080/api/shop/products/";
+const PATH_PRODUCTS = "products";
 
 export const deleteProductById = async (id) => {
   try {
-    const response = await axios.delete(`${API_URL}${id}`);
+    const response = await axiosInstance.delete(`${PATH_PRODUCTS}/${id}`);
 
     const data = await response.data;
+
+    console.log(data)
 
     return { data };
 

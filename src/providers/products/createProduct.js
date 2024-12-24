@@ -1,19 +1,12 @@
-import axios from "axios";
+import { axiosInstance } from "../hooks/axiosInstace";
 
-const API_URL = "http://localhost:8080/api/shop/products";
+const PATH_PRODUCT = "products";
 
 export const createProduct = async (formDataProduct) => {
 
-  const { userAuthenticated } = JSON.parse(localStorage.getItem("auth"));
-
-  const token = userAuthenticated.token;
-
   try {
-    const response = await axios.post(`${API_URL}`,formDataProduct,{
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
+
+    const response = await axiosInstance.post(`${PATH_PRODUCT}`,formDataProduct);
 
     const data = await response.data;
 

@@ -4,8 +4,16 @@ const API_URL = "http://localhost:8080/api/shop/products";
 
 export const createProduct = async (formDataProduct) => {
 
+  const { userAuthenticated } = JSON.parse(localStorage.getItem("auth"));
+
+  const token = userAuthenticated.token;
+
   try {
-    const response = await axios.post(`${API_URL}`, formDataProduct);
+    const response = await axios.post(`${API_URL}`,formDataProduct,{
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
 
     const data = await response.data;
 

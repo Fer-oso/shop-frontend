@@ -4,8 +4,9 @@ import "./LoginFormStyles.css";
 import { useForm } from "../../components/hooks/useForm";
 
 import { useDispatch } from "react-redux";
-import { startLoginUserWithUsernameAndPassword } from "../../store/authThunk";
+
 import { useCheckUserauthenticated } from "../../providers/hooks/useCheckUserAuthenticated";
+import { startLoginUserWithUsernameAndPassword } from "../../store/auth/authThunk";
 
 export const LoginForm = () => {
 

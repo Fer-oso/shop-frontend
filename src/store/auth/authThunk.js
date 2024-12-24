@@ -1,4 +1,4 @@
-import { loginWithEmailAndPassword } from "../providers/login/loginWithEmailAndPassword";
+import { loginWithEmailAndPassword } from "../../providers/login/loginWithEmailAndPassword";
 import { login, logout } from "./authSlice";
 
 export const startLoginUserWithUsernameAndPassword = ({

@@ -1,7 +1,8 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { Link, NavLink } from 'react-router-dom'
-import { startLogoutUser } from '../../../store/authThunk';
+import { startLogoutUser } from '../../../store/auth/authThunk';
+
 
 export const UserNav = () => {
 

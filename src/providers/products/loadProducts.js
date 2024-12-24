@@ -4,8 +4,15 @@ const API_URL = "http://localhost:8080/api/shop/products";
 
 export const loadProducts = async () => {
 
+  const { userAuthenticated } = JSON.parse(localStorage.getItem("auth"));
+
+  const token = userAuthenticated.token;
+
   try {
-    const response = await axios.get(API_URL);
+    const response = await axios.get(API_URL,{
+      headers: {
+        Authorization: `Bearer ${token}`
+      }});
 
     const data = await response.data;
 

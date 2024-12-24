@@ -5,7 +5,7 @@ import DeleteProductButton from "../buttons/DeleteProductButton";
 
 export const ProductRow = ({ product }) => {
 
-   const {id,name,brand,code,stock,price,category,images} = product;
+  const { id, name, brand, code, stock, price, category, images } = product;
 
   return (
     <>
@@ -17,7 +17,9 @@ export const ProductRow = ({ product }) => {
         <td>{stock}</td>
         <td>{price}</td>
         <td>{category?.name || "No category"}</td>
-        <td><div className="d-inline-block" style={{maxWidth: "120px"}}><img src={"http://localhost:8080/api/shop/images/"+ images[0].id} className="img-fluid" alt="..."/></div></td>
+        <td><div className="d-inline-block" style={{ maxWidth: "120px" }}>
+          {images && images[0] ? (<img src={"http://localhost:8080/api/shop/images/" + images[0].id} className="img-fluid" alt="..." />) : (<span>No Image</span>)}
+        </div></td>
         <td>
           <Link to={`/products/${id}`} className="btn btn-info me-2">
             Ver
@@ -28,7 +30,7 @@ export const ProductRow = ({ product }) => {
           >
             Editar
           </Link>
-          <DeleteProductButton onDelete={()=>deleteProductById(id)}/>
+          <DeleteProductButton onDelete={() => deleteProductById(id)} />
         </td>
       </tr>
     </>

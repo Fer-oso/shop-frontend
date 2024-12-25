@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useLoaderData } from 'react-router-dom'
 import { ErrorMessage } from '../../components/alerts/ErrorMessage';
 import { ProductsTable } from './components/table/ProductsTable';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { startLoadProducts } from '../../store/product/productThunk';
 
 export const Products = () => {
@@ -10,6 +10,8 @@ export const Products = () => {
   const { data, error} = useLoaderData();
 
   const dispatch = useDispatch();
+
+  const products = useSelector(state => state.products.products);
 
   useEffect(()=>{
 
@@ -33,7 +35,7 @@ export const Products = () => {
       ) : (
         <>
           <div className="container-fluid">
-            <ProductsTable products={data.response} />
+            <ProductsTable products={products} />
           </div>
         </>
       )}

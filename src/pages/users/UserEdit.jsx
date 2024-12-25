@@ -1,60 +1,37 @@
 import React, { useState } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import { useForm } from "../../components/hooks/useForm";
+import { useDispatch } from "react-redux";
+import useFileInput from "../../components/hooks/useFileInput";
+import { startEditUser } from "../../store/users/userThunk";
 
 export const UserEdit = () => {
-  const { user, error } = useLoaderData();
+
+  const { user } = useLoaderData();
+
+  const dispatch = useDispatch();
 
   const { formState, onInputChange, onCheckboxChange } = useForm(user);
 
-  const {
-    username,
-    password,
-    enabled,
-    accountNonExpired,
-    accountNonLocked,
-    credentialsNonExpired,
-    profileImages,
-  } = formState;
+  const { username, password, enabled, accountNonExpired, accountNonLocked, credentialsNonExpired, profileImages} = formState;
 
-  const handleForm = (e) => {
+  const { files, error, handleFileChange, resetFiles } = useFileInput();
+
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formState);
+
+    console.log(formState)
+  }
+
+  const editUser = () => {
+    dispatch(startEditUser(user.id, formState, files));
   };
 
-  const json = JSON.stringify(formState);
-  const blob = new Blob([json], {
-    type: "application/json",
-  });
 
-  const formDataToJson = (formData) => {
-    const json = {};
-    for (let [key, value] of formData.entries()) {
-      json[key] = value;
-    }
-    return json;
-  };
-
-  const editUser = (e) => {
-    e.preventDefault();
-    const formDataUserEdited = new FormData();
-    formDataUserEdited.append("user", blob);
- /* formDataUserEdited.append("imagen", imagen);
-    CharacterService.editarPersonaje(id, formDataPersonaje)
-      .then((res) => {
-        console.log(res);
-        navigate("/personajes");
-      })
-      .catch((error) => {
-        console.log(error);
-      }); */
-
-      const json = formDataToJson(formDataUserEdited);
-      console.log(json);
-  };
   return (
     <div className="container align-content-center">
-      <form onSubmit={handleForm} className="col-md-8">
+      <form onSubmit={handleSubmit} className="col-md-8">
         <h1>Edit form user</h1>
 
         <div className="form-group">

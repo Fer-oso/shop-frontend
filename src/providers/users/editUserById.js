@@ -1,17 +1,17 @@
 import { axiosInstance } from "../hooks/axiosInstace";
 
-const PATH_USERS = "users";
+const PATH_USER = "users";
 
-export const loadUsers = async () => {
-  
+export const editUserById = async (id,formDataUserEdited) => {
+
   try {
 
-    const response = await axiosInstance.get(PATH_USERS);
+    const response = await axiosInstance.put(`${PATH_USER}/${id}`, formDataUserEdited);
 
-    const data = await response.data;
+    const data = await response.data
 
-    return { users: data.response };
-
+    return { user: data };
+    
   } catch (error) {
     // Verificar si el error proviene de la respuesta del servidor
     if (error.response) {
@@ -27,8 +27,7 @@ export const loadUsers = async () => {
       return { error: { message: "No response from server" } };
 
     } else {
-
-      // Error al configurar la solicitu
+      // Error al configurar la solicitud
       console.log("Error setting up request:", error.message);
 
       return { error: "Error setting up request" };

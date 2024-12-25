@@ -51,9 +51,9 @@ export const startDeleteProduct = (id) =>{
 
         const {data, error} = await deleteProductById(id);
 
-        const productDeleted = data? data.response : {};
+        const productDeleted = {id}
         
-        const message = error? error : "Product deleted succesfully 😊";
+        const message = error? error : data.response
 
         dispatch(deleteProduct({productDeleted,message}));
     }

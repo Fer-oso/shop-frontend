@@ -38,7 +38,9 @@ export const productSlice = createSlice({
         deleteProduct: (state, action) => {
             state.productDeleted = action.payload.productDeleted;
             state.message = action.payload.message;
-            state.products = action.payload.products;
+           state.products = state.products.filter(
+             (product) => product.id !== action.payload.productDeleted.id
+           );
             state.product = action.payload.product;
             state.productEdited = action.payload.productEdited;
         }

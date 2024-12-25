@@ -1,15 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { ErrorMessage } from '../../components/alerts/ErrorMessage';
 import { Link, useLoaderData } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { startLoadUsers } from '../../store/users/userThunk';
 
 export const Users = () => {
 
- const { users,error } = useLoaderData();
+ const { users, error } = useLoaderData();
+
+ const dispatch = useDispatch();
+
+ useEffect(() => {
+   dispatch(startLoadUsers(users, error));
+ }, [users, error, dispatch]);
 
  return (
    <>
-     {!users ? (
+     {error ? (
        <ErrorMessage
          message={error.message}
          status={error.status}

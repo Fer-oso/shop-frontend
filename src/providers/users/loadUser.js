@@ -1,18 +1,16 @@
-import axios from "axios";
+import { axiosInstance } from "../hooks/axiosInstace";
 
-const API_URL = "http://localhost:8080/api/shop/users/";
+const PATH_USER = "users";
 
 export const loadUser = async ({ params }) => {
 
   try {
 
-    const response = await axios.get(`${API_URL}${params.id}`);
+    const response = await axiosInstance.get(`${PATH_USER}/${params.id}`);
 
-    const user = await response.data
+    const data = await response.data
 
-    console.log(user)
-
-    return { user};
+    return { user: data };
     
   } catch (error) {
     // Verificar si el error proviene de la respuesta del servidor

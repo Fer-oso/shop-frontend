@@ -3,12 +3,12 @@ import { axiosInstance } from "../hooks/axiosInstace";
 const PATH_PRODUCTS = "products";
 
 export const deleteProductById = async (id) => {
+
   try {
+    
     const response = await axiosInstance.delete(`${PATH_PRODUCTS}/${id}`);
 
     const data = await response.data;
-
-    console.log(data)
 
     return { data };
 

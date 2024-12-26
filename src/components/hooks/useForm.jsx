@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 export const useForm = (initialFormState = {}) => {
-
   const [formState, setFormState] = useState(initialFormState);
 
   //function to control value form
@@ -14,7 +13,7 @@ export const useForm = (initialFormState = {}) => {
     });
   };
 
-//function to control checked form
+  //function to control checked form
   const onCheckboxChange = ({ target }) => {
     const { name, checked } = target;
 
@@ -30,8 +29,9 @@ export const useForm = (initialFormState = {}) => {
 
   return {
     formState,
+    setFormState,
     onInputChange,
     onCheckboxChange,
-    handleSubmit
+    handleSubmit,
   };
 };

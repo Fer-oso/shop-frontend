@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import { useForm } from "../../components/hooks/useForm";
 import { useDispatch } from "react-redux";
 import useFileInput from "../../components/hooks/useFileInput";
-import { startEditUser } from "../../store/users/userThunk";
+import { startEditUser, startLoadUser } from "../../store/users/userThunk";
+import { RoleSelector } from "./components/RoleSelector";
 
 export const UserEdit = () => {
 
@@ -11,24 +12,27 @@ export const UserEdit = () => {
 
   const dispatch = useDispatch();
 
-  const { formState, onInputChange, onCheckboxChange } = useForm(user);
+  const { formState,setFormState, onInputChange, onCheckboxChange,handleSubmit } = useForm(user);
 
-  const { username, password, enabled, accountNonExpired, accountNonLocked, credentialsNonExpired, profileImages} = formState;
+  const {username,password,enabled,accountNonExpired,accountNonLocked,credentialsNonExpired,profileImages} = formState;
 
   const { files, error, handleFileChange, resetFiles } = useFileInput();
 
+  useEffect(()=>{
+   dispatch(startLoadUser(user)) 
+  },[dispatch])
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    console.log(formState)
-  }
 
   const editUser = () => {
     dispatch(startEditUser(user.id, formState, files));
   };
 
-
+    const availableRoles = [
+      { roleName: "ADMIN" },
+      { roleName: "USER" },
+      { roleName: "INVITED" },
+    ];
+    
   return (
     <div className="container align-content-center">
       <form onSubmit={handleSubmit} className="col-md-8">
@@ -154,20 +158,11 @@ export const UserEdit = () => {
           />
         </div>
 
-        <div className="form-group">
-          <label htmlFor="exampleFormControlSelect1">Example select</label>
-          <select
-            multiple
-            className="form-control"
-            id="exampleFormControlSelect1"
-            //   value={values.producciones.titulo}
-            onChange={onInputChange}
-          >
-            {/*values.producciones.map((produccion) => (
-                <option key={produccion.id}>{produccion.titulo}</option>
-              ))*/}
-          </select>
-        </div>
+        <RoleSelector
+          roles={availableRoles}
+          formState={formState}
+          setFormState={setFormState}
+        />
 
         <button
           type="submit"

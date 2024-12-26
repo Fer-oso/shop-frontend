@@ -5,7 +5,6 @@ export const usersSlice = createSlice({
   initialState: {
     users: [],
     user: {},
-    userEdited: {},
     message: "",
   },
 
@@ -26,6 +25,7 @@ export const usersSlice = createSlice({
 
     editUser: (state, action) => {
       state.userEdited = action.payload.userEdited;
+      state.user = action.payload.user;
       state.message = action.payload.message;
       state.users = action.payload.users;
     },

@@ -1,5 +1,5 @@
 import { editUserById } from "../../providers/users/editUserById";
-import { editUser, loadUsers } from "./userSlice";
+import { editUser, loadUser, loadUsers } from "./userSlice";
 
 export const startLoadUsers = (users,message) => {
     return async (dispatch) => {
@@ -9,10 +9,17 @@ export const startLoadUsers = (users,message) => {
     dispatch(loadUsers({users,message}));
 } }
 
-export const startEditUser =( id, userEdited, files) =>{
+
+export const startLoadUser = (user, message) => {
+    return async (dispatch) => {
+        dispatch(loadUser({user, message}));
+    }
+}
+
+export const startEditUser =( id, userToEdit, files) =>{
     return async (dispatch) =>{
 
-         const userJSON = JSON.stringify(userEdited);
+         const userJSON = JSON.stringify(userToEdit);
 
          const userBlob = new Blob([userJSON], {
            type: "application/json",
@@ -29,8 +36,10 @@ export const startEditUser =( id, userEdited, files) =>{
 
         const { user, error } = await editUserById(id, formDataUserEdited);
 
-        console.log(user, error);
+        const userEdited = user? user : {};
+
+        const message = error ? error : "User edited succesfully 😊";
         
-        dispatch(editUser({userEdited,message}));
+        dispatch(editUser({ userEdited, message }));
     }
 }

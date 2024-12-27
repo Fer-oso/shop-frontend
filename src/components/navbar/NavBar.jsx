@@ -1,79 +1,26 @@
-import React from "react";
-import { Link, NavLink } from "react-router-dom";
-import { UserNav } from "./users/UserNav";
+import * as React from "react";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import Container from "@mui/material/Container";
+import { UserIcon } from "./users/UserIcon";
+import { HamburMenu } from "./menu/hamburmenu/HamburMenu";
+import { NormalMenu } from "./menu/normalmenu/NormalMenu";
 
-export const NavBar = () => {
+const pages = ["Products", "Pricing", "Blog"];
+
+export const NavBar =() => {
   return (
-    <>
-      <nav
-        className="navbar navbar-expand-lg bg-body-tertiary sticky-top bg-dark"
-        data-bs-theme="dark"
-      >
-        <div className="container-fluid">
-          <a className="navbar-brand" href="#">
-            Navbar
-          </a>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon" />
-          </button>
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                <NavLink to="/" className="nav-link">
-                  home
-                </NavLink>
-              </li>
-              <li className="nav-item dropdown">
-                <a
-                  className="nav-link dropdown-toggle"
-                  href="#"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Products
-                </a>
-                <ul className="dropdown-menu">
-                  <li>
-                    <Link to="/products" className="dropdown-item">All products</Link>
-                  </li>
-                  <li>
-                  <Link to="/products/create" className="dropdown-item">Create</Link>
-                  </li>
-                  <li>
-                    <hr className="dropdown-divider" />
-                  </li>
-                </ul>
-              </li>
-             <UserNav/>
-              <li className="nav-item">
-                <a className="nav-link disabled" aria-disabled="true">
-                  Disabled
-                </a>
-              </li>
-            </ul>
-            <form className="d-flex" role="search">
-              <input
-                className="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button className="btn btn-outline-success" type="submit">
-                Search
-              </button>
-            </form>
-          </div>
-        </div>
-      </nav>
-    </>
+    <AppBar position="static">
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          <HamburMenu pages={pages} />
+
+          <NormalMenu pages={pages} />
+
+          <UserIcon />
+        </Toolbar>
+      </Container>
+    </AppBar>
   );
-};
+}
+

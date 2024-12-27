@@ -2,46 +2,41 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { Link, NavLink } from 'react-router-dom'
 import { startLogoutUser } from '../../../store/auth/authThunk';
+import { MenuItem, Typography } from '@mui/material';
 
+export const UserNav = ({ id,handleCloseUserMenu }) => {
 
-export const UserNav = () => {
+  const dispatch = useDispatch();
 
-    const dispatch = useDispatch();
+  const onClickLogout = () => {
+    dispatch(startLogoutUser());
+  };
 
-    const onClickLogout = () => {
+  return (
+    <>
+      <MenuItem onClick={handleCloseUserMenu}>
+        <NavLink to={`/users/${id}`} className="dropdown-item">
+          <Typography sx={{ textAlign: "center" }}>Profile</Typography>
+        </NavLink>
+      </MenuItem>
 
-        dispatch(startLogoutUser());
-    }
+      <MenuItem onClick={handleCloseUserMenu}>
+        <NavLink to={`/users/${id}/edit`} className="dropdown-item">
+          <Typography sx={{ textAlign: "center" }}>Settings</Typography>
+        </NavLink>
+      </MenuItem>
 
-    return (
-        <>
-            <li className="nav-item dropdown">
-                <a
-                    className="nav-link dropdown-toggle"
-                    href="#"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                >
-                    Users
-                </a>
-                <ul className="dropdown-menu">
-                    <li>
-                        <NavLink to="/users" className="dropdown-item">All users</NavLink>
-                    </li>
-                    <li>
-                        <Link  onClick={onClickLogout} className="dropdown-item">Logout</Link>
-                    </li>
-                    <li>
-                        <hr className="dropdown-divider" />
-                    </li>
-                    <li>
-                        <a className="dropdown-item" href="#">
-                            Something else here
-                        </a>
-                    </li>
-                </ul>
-            </li>
-        </>
-    )
-}
+      <MenuItem onClick={handleCloseUserMenu}>
+        <NavLink to="/users" className="dropdown-item">
+          <Typography sx={{ textAlign: "center" }}>All Users</Typography>
+        </NavLink>
+      </MenuItem>
+
+      <MenuItem onClick={handleCloseUserMenu}>
+        <Link onClick={onClickLogout} className="dropdown-item">
+          <Typography sx={{ textAlign: "center" }}>Logout</Typography>
+        </Link>
+      </MenuItem>
+    </>
+  );
+};

@@ -31,7 +31,7 @@ export const startLogoutUser = () => {
 
     dispatch(logout({ status, userAuthenticated }));
 
-    localStorage.removeItem("auth");
+    localStorage.setItem("auth", JSON.stringify({ status, userAuthenticated }));
   }
 };
 

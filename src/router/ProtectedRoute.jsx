@@ -1,19 +1,21 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { Navigate, Outlet, useNavigation } from 'react-router-dom';
+import { Navigate, Outlet, useNavigate, useNavigation } from 'react-router-dom';
 import styles from "../components/styles/General.module.css";
 
 import { Footer } from '../components/Footer';
 import { Loading } from '../components/Loading';
 import { NavBar } from '../components/navbar/NavBar';
+import { useCheckUserauthenticated } from '../providers/hooks/useCheckUserAuthenticated';
 
 export const ProtectedRoute = () => {
 
-    const { status } = useSelector(state => state.authentication);
+    const { session } = useCheckUserauthenticated();
 
     const navigation = useNavigation();
 
-    if (status === "unauthenticated") { return <Navigate to="/login" /> }
+    if (session.status === "unauthenticated") { return <Navigate to="/login" /> }
+
 
     return (
         <div className={styles.general}>

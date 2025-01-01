@@ -5,14 +5,12 @@ import { login } from "../../store/auth/authSlice";
 
 export const useCheckUserauthenticated = () => {
 
-  const {status,userAuthenticated} = useSelector((state) => state.authentication);
-
   const dispatch = useDispatch();
+
+  const session = JSON.parse(localStorage.getItem("auth"));
 
   useEffect(() => {
    
-      const session = JSON.parse(localStorage.getItem("auth"));
-
       if (session != null) {
 
         const {status, userAuthenticated} = session
@@ -21,5 +19,5 @@ export const useCheckUserauthenticated = () => {
       }
   }, [dispatch]);
 
-  return {status,userAuthenticated}
+  return { session };
 };

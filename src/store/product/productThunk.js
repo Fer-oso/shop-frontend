@@ -53,7 +53,7 @@ export const startDeleteProduct = (id) =>{
 
         const productDeleted = {id}
         
-        const message = error? error : data.response
+        const message = error? error : data.response;
 
         dispatch(deleteProduct({productDeleted,message}));
     }

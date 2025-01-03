@@ -26,7 +26,7 @@ export const LoginForm = () => {
     }
   }, [status]);
 
-  const onClickLoginButton = () => {
+  const onClickLoginButton = (e) => {
     dispatch(startLoginUserWithUsernameAndPassword(formState));
   };
 

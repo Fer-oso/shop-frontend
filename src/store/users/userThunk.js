@@ -1,11 +1,9 @@
+import { deleteUserById } from "../../providers/users/deleteUserById";
 import { editUserById } from "../../providers/users/editUserById";
-import { editUser, loadUser, loadUsers } from "./userSlice";
+import { deleteUser, editUser, loadUser, loadUsers } from "./userSlice";
 
 export const startLoadUsers = (users,message) => {
     return async (dispatch) => {
-
-       message = message? message : "Users loaded succesfully"; 
-
     dispatch(loadUsers({users,message}));
 } }
 
@@ -42,4 +40,18 @@ export const startEditUser =( id, userToEdit, files) =>{
         
         dispatch(editUser({ userEdited, message }));
     }
+}
+
+export const startDeleteUser = (id) => {
+    return async (dispatch) => {
+
+        const { data, error } = await deleteUserById(id);
+
+        const userDeleted = { id };
+
+        const message = error? error : data.response;
+
+        dispatch(deleteUser({ userDeleted, message }));
+    }
+
 }

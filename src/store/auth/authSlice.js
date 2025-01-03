@@ -1,13 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const initialState = JSON.parse(localStorage.getItem("auth")) || {
+  status: "unauthenticated",
+  errorMessage: "",
+  userAuthenticated: {},
+}; 
 /*initial state*/
 export const authslice = createSlice({
   name: "authentication",
-  initialState: {
-    status: "unauthenticated",
-    errorMessage: "",
-    userAuthenticated: {},
-  },
+  initialState,
   /* reducer/action */
   reducers: {
     login: (state, action) => {

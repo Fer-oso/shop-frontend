@@ -17,7 +17,20 @@ import { LoginForm } from "../pages/login/LoginForm";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { PublicRoute } from "./PublicRoute";
 
-export const router = createBrowserRouter([
+export const routes = () =>{
+
+const session = JSON.parse(localStorage.getItem("auth"));
+
+if (!session) {
+
+const status = "unauthenticated";
+
+const userAuthenticated = {};
+
+localStorage.setItem("auth", JSON.stringify({ status, userAuthenticated }));
+}
+
+const router = createBrowserRouter([
   {
     path: "/",
     element: <ProtectedRoute/> ,
@@ -33,5 +46,11 @@ export const router = createBrowserRouter([
       { path: "/products/:id/edit", element: <EditProductForm />, loader: loadProduct},
       ],
   },
-  { path: "/login", element: <PublicRoute> <LoginForm/> </PublicRoute>},
+  { path: "/login", element: <PublicRoute > <LoginForm/> </PublicRoute>},
 ]);
+
+return router;
+}
+
+export default routes();
+

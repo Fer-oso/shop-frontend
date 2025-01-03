@@ -29,7 +29,15 @@ export const usersSlice = createSlice({
       state.message = action.payload.message;
       state.users = action.payload.users;
     },
+
+    deleteUser: (state, action) => {
+       state.userDeleted = action.payload.userDeleted;
+        state.message = action.payload.message;
+        state.users = state.users.filter(
+          (user) => user.id !== action.payload.userDeleted.id
+        );
+    }
   },
 });
 
-export const { loadUsers, loadUser, editUser } = usersSlice.actions;
+export const { loadUsers, loadUser, editUser, deleteUser } = usersSlice.actions;

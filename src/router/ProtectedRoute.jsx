@@ -1,12 +1,11 @@
-import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { Navigate, Outlet, useNavigate, useNavigation } from "react-router-dom";
-import styles from "../components/styles/General.module.css";
+import React from "react";
+import { Navigate, Outlet, useNavigation } from "react-router-dom";
 
-import { Footer } from "../components/Footer";
-import { Loading } from "../components/Loading";
+
+import { Loading } from "../components/loading/Loading";
 import { NavBar } from "../components/navbar/NavBar";
 import { useCheckUserauthenticated } from "../providers/hooks/useCheckUserAuthenticated";
+import { Footer } from "../components/footer/Footer";
 
 export const ProtectedRoute = () => {
 
@@ -25,7 +24,6 @@ export const ProtectedRoute = () => {
         <Outlet />
         {navigation.state === "loading" && <Loading />}
       </main>
-
       <Footer />
     </>
   );

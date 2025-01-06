@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import { Home } from "../pages/Home";
+
 import { NotFound } from "../pages/NotFound";
 import { loadUsers } from "../providers/users/loadUsers";
 import { loadUser } from "../providers/users/loadUser";
@@ -16,6 +16,7 @@ import { EditProductForm } from "../pages/products/editproduct/EditproductForm";
 import { LoginForm } from "../pages/login/LoginForm";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { PublicRoute } from "./PublicRoute";
+import { Home } from "../pages/home/Home";
 
 export const routes = () =>{
 

@@ -19,9 +19,9 @@ import { LoginButton } from "./menu/login/LoginButton";
 export const NavBar = () => {
   const products = [
     {
-      name: "Analytics",
-      description: "Get a better understanding of your traffic",
-      href: "#",
+      name: "Products",
+      description: "Get at products page to see all colection",
+      href: "/products",
       icon: ChartPieIcon,
     },
     {
@@ -57,16 +57,16 @@ export const NavBar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="absolute inset-x-0 top-0 z-50">
+    <header className="bg-white top-0">
       <nav
         aria-label="Global"
-        className="flex items-center justify-between p-6 lg:px-8"
+        className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
       >
         <Logo />
 
-        <NormalMenu products={products} />
-
         <HamburMenuOpenButton setMobileMenuOpen={setMobileMenuOpen} />
+
+        <NormalMenu products={products} />
 
         <LoginButton />
       </nav>

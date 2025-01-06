@@ -5,7 +5,8 @@ import { Navigate, Outlet, useNavigation } from "react-router-dom";
 import { Loading } from "../components/loading/Loading";
 import { NavBar } from "../components/navbar/NavBar";
 import { useCheckUserauthenticated } from "../providers/hooks/useCheckUserAuthenticated";
-import { Footer } from "../components/footer/Footer";
+import { Footer } from "../pages/home/components/footer/Footer";
+
 
 export const ProtectedRoute = () => {
 
@@ -18,13 +19,13 @@ export const ProtectedRoute = () => {
   }
 
   return (
-    <>
+    <div className="overflow-hidden">
       <NavBar />
       <main>
         <Outlet />
         {navigation.state === "loading" && <Loading />}
       </main>
       <Footer />
-    </>
+    </div>
   );
 };

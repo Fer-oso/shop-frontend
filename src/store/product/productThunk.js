@@ -1,6 +1,7 @@
+import { createProductService } from "../../providers/products/createProductService";
 import { deleteProductById } from "../../providers/products/deleteProductById";
 import { editProductById } from "../../providers/products/editProductById";
-import { deleteProduct, editProduct, loadProduct, loadProducts } from "./productSilce"
+import { createProduct, deleteProduct, editProduct, loadProduct, loadProducts } from "./productSilce"
 
 export const startLoadProducts = (products,message) =>{
     return async (dispatch) => {
@@ -11,6 +12,51 @@ export const startLoadProducts = (products,message) =>{
 export const startLoadProduct = (product, message) =>{
     return async (dispatch) =>{
         dispatch(loadProduct({product,message}));
+    }
+}
+
+export const startCreateProduct = (product, files) =>{
+
+    return async (dispatch) =>{
+
+        try {
+          /*Creo un JSON del product recibido */
+
+          const productJSON = JSON.stringify(product);
+
+          /** Creo un BLOB del JSON anterior */
+          const produbtBLOB = new Blob([productJSON], {
+            type: "application/json",
+          });
+
+          /** Creo un formData */
+
+          const formDataProduct = new FormData();
+
+          formDataProduct.append("product", produbtBLOB);
+
+          if (files && files.length > 0) {
+            files.forEach((file) => {
+              formDataProduct.append("image", file);
+            });
+          }
+
+          const { data, error } = await createProductService(formDataProduct);
+
+           const productCreated = data ? data.response : {};
+
+           const message = error ? error : "Product created Succesfully 😊";
+
+           const {payload} = await dispatch(createProduct({productCreated,message}));
+
+           console.log(payload)
+
+          return payload
+
+        } catch (error) {
+             console.error("Error al crear el producto:", error);
+             return { success: false, error: error.message };
+        }
     }
 }
 

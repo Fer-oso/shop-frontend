@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = JSON.parse(localStorage.getItem("auth")) || {
   status: "unauthenticated",
-  errorMessage: "",
+  message: "No user authenticated",
   userAuthenticated: {},
 }; 
 /*initial state*/
@@ -13,13 +13,13 @@ export const authslice = createSlice({
   reducers: {
     login: (state, action) => {
       state.status = action.payload.status;
-      state.errorMessage = action.payload.errorMessage;
+      state.message = action.payload.message;
       state.userAuthenticated = action.payload.userAuthenticated;
     },
     
     logout: (state,action) =>{
       state.status = action.payload.status;
-      state.errorMessage = "";
+      state.message = "";
       state.userAuthenticated = {};
     },
   },

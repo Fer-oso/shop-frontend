@@ -4,16 +4,17 @@ import { useCheckUserauthenticated } from '../providers/hooks/useCheckUserAuthen
 
 export const PublicRoute = ({ children }) => {
 
-   const { session } = useCheckUserauthenticated();
+   const { status} = useCheckUserauthenticated();
 
   const navigate = useNavigate();
 
    useEffect(()=>{
 
-       if (session.status === "authenticated") {
+       if (status === "authenticated") {
+      
          navigate("/");
        }
-   },[session])
+   },[status])
 
   return children;
 };

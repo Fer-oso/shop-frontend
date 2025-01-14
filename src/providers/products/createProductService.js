@@ -2,7 +2,7 @@ import { axiosInstance } from "../hooks/axiosInstace";
 
 const PATH_PRODUCT = "products";
 
-export const createProduct = async (formDataProduct) => {
+export const createProductService = async (formDataProduct) => {
 
   try {
 

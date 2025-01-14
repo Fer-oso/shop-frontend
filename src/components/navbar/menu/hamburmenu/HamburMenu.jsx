@@ -1,9 +1,12 @@
-import React, { useState } from "react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import React from "react";
+import {  XMarkIcon } from "@heroicons/react/24/outline";
 import { Dialog, DialogPanel, Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import { userRoutesProducts } from "../../utils/routesProduct";
 
-export const HamburMenu = ({mobileMenuOpen, setMobileMenuOpen,products,callsToAction }) => {
+export const HamburMenu = ({routes, mobileMenuOpen, setMobileMenuOpen}) => {
+
+
 
   return (
     <>
@@ -13,7 +16,7 @@ export const HamburMenu = ({mobileMenuOpen, setMobileMenuOpen,products,callsToAc
         className="lg:hidden"
       >
         <div className="fixed inset-0 z-10" />
-        <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+        <DialogPanel className="fixed inset-y-0 left-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
             <a href="#" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
@@ -44,7 +47,7 @@ export const HamburMenu = ({mobileMenuOpen, setMobileMenuOpen,products,callsToAc
                     />
                   </DisclosureButton>
                   <DisclosurePanel className="mt-2 space-y-2">
-                    {[...products, ...callsToAction].map((item) => (
+                    {[...routes].map((item) => (
                       <DisclosureButton
                         key={item.name}
                         as="a"

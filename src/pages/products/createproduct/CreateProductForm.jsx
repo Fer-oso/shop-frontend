@@ -4,7 +4,10 @@ import { useForm } from '../../../components/hooks/useForm';
 import CreateButton from '../components/buttons/CreateProductButton';
 import useFileInput from '../../../components/hooks/useFileInput';
 import { InputFile } from '../components/form/InputFile';
-import { createProduct } from '../../../providers/products/createProduct';
+import { Toaster } from 'sonner';
+import { useDispatch } from 'react-redux';
+import { startCreateProduct } from '../../../store/product/productThunk';
+
 
 export const CreateProductForm = () => {
 
@@ -21,7 +24,7 @@ export const CreateProductForm = () => {
 
   const { handleSubmit, formState, onCheckboxChange, onInputChange } = useForm(productModel);
 
-  const { files, error, handleFileChange, resetFiles } = useFileInput();
+  const { files, messageError, handleFileChange, resetFiles } = useFileInput();
 
   const { name,
     brand,
@@ -32,30 +35,13 @@ export const CreateProductForm = () => {
     category,
     available } = formState;
 
-  const createFunction = (product, files) => {
+  const dispatch = useDispatch();  
 
-    /*Creo un JSON del formState */
+ const createFunction = async(product, files)=> {
+   
+  const data =  dispatch(startCreateProduct(product,files));
 
-    const productJSON = JSON.stringify(product);
-
-    /** Creo un BLOB del JSON anterior */
-    const produbtBLOB = new Blob([productJSON], {
-      type: "application/json"
-    });
-
-    /** Creo un formData */
-
-    const formDataProduct = new FormData();
-
-    formDataProduct.append("product", produbtBLOB);
-
-    if (files && files.length > 0) {
-      files.forEach((file) => { formDataProduct.append("image", file) });
-    }
-    
-    const response = createProduct(formDataProduct);
-
-    return response;
+    return data
   }
 
   return (
@@ -150,9 +136,16 @@ export const CreateProductForm = () => {
             Available
           </label>
         </div>
-        <InputFile files={files} error={error} handleFileChange={handleFileChange} resetFiles={resetFiles} />
+        <InputFile
+          files={files}
+          error={messageError}
+          handleFileChange={handleFileChange}
+          resetFiles={resetFiles}
+        />
         <CreateButton createFunction={() => createFunction(formState, files)} />
       </form>
+
+      <Toaster />
     </div>
   );
 };

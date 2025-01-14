@@ -2,8 +2,12 @@ import React from "react";
 
 import { Popover, PopoverButton, PopoverGroup, PopoverPanel } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import { Link } from "react-router-dom";
+import { userRoutesProducts } from "../../utils/routesProduct";
 
-export const NormalMenu = ({ products }) => {
+export const NormalMenu = ({routes}) => {
+
+
   return (
     <PopoverGroup className="hidden lg:flex lg:gap-x-12">
       <Popover className="relative">
@@ -20,7 +24,7 @@ export const NormalMenu = ({ products }) => {
           className="absolute -left-8 top-full z-10 mt-2.5 w-screen max-w-md overflow-hidden bg-white shadow-lg ring-1 ring-gray-900/5 transition data-[closed]:translate-y-1 data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in"
         >
           <div className="p-4">
-            {products.map((item) => (
+            {routes.map((item) => (
               <div
                 key={item.name}
                 className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm/6 hover:bg-gray-50"
@@ -32,13 +36,13 @@ export const NormalMenu = ({ products }) => {
                   />
                 </div>
                 <div className="flex-auto">
-                  <a
-                    href={item.href}
+                  <Link
+                    to={item.href}
                     className="block font-semibold text-gray-900"
                   >
                     {item.name}
                     <span className="absolute inset-0" />
-                  </a>
+                  </Link>
                   <p className="mt-1 text-gray-600">{item.description}</p>
                 </div>
               </div>
@@ -57,5 +61,7 @@ export const NormalMenu = ({ products }) => {
         Company
       </a>
     </PopoverGroup>
+
+    
   );
 };

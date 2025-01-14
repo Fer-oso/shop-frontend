@@ -1,6 +1,23 @@
 export const useCheckUserauthenticated = () => {
 
-  const session = JSON.parse(localStorage.getItem("auth"));
+  let session = JSON.parse(localStorage.getItem("auth"));
 
-  return { session };
+  if (!session) {
+
+    session = {
+
+      status: "unauthenticated",
+
+      userAuthenticated: {},
+
+      message: "User not authenticated",
+    };
+
+    localStorage.setItem(
+      "auth",
+      JSON.stringify(session)
+    );
+  }
+
+  return { status: session.status, userAuthenticated: session.userAuthenticated }
 };

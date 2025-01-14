@@ -17,19 +17,11 @@ import { LoginForm } from "../pages/login/LoginForm";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { PublicRoute } from "./PublicRoute";
 import { Home } from "../pages/home/Home";
+import { useCheckUserauthenticated } from "../providers/hooks/useCheckUserAuthenticated";
 
 export const routes = () =>{
 
-const session = JSON.parse(localStorage.getItem("auth"));
-
-if (!session) {
-
-const status = "unauthenticated";
-
-const userAuthenticated = {};
-
-localStorage.setItem("auth", JSON.stringify({ status, userAuthenticated }));
-}
+useCheckUserauthenticated();
 
 const router = createBrowserRouter([
   {
@@ -37,13 +29,13 @@ const router = createBrowserRouter([
     element: <ProtectedRoute/> ,
     errorElement: <NotFound />,
     children: [
-      { index: true, element: <Home /> },
+      { index: true, element: <Home />},
       { path: "/users", element:<Users />, loader: loadUsers},
       { path: "/users/:id", element: <UserInfo />, loader: loadUser},
       { path: "/users/:id/edit", element: <UserEdit />, loader: loadUser},
       { path: "/products", element: <Products />, loader: loadProducts},
       { path: "/products/:id", element: <ProductDetail />, loader: loadProduct},
-      { path: "/products/create", element: <CreateProductForm />},
+      { path: "/products/create", element: <CreateProductForm/>},
       { path: "/products/:id/edit", element: <EditProductForm />, loader: loadProduct},
       ],
   },

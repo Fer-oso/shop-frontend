@@ -7,6 +7,7 @@ import { LoginButton } from "./menu/login/LoginButton";
 import { SearchButton } from "../../pages/products/components/form/SearchButton";
 import { useSelector } from "react-redux";
 import { adminRoutesProducts, userRoutesProducts } from "./utils/routesProduct";
+import ShoppingCartList from "./shoppincart/ShoppingCartList";
 
 export const NavBar = () => {
 
@@ -24,7 +25,9 @@ export const NavBar = () => {
         <Logo />
         <HamburMenuOpenButton routes = {routes} />
         <NormalMenu routes = { routes} />
-        <SearchButton />
+        <SearchButton /> 
+
+        <ShoppingCartList/>
         <LoginButton />
       </nav>
     </header>

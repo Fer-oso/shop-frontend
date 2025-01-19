@@ -1,21 +1,10 @@
-import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useModal } from "./hooks/useModal";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { startAddProductToShoppingCart } from "../../../../store/shoppingcart/shoppingCartThunk";
-import { useCheckUserauthenticated } from "../../../../providers/hooks/useCheckUserAuthenticated";
-import { SearchButton } from "../form/SearchButton";
 
 export default function ProductList({ products }) {
 
-  const shoppingCart = useSelector(state => state.shoppingCart)
-
-  const {userAuthenticated} = useCheckUserauthenticated(); 
-
-  useEffect(() => {
-    localStorage.setItem(`shopping-cart-${userAuthenticated.id}`, JSON.stringify(shoppingCart));
-  }, [shoppingCart]);
-  
   const dispatch = useDispatch();
   
   // Función para añadir producto al carrito

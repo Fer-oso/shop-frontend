@@ -25,19 +25,17 @@ const CreateButton = ({createFunction}) =>{
 
           try {
 
-            const data = createFunction();
-           
-            if (data && data.code == '201') {
-              console.log(data)
+            const productCreated = await createFunction();
+  
+            if (productCreated) {
+             
               await swalWithBootstrapButtons.fire({
                 title: "Create!",
                 text: "Your product has been created succesfully.",
-                icon: "success"
+                icon: "success",
               });
-
-              
-             } else {
-              console.log(data)
+            } else {
+              console.log(data);
               await swalWithBootstrapButtons.fire({
                 title: "Error",
                 text: "There was an issue creating your product.",

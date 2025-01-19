@@ -1,3 +1,4 @@
+import { createProductFormData } from "../../pages/products/utils/createProductFormData";
 import { createProductService } from "../../providers/products/createProductService";
 import { deleteProductById } from "../../providers/products/deleteProductById";
 import { editProductById } from "../../providers/products/editProductById";
@@ -20,30 +21,12 @@ export const startCreateProduct = (product, files) =>{
     return async (dispatch) =>{
 
         try {
-          /*Creo un JSON del product recibido */
-
-          const productJSON = JSON.stringify(product);
-
-          /** Creo un BLOB del JSON anterior */
-          const produbtBLOB = new Blob([productJSON], {
-            type: "application/json",
-          });
-
-          /** Creo un formData */
-
-          const formDataProduct = new FormData();
-
-          formDataProduct.append("product", produbtBLOB);
-
-          if (files && files.length > 0) {
-            files.forEach((file) => {
-              formDataProduct.append("image", file);
-            });
-          }
+            
+          const formDataProduct = createProductFormData(product,files)
 
           const { data, error } = await createProductService(formDataProduct);
 
-           const productCreated = data ? data.response : {};
+           const productCreated = data ? data.response : null;
 
            const message = error ? error : "Product created Succesfully 😊";
 

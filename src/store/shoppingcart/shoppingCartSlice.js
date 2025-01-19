@@ -28,13 +28,18 @@ export const shoppingCartSlice = createSlice({
             state.total = state.productsList.reduce((total,product) => total + product.subtotal,0)
         },
 
+        removeProductOfShoppingCart:(state,action) =>{
+          state.productsList = action.payload
+          state.total = state.productsList.reduce((total,product)=> total+product.subtotal,0)
+        },
+        
         updateProductInShoppingCart:(state,action) =>{
-            state.productsList = action.payload;
-            state.total = state.productsList.reduce(
-              (total, product) => total + product.subtotal,
-              0
-            );
-        }
+          state.productsList = action.payload;
+          state.total = state.productsList.reduce(
+            (total, product) => total + product.subtotal,
+            0
+          );
+      },
     }
 })
 
@@ -43,4 +48,5 @@ export const {
   loadShoppingCart,
   addProductToShoppingCart,
   updateProductInShoppingCart,
+  removeProductOfShoppingCart,
 } = shoppingCartSlice.actions;

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useModal } from "./hooks/useModal";
 import { useDispatch } from "react-redux";
 import { startAddProductToShoppingCart } from "../../../../store/shoppingcart/shoppingCartThunk";
+import { Toaster } from "sonner";
 
 export default function ProductList({ products }) {
 
@@ -10,6 +11,7 @@ export default function ProductList({ products }) {
   // Función para añadir producto al carrito
   const addToCart = (product) => {
     dispatch(startAddProductToShoppingCart(product));
+
   };
 
   const { showModal, openModal, closeModal, selectedItem } = useModal();
@@ -92,6 +94,7 @@ export default function ProductList({ products }) {
               ${selectedItem.price}
             </p>
             <div className="mt-4 flex justify-between">
+             
               <button
                 className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-all"
                 onClick={() => addToCart(selectedItem)}
@@ -108,6 +111,7 @@ export default function ProductList({ products }) {
           </div>
         </div>
       )}
+       <Toaster richColors/>
     </div>
   );
 }

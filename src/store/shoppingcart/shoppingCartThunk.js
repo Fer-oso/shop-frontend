@@ -1,3 +1,4 @@
+import { toast } from "sonner";
 import {
   addProductToShoppingCart,
   loadShoppingCart,
@@ -13,24 +14,32 @@ export const startLoadShoppingCart = (shoppingcart) => {
 
 export const startAddProductToShoppingCart = (productSelected) => {
   return async (dispatch, getState) => {
-    const { productsList } = getState().shoppingCart;
 
-    if (productsList.some((product) => product.id === productSelected.id)) {
- 
-      dispatch(startIncreaseQuantityOfProductInShoppingCart(productSelected.id));
+    try {
       
-      alert("Quantity product updated");
-    } else {
-      const product = {
-        ...productSelected,
-        quantity: 1,
-        subtotal: productSelected.price,
-      };
+      const { productsList } = getState().shoppingCart;
 
-      dispatch(addProductToShoppingCart(product));
+      if (productsList.some((product) => product.id === productSelected.id)) {
+   
+        dispatch(startIncreaseQuantityOfProductInShoppingCart(productSelected.id));
+        
+         toast.info("Product already added. Quantity updated")
+      } else {
+        const product = {
+          ...productSelected,
+          quantity: 1,
+          subtotal: productSelected.price,
+        };
+  
+        dispatch(addProductToShoppingCart(product));
+  
+       toast.success("Product added sucessfully")
+      }
 
-      alert(`${product.name} añadido al carrito 🛒`);
+    } catch (error) {
+      return toast.error("Product not added. view reason" +error)
     }
+
   };
 };
 

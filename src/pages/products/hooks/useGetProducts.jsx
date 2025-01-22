@@ -8,6 +8,8 @@ const dispatch = useDispatch();
 
   const products = useSelector(state => state.products.products);
 
+  const message = error? error.message: "";
+
   useEffect(()=>{
 
     const products = data? data.response : [];
@@ -18,7 +20,7 @@ const dispatch = useDispatch();
 
   },[data, dispatch]);
 
-  return products;
+  return {products,message};
    
 }
 

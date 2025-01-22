@@ -8,27 +8,44 @@ import { SearchButton } from "../../pages/products/components/form/SearchButton"
 import { useSelector } from "react-redux";
 import { adminRoutesProducts, userRoutesProducts } from "./utils/routesProduct";
 import ShoppingCartList from "./shoppincart/ShoppingCartList";
+import { UserIcon } from "./users/UserIcon";
+import { navBarGeneralRoutes } from "./utils/routes/navbarRoutes";
 
 export const NavBar = () => {
+  const { userAuthenticated } = useSelector((state) => state.authentication);
 
-  const { userAuthenticated} = useSelector(state => state.authentication);
+  const roles = userAuthenticated?.roles.map((role) => role.roleName);
 
-  const roles = userAuthenticated?.roles.map(role => role.roleName);
-
-  const routes = roles.includes("ADMIN") ? adminRoutesProducts : userRoutesProducts;
+  const productsRoutes = roles.includes("ADMIN")
+    ? adminRoutesProducts
+    : userRoutesProducts;
 
   return (
     <header className="bg-white top-0">
       <nav
         aria-label="Global"
-        className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
+        className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
+      >
         <Logo />
-        <HamburMenuOpenButton routes = {routes} />
-        <NormalMenu routes = { routes} />
-        <SearchButton /> 
+        <div className="flex items-center m-auto">
 
-        <ShoppingCartList/>
-        <LoginButton />
+        <HamburMenuOpenButton generalRoutes={navBarGeneralRoutes} productRoutes={productsRoutes} />
+        <NormalMenu generalRoutes={navBarGeneralRoutes} productRoutes={productsRoutes} />
+        <SearchButton />
+
+        <ShoppingCartList />
+
+   
+        </div>
+        {userAuthenticated ? (
+          <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+            <UserIcon/>
+          </div>
+        ) : (
+          <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+            <LoginButton />
+          </div>
+        )}
       </nav>
     </header>
   );

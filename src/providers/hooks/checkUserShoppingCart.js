@@ -7,8 +7,6 @@ export const checkUserShoppingCart = (logedUser, dispatch) => {
 
   let shoppingCart = JSON.parse(localStorage.getItem(`shopping-cart-${id}`));
 
-  console.log(shoppingCart)
-
   if (!shoppingCart) {
     shoppingCart = {
       productsList: [],

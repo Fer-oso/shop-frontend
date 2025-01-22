@@ -18,32 +18,48 @@ import { ProtectedRoute } from "./ProtectedRoute";
 import { PublicRoute } from "./PublicRoute";
 import { Home } from "../pages/home/Home";
 import { useCheckUserauthenticated } from "../providers/hooks/useCheckUserAuthenticated";
+import Checkout from "../pages/checkout/CheckOut";
 
-export const routes = () =>{
+export const routes = () => {
+  useCheckUserauthenticated();
 
-useCheckUserauthenticated();
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <ProtectedRoute/> ,
-    errorElement: <NotFound />,
-    children: [
-      { index: true, element: <Home />},
-      { path: "/users", element:<Users />, loader: loadUsers},
-      { path: "/users/:id", element: <UserInfo />, loader: loadUser},
-      { path: "/users/:id/edit", element: <UserEdit />, loader: loadUser},
-      { path: "/products", element: <Products />, loader: loadProducts},
-      { path: "/products/:id", element: <ProductDetail />, loader: loadProduct},
-      { path: "/products/create", element: <CreateProductForm/>},
-      { path: "/products/:id/edit", element: <EditProductForm />, loader: loadProduct},
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <ProtectedRoute />,
+      errorElement: <NotFound />,
+      children: [
+        { index: true, element: <Home /> },
+        { path: "/users", element: <Users />, loader: loadUsers },
+        { path: "/users/:id", element: <UserInfo />, loader: loadUser },
+        { path: "/users/:id/edit", element: <UserEdit />, loader: loadUser },
+        { path: "/products", element: <Products />, loader: loadProducts },
+        {
+          path: "/products/:id",
+          element: <ProductDetail />,
+          loader: loadProduct,
+        },
+        { path: "/products/create", element: <CreateProductForm /> },
+        {
+          path: "/products/:id/edit",
+          element: <EditProductForm />,
+          loader: loadProduct,
+        },
+        { path: "/shopping-cart/checkout", element: <Checkout /> },
       ],
-  },
-  { path: "/login", element: <PublicRoute > <LoginForm/> </PublicRoute>},
-]);
+    },
+    {
+      path: "/login",
+      element: (
+        <PublicRoute>
+          {" "}
+          <LoginForm />{" "}
+        </PublicRoute>
+      ),
+    },
+  ]);
 
-return router;
-}
+  return router;
+};
 
 export default routes();
-

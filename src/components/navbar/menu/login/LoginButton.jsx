@@ -13,10 +13,8 @@ export const LoginButton = () => {
   }
 
   return (
-    <div className="hidden lg:flex lg:flex-1 lg:justify-end">
       <Link onClick={onClickLogin} className="text-sm/6  font-semibold text-gray-900">
       Log in <span aria-hidden="true">&rarr;</span>
       </Link>
-    </div>
   );
 };

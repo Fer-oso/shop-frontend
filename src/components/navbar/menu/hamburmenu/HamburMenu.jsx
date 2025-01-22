@@ -4,7 +4,7 @@ import { Dialog, DialogPanel, Disclosure, DisclosureButton, DisclosurePanel } fr
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { userRoutesProducts } from "../../utils/routesProduct";
 
-export const HamburMenu = ({routes, mobileMenuOpen, setMobileMenuOpen}) => {
+export const HamburMenu = ({productRoutes, mobileMenuOpen, setMobileMenuOpen}) => {
 
 
 
@@ -47,7 +47,7 @@ export const HamburMenu = ({routes, mobileMenuOpen, setMobileMenuOpen}) => {
                     />
                   </DisclosureButton>
                   <DisclosurePanel className="mt-2 space-y-2">
-                    {[...routes].map((item) => (
+                    {[...productRoutes].map((item) => (
                       <DisclosureButton
                         key={item.name}
                         as="a"

@@ -14,7 +14,7 @@ export const EditProductForm = () => {
 
     const dispatch = useDispatch();
 
-    const { handleSubmit, formState, onCheckboxChange, onInputChange } = useForm(data.response);
+    const { formState, onCheckboxChange, onInputChange } = useForm(data.response);
 
     const { files, error, handleFileChange, resetFiles } = useFileInput();
 
@@ -23,6 +23,10 @@ export const EditProductForm = () => {
     const editFunction = (id,product, files) => {
         dispatch(startEditProduct(id,product,files))
     }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+      };
 
     return (
         <div className="product-form-container">

@@ -22,7 +22,7 @@ export const CreateProductForm = () => {
     available: false,
   };
 
-  const { handleSubmit, formState, onCheckboxChange, onInputChange } = useForm(productModel);
+  const { formState, onCheckboxChange, onInputChange } = useForm(productModel);
 
   const { files, messageError, handleFileChange, resetFiles } = useFileInput();
 
@@ -43,6 +43,10 @@ export const CreateProductForm = () => {
 
     return data
   }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
 
   return (
     <div className="product-form-container">

@@ -30,9 +30,13 @@ export const LoginForm = () => {
     dispatch(startLoginUserWithUsernameAndPassword(formState));
   };
 
-  const { handleSubmit, formState, onInputChange } = useForm(loginModel);
+  const {  formState, onInputChange } = useForm(loginModel);
 
   const { username, password } = formState;
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
 
   return (
     <div className="login-form-container">

@@ -2,7 +2,7 @@ import { Bars3Icon } from '@heroicons/react/24/outline'
 import React, { useState } from 'react'
 import { HamburMenu } from './HamburMenu';
 
-export const HamburMenuOpenButton = ({routes}) => {
+export const HamburMenuOpenButton = ({generalRoutes,productRoutes}) => {
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
@@ -17,7 +17,7 @@ export const HamburMenuOpenButton = ({routes}) => {
         <Bars3Icon aria-hidden="true" className="size-6" />
       </button>
 
-      <HamburMenu routes={routes} mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
+      <HamburMenu productRoutes={productRoutes} mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
     </div>
   );
 }

@@ -10,11 +10,13 @@ export const Products = () => {
 
   const { data, error} = useLoaderData();
 
-  const products = useGetProducts(data,error)
+  console.log(error)
+
+  const {products,message} = useGetProducts(data,error)
 
   return (
     <>
-      {data.length < 0 ? (
+      {message? (
         <ErrorMessage
           message={error.message}
           status={error.status}

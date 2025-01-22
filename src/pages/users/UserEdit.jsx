@@ -12,7 +12,7 @@ export const UserEdit = () => {
 
   const dispatch = useDispatch();
 
-  const { formState,setFormState, onInputChange, onCheckboxChange,handleSubmit } = useForm(user);
+  const { formState,setFormState, onInputChange, onCheckboxChange } = useForm(user);
 
   const {username,password,enabled,accountNonExpired,accountNonLocked,credentialsNonExpired,profileImages} = formState;
 
@@ -32,6 +32,10 @@ export const UserEdit = () => {
       { roleName: "USER" },
       { roleName: "INVITED" },
     ];
+
+    const handleSubmit = (e) => {
+      e.preventDefault();
+    };
     
   return (
     <div className="container align-content-center">

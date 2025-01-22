@@ -12,6 +12,7 @@ import { startRemoveProductInShoppingCart } from "../../../store/shoppingcart/sh
 import { ShoppingCartButton } from "./ShoppingCartButton";
 import { ModifyQuantityButton } from "../../buttons/ModifyQuantityButton";
 import { useGetShoppingCart } from "../../hooks/useGetShoppingCart";
+import { Link } from "react-router-dom";
 
 export default function ShoppingCartList() {
 
@@ -46,7 +47,7 @@ export default function ShoppingCartList() {
 
           <div className="fixed inset-0 overflow-hidden">
             <div className="absolute inset-0 overflow-hidden">
-              <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
+              <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full ">
                 <TransitionChild
                   enter="transform transition ease-in-out duration-500 sm:duration-700"
                   enterFrom="translate-x-full"
@@ -153,12 +154,12 @@ export default function ShoppingCartList() {
                           ❕❕ Shipping and taxes calculated at checkout.
                         </p>
                         <div className="mt-6">
-                          <a
-                            href="#"
+                          <Link
+                            to="/shopping-cart/checkout"
                             className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
                           >
                             Checkout
-                          </a>
+                          </Link>
                         </div>
                         <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                           <p>

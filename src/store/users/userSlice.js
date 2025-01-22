@@ -19,7 +19,6 @@ export const usersSlice = createSlice({
     loadUser: (state, action) => {
       state.user = action.payload.user;
       state.message = action.payload.message;
-      state.users = action.payload.users;
       state.userEdited = action.payload.userEdited;
     },
 
@@ -27,7 +26,6 @@ export const usersSlice = createSlice({
       state.userEdited = action.payload.userEdited;
       state.user = action.payload.user;
       state.message = action.payload.message;
-      state.users = action.payload.users;
     },
 
     deleteUser: (state, action) => {

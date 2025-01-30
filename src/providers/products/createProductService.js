@@ -8,6 +8,8 @@ export const createProductService = async (formDataProduct) => {
 
     const response = await axiosInstance.post(`${PATH_PRODUCT}`,formDataProduct);
 
+    console.log(response);
+
     const data = await response.data;
 
     return { data };

@@ -80,7 +80,7 @@ export default function ProductList({ products }) {
             {selectedItem.images?.[0] ? (
               <img
                 src={`http://localhost:8080/api/shop/images/${selectedItem.images[0].id}`}
-                className="h-64 w-full object-cover rounded-md"
+                className="h-auto w-full object-cover rounded-md"
                 alt={selectedItem.name}
               />
             ) : (

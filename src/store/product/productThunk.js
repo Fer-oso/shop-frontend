@@ -21,14 +21,14 @@ export const startCreateProduct = (product, files) =>{
     return async (dispatch) =>{
 
         try {
-            
+
           const formDataProduct = createProductFormData(product,files)
 
           const { data, error } = await createProductService(formDataProduct);
 
-           const productCreated = data ? data.response : null;
+           const productCreated = data? data.response : null;
 
-           const message = error ? error : "Product created Succesfully 😊";
+           const message = error? error : {code:'201',message:"Product created Succesfully 😊"};
 
            const {payload} = await dispatch(createProduct({productCreated,message}));
 

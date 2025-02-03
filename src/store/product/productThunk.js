@@ -20,9 +20,14 @@ export const startCreateProduct = (product, files) =>{
 
     return async (dispatch) =>{
 
-        try {
+        const object  = {
+            nameProduct: "product",
+            product,
+            nameFiles: "image",
+            files
+        }
 
-          const formDataProduct = createProductFormData(product,files)
+          const formDataProduct = createProductFormData(object)
 
           const { data, error } = await createProductService(formDataProduct);
 
@@ -32,14 +37,7 @@ export const startCreateProduct = (product, files) =>{
 
            const {payload} = await dispatch(createProduct({productCreated,message}));
 
-           console.log(payload)
-
-          return payload
-
-        } catch (error) {
-             console.error("Error al crear el producto:", error);
-             return { success: false, error: error.message };
-        }
+          return payload;
     }
 }
 

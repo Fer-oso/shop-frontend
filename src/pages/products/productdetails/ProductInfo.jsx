@@ -1,11 +1,16 @@
 import React from 'react'
+import { Link, useOutletContext } from 'react-router-dom';
 
 export const ProductInfo = ({product}) => {
 
 const { name, brand, description, price, stock, code, category, available, images } = product;
 
-  return (
+const roles = useOutletContext();
+
+return (
+
     <div className="product-detail-container">
+     {roles.includes("ADMIN") ? (<><nav><Link to={`edit`}>Edit</Link></nav></>): (<></>)} 
     <h1 className="product-title">{name}</h1>
     <div className="product-info">
       <div className="product-details">

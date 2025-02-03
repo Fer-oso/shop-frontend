@@ -11,10 +11,8 @@ import ShoppingCartList from "./shoppincart/ShoppingCartList";
 import { UserIcon } from "./users/UserIcon";
 import { navBarGeneralRoutes } from "./utils/routes/navbarRoutes";
 
-export const NavBar = () => {
-  const { userAuthenticated } = useSelector((state) => state.authentication);
-
-  const roles = userAuthenticated?.roles.map((role) => role.roleName);
+export const NavBar = ({roles}) => {
+ 
 
   const productsRoutes = roles.includes("ADMIN")
     ? adminRoutesProducts
@@ -37,7 +35,7 @@ export const NavBar = () => {
 
    
         </div>
-        {userAuthenticated ? (
+        {roles ? (
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
             <UserIcon/>
           </div>

@@ -1,4 +1,4 @@
-export const createProductFormData = (product,files) =>{
+export const createProductFormData = ({nameProduct,product,nameFiles,files}) =>{
 
   const productJSON = JSON.stringify(product);
 
@@ -11,11 +11,11 @@ export const createProductFormData = (product,files) =>{
 
           const formDataProduct = new FormData();
 
-          formDataProduct.append("product", produbtBLOB);
+          formDataProduct.append(nameProduct, produbtBLOB);
 
           if (files && files.length > 0) {
             files.forEach((file) => {
-              formDataProduct.append("image", file);
+              formDataProduct.append(nameFiles, file);
             });
           }
 

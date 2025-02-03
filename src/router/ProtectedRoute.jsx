@@ -10,11 +10,14 @@ import { useDispatch } from "react-redux";
 import { checkUserShoppingCart } from "../providers/hooks/CheckUserShoppingCart";
 
 export const ProtectedRoute = () => {
+
   const { status, userAuthenticated } = useCheckUserauthenticated();
 
   const dispatch = useDispatch();
 
   const navigation = useNavigation();
+
+  const roles = userAuthenticated?.roles?.map((role) => role.roleName);
 
   useEffect(() => {
     if (status === "authenticated") {
@@ -22,18 +25,19 @@ export const ProtectedRoute = () => {
     }
   }, [status]);
 
+  
   if (status === "unauthenticated") {
     return <Navigate to="/login" />;
   }
 
   return (
     <div className="overflow-hidden">
-      <NavBar />
-      <main>
-        <Outlet />
-        {navigation.state === "loading" && <Loading />}
-      </main>
-      <Footer />
-    </div>
+    <NavBar roles={roles} />
+    <main>
+      <Outlet context={roles}/>
+      {navigation.state === "loading" && <Loading />}
+    </main>
+    <Footer />
+  </div>
   );
 };

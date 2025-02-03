@@ -19,6 +19,7 @@ import { PublicRoute } from "./PublicRoute";
 import { Home } from "../pages/home/Home";
 import { useCheckUserauthenticated } from "../providers/hooks/useCheckUserAuthenticated";
 import Checkout from "../pages/checkout/CheckOut";
+import { PostConfirmOrder } from "../pages/Pagar/PostConfirmOrder";
 
 export const routes = () => {
   useCheckUserauthenticated();
@@ -46,14 +47,14 @@ export const routes = () => {
           loader: loadProduct,
         },
         { path: "/shopping-cart/checkout", element: <Checkout /> },
+        { path: "/shopping-cart/post-confirm-order", element: <PostConfirmOrder /> },
       ],
     },
     {
       path: "/login",
       element: (
         <PublicRoute>
-          {" "}
-          <LoginForm />{" "}
+          <LoginForm />
         </PublicRoute>
       ),
     },

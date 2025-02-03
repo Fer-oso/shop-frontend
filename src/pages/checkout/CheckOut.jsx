@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useForm } from "../../components/hooks/useForm";
+import { ConfirmOrderButton } from "./components/button/ConfirmOrderButton";
+import { Toaster } from "sonner";
 
 const Checkout = () => {
   const { productsList } = useSelector((state) => state.shoppingCart);
@@ -27,11 +29,6 @@ const Checkout = () => {
 
   const { fullName, email, address, phone } = formState;
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Información del usuario:", userInfo);
-    alert("¡Pedido confirmado con éxito!");
-  };
 
   return (
     <div className="min-h-screen bg-gray-100 py-8">
@@ -80,14 +77,14 @@ const Checkout = () => {
                         })}
                       </p>
                       <p className="text-sm text-center font-semibold text-gray-800">
-                        
+
                         {(product.price * product.quantity).toLocaleString("es-AR", {
                           style: "currency",
                           currency: "ARS",
                         })}
                       </p>
                     </div>
-                    
+
                   </div>
                 ))}
                 <div className="mt-6 border-t border-gray-200 pt-4">
@@ -111,7 +108,7 @@ const Checkout = () => {
               <h2 className="text-xl font-semibold mb-4 text-gray-700">
                 Información del Usuario
               </h2>
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form className="space-y-4">
                 <div>
                   <label
                     className="block text-gray-600 font-medium mb-1"
@@ -184,12 +181,9 @@ const Checkout = () => {
                     placeholder="Tu número de teléfono"
                   />
                 </div>
-                <button
-                  type="submit"
-                  className="w-full bg-indigo-600 text-white font-bold py-3 rounded-lg shadow-lg hover:bg-indigo-500 hover:shadow-xl transition-all duration-300"
-                >
-                  Confirmar Pedido
-                </button>
+
+                <ConfirmOrderButton/>
+
               </form>
               <div className="mt-6 border-t border-gray-200 pt-4">
                 <h2 className="text-xl font-semibold text-gray-700">
@@ -206,6 +200,7 @@ const Checkout = () => {
           </div>
         </div>
       </div>
+      <Toaster richColors />
     </div>
   );
 };

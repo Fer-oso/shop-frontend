@@ -1,33 +1,30 @@
 import React from "react";
-
-
-
+import { Link } from "react-router-dom";
 
 export const Hero = () => {
- 
-     const images = [
-       {
-         src: "/images/hero4-min.jpg",
-       },
-       {
-         src: "/images/hero5-min.jpg",
-       },
-       {
-         src: "/images/hero3-min.jpg",
-       },
-       {
-         src: "/images/hero2-min.jpg",
-       },
-       {
-         src: "/images/hero6-min.jpg",
-       },
-       {
-         src: "/images/hero2-min.jpg",
-       },
-     ];
+  const images = [
+    {
+      src: "/images/hero4-min.jpg",
+    },
+    {
+      src: "/images/hero5-min.jpg",
+    },
+    {
+      src: "/images/hero3-min.jpg",
+    },
+    {
+      src: "/images/hero2-min.jpg",
+    },
+    {
+      src: "/images/hero6-min.jpg",
+    },
+    {
+      src: "/images/hero2-min.jpg",
+    },
+  ];
 
   return (
-    <div className="mx-auto my-auto bg-white py-14 sm:py-10">
+    <div className="mx-auto my-auto ">
       <section className="relative bg-gradient-to-r from-gray-100 to-white py-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col lg:flex-row items-center lg:justify-between">
           {/* Texto y Botón */}
@@ -41,12 +38,12 @@ export const Hero = () => {
               Upgrade your style and gear with our latest collections. Explore
               now and find exclusive deals!
             </p>
-            <a
-              href="#"
+            <Link
+              to={"/products"}
               className="mt-6 inline-block bg-indigo-600 text-white px-8 py-3 text-lg font-medium rounded-lg shadow-md hover:bg-indigo-700 transition"
             >
               Shop Now
-            </a>
+            </Link>
           </div>
 
           {/* Grid de Imágenes */}

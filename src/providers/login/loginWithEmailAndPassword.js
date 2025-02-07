@@ -1,13 +1,16 @@
 import axios from "axios";
+import { axiosInstance } from "../hooks/axiosInstace";
 
-const API_URL = "http://localhost:8080/api/shop/auth/login";
+const API_URL = "auth/login";
 
 export const loginWithEmailAndPassword = async ({ username, password }) => {
   try {
-    const response = await axios.post(`${API_URL}`, {
+    const response = await axiosInstance.post(`${API_URL}`, {
       username,
       password,
     });
+
+    console.log(response);
 
     const userAuthenticated = await response.data;
 

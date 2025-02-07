@@ -1,17 +1,16 @@
 import { axiosInstance } from "../hooks/axiosInstace";
 
-
 const PATH_PRODUCTS = "products";
 
 export const loadProducts = async () => {
-
   try {
     const response = await axiosInstance.get(PATH_PRODUCTS);
+
+    console.log(response);
 
     const data = await response.data;
 
     return { data };
-
   } catch (error) {
     // Verificar si el error proviene de la respuesta del servidor
     if (error.response) {

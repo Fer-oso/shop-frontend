@@ -3,115 +3,167 @@ import { useModal } from "./hooks/useModal";
 import { useDispatch } from "react-redux";
 import { startAddProductToShoppingCart } from "../../../../store/shoppingcart/shoppingCartThunk";
 import { Toaster } from "sonner";
+import {
+  ControlPointOutlined,
+  Details,
+  HeartBroken,
+  RemoveRedEye,
+  RemoveRedEyeOutlined,
+  Share,
+  ShoppingCart,
+} from "@mui/icons-material";
 
 export default function ProductList({ products }) {
-
   const dispatch = useDispatch();
-  
+
   // Función para añadir producto al carrito
   const addToCart = (product) => {
     dispatch(startAddProductToShoppingCart(product));
-
   };
 
   const { showModal, openModal, closeModal, selectedItem } = useModal();
 
   return (
-    <div className="bg-white">
+    <div className="bg-white mt-10">
       <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-        <h2 className="text-2xl font-bold tracking-tight text-gray-900 text-center">
-          List of all products availables in the store
+        <h2 className="text-2xl font-bold tracking-tight text-gray-900 mb-8">
+          List of all our products
         </h2>
-       
-        <div className="mt-6 grid grid-cols-1 gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-2 xl:gap-2">
+
+        <div className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-4">
           {products.map((product) => (
-            <div key={product.id} className="group">
-              <div
-                className="aspect-h-1 aspect-w-1 w-full border-1 overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80 lg:w-autocursor-pointer"
-                onClick={() => openModal(product)}
-              >
+            <div
+              key={product.id}
+              className="group relative border flex flex-col"
+            >
+              <div className="aspect-w-1 aspect-h-1 cursor-pointer">
                 {product.images?.[0] ? (
                   <img
-                    src={`http://localhost:8080/api/shop/images/${product.images[0].id}`}
-                    className="aspect-square w-full rounded-md bg-gray-200 object-cover group-hover:opacity-75 lg:aspect-auto lg:h-80"
+                    src={`https://8079-2800-810-58c-89cc-c4ea-837e-4784-352b.ngrok-free.app/api/shop/images/${product.images[0].id}`}
+                    className="aspect-square w-full h-full object-contain  rounded-md bg-white lg:aspect-auto lg:h-80 lg:w-full transition-opacity duration-300 "
                     alt={product.name}
+                    onClick={() => openModal(product)}
                   />
                 ) : (
-                  <span>No Image</span>
+                  <img
+                    src=""
+                    alt="No image"
+                    className="aspect-square w-full h-full object-cover text-center group-hover:opacity-75 rounded-md bg-gray-200 lg:aspect-auto lg:h-80 transition-opacity duration-300"
+                    onClick={() => openModal(product)}
+                  />
                 )}
               </div>
 
-              <div className="mt-4 flex justify-between">
-                <h3 className="text-sm text-gray-700">{product.name}</h3>
+              <div className="mt-4 space-y-2  flex flex-col h-full  transition-colors ">
+                <div className="flex justify-between  ">
+                  <h3 className="text-sm text-gray-700 ml-1 group-hover:text-blue-500">
+                    {product.name}
+                  </h3>
+
+                  <p className="text-sm font-black text-black-500 mr-1">
+                    ${product.price}
+                  </p>
+                </div>
+
+                <p className="text-sm text-gray-500 ml-1">
+                  {product.category.name}
+                </p>
+
+                <div className="mt-auto flex flex-col gap-2">
+                  <button
+                    onClick={() => addToCart(product)}
+                    className="w-full flex items-center justify-center space-x-2 bg-blue-500 text-white px-4 py-2  hover:bg-blue-600 transition-colors lg:text-xs"
+                  >
+                    <ShoppingCart size={20} />
+                    <span>Add to Cart</span>
+                  </button>
+
+                  <Link
+                    to={`/products/${product.id}`}
+                    className="w-full flex items-center justify-center space-x-2 bg-gray-200 text-black px-4 py-2  hover:bg-gray-300 transition-colors lg:text-xs"
+                  >
+                    <ControlPointOutlined size={20} /> <span>View details</span>
+                  </Link>
+                </div>
               </div>
-
-              <p className="text-sm font-black text-black-500">
-                ${product.price}
-              </p>
-
-              <Link
-                to={`/products/${product.id}`}
-                className="btn btn-success cursor-pointer mt-4"
-              >
-                Ver detalles
-              </Link>
             </div>
           ))}
         </div>
       </div>
 
       {/* Modal de Producto */}
-      {selectedItem && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 p-4">
-          <div
-            className={`bg-white rounded-lg p-6 max-w-md h-full relative overflow-auto transition-all duration-300 ${
-              showModal ? "opacity-100 scale-100" : "opacity-0 scale-95"
-            }`}
-          >
-            <button
-              className="absolute top-3 right-3 text-gray-600 hover:text-gray-900"
+      {showModal && selectedItem && (
+        <div
+          className="fixed inset-0 z-50 overflow-y-auto"
+          aria-labelledby="modal-title"
+          role="dialog"
+          aria-modal="true"
+        >
+          <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div
+              className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
               onClick={closeModal}
-            >
-              ✖
-            </button>
-            <h3 className="mt-4 text-xl font-bold text-gray-900 text-center">
-              {selectedItem.name}
-            </h3>
-            {selectedItem.images?.[0] ? (
-              <img
-                src={`http://localhost:8080/api/shop/images/${selectedItem.images[0].id}`}
-                className="h-auto w-full object-cover rounded-md"
-                alt={selectedItem.name}
-              />
-            ) : (
-              <span>No Image</span>
-            )}
+            ></div>
 
-            <p className="mt-2 text-gray-600 text-ellipsis">
-              {selectedItem.description}
-            </p>
-            <p className="mt-2 text-lg font-semibold text-indigo-600">
-              ${selectedItem.price}
-            </p>
-            <div className="mt-4 flex justify-between">
-             
-              <button
-                className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-all"
-                onClick={() => addToCart(selectedItem)}
-              >
-                Añadir al Carrito 🛒
-              </button>
-              <button
-                className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100 transition-all"
-                onClick={closeModal}
-              >
-                Cerrar
-              </button>
+            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+              <div className=" bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div className="sm:flex sm:items-start">
+                  <div className="mt-3 text-center sm:mt-0 sm:text-left w-full">
+                    <div className=" aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-gray-200 mb-4">
+                      {selectedItem.images?.[0] ? (
+                        <img
+                          src={`https://8079-2800-810-58c-89cc-c4ea-837e-4784-352b.ngrok-free.app/api/shop/images/${selectedItem.images[0].id}`}
+                          className="h-full w-full object-cover object-center"
+                          alt={selectedItem.name}
+                        />
+                      ) : (
+                        <span>No Image</span>
+                      )}
+                    </div>
+
+                    <h3
+                      className="text-lg leading-6 font-medium text-gray-900"
+                      id="modal-title"
+                    >
+                      {" "}
+                      {selectedItem.name}
+                    </h3>
+
+                    <div className="mt-2">
+                      <p className="text-sm text-gray-500">
+                        {selectedItem.description}
+                      </p>
+                      <p className="mt-2 text-lg font-bold text-gray-900">
+                        ${selectedItem.price}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <button
+                  type="button"
+                  className=" mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-blue-800 text-base font-medium text-white hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                  onClick={() => {
+                    addToCart(selectedItem);
+                  }}
+                >
+                  Add to Cart
+                </button>
+                <button
+                  type="button"
+                  className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-gray-200 text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                  onClick={closeModal}
+                >
+                  Close
+                </button>
+              </div>
             </div>
           </div>
         </div>
       )}
-       <Toaster richColors/>
+      <Toaster richColors />
     </div>
   );
 }

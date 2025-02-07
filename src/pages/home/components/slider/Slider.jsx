@@ -1,13 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 
-  const images = [
-    "/images/img1.jpg",
-    "/images/img2.jpg",
-    "/images/img3.jpg",
-  ];
+const images = ["/images/img1.jpg", "/images/img2.jpg", "/images/img3.jpg"];
 
-export const Slider = ({autoplayInterval = 3000 }) => {
-
+export const Slider = ({ autoplayInterval = 3000 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
@@ -28,9 +23,7 @@ export const Slider = ({autoplayInterval = 3000 }) => {
       onMouseLeave={() => setIsPaused(false)}
     >
       {/* Imágenes */}
-      <div
-        className={`max-w-full h-96 flex`}
-      >
+      <div className={`max-w-full h-96 flex`}>
         <img
           src={images[currentIndex]}
           alt={`Slide ${currentIndex + 1}`}

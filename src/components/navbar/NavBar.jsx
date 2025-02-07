@@ -11,9 +11,7 @@ import ShoppingCartList from "./shoppincart/ShoppingCartList";
 import { UserIcon } from "./users/UserIcon";
 import { navBarGeneralRoutes } from "./utils/routes/navbarRoutes";
 
-export const NavBar = ({roles}) => {
- 
-
+export const NavBar = ({ roles }) => {
   const productsRoutes = roles.includes("ADMIN")
     ? adminRoutesProducts
     : userRoutesProducts;
@@ -22,22 +20,25 @@ export const NavBar = ({roles}) => {
     <header className="bg-white top-0">
       <nav
         aria-label="Global"
-        className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
+        className="mx-auto flex max-w-7xl items-center justify-between lg:px-8"
       >
         <Logo />
         <div className="flex items-center m-auto">
+          <HamburMenuOpenButton
+            generalRoutes={navBarGeneralRoutes}
+            productRoutes={productsRoutes}
+          />
+          <NormalMenu
+            generalRoutes={navBarGeneralRoutes}
+            productRoutes={productsRoutes}
+          />
+          <SearchButton />
 
-        <HamburMenuOpenButton generalRoutes={navBarGeneralRoutes} productRoutes={productsRoutes} />
-        <NormalMenu generalRoutes={navBarGeneralRoutes} productRoutes={productsRoutes} />
-        <SearchButton />
-
-        <ShoppingCartList />
-
-   
+          <ShoppingCartList />
         </div>
         {roles ? (
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            <UserIcon/>
+            <UserIcon />
           </div>
         ) : (
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">

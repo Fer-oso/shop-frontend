@@ -1,4 +1,4 @@
-import {  useState } from "react";
+import { useState } from "react";
 import {
   Dialog,
   DialogPanel,
@@ -6,7 +6,7 @@ import {
   Transition,
   TransitionChild,
 } from "@headlessui/react";
-import {  XMarkIcon } from "@heroicons/react/24/solid";
+import { XMarkIcon } from "@heroicons/react/24/solid";
 import { useDispatch } from "react-redux";
 import { startRemoveProductInShoppingCart } from "../../../store/shoppingcart/shoppingCartThunk";
 import { ShoppingCartButton } from "./ShoppingCartButton";
@@ -15,23 +15,23 @@ import { useGetShoppingCart } from "../../hooks/useGetShoppingCart";
 import { Link } from "react-router-dom";
 
 export default function ShoppingCartList() {
-
   const dispatch = useDispatch();
 
-  const {productsList, total} = useGetShoppingCart();
+  const { productsList, total } = useGetShoppingCart();
 
   const [open, setOpen] = useState(false);
 
-  const onClickRemoveProduct = (product) =>{
-
-   dispatch(startRemoveProductInShoppingCart(product))
-  }
+  const onClickRemoveProduct = (product) => {
+    dispatch(startRemoveProductInShoppingCart(product));
+  };
 
   return !productsList.length > 0 ? (
-    <><div></div></>
+    <>
+      <div></div>
+    </>
   ) : (
     <div>
-      <ShoppingCartButton show={setOpen} productsList={productsList}/>
+      <ShoppingCartButton show={setOpen} productsList={productsList} />
       <Transition show={open}>
         <Dialog className="relative z-10" onClose={setOpen}>
           <TransitionChild
@@ -92,7 +92,7 @@ export default function ShoppingCartList() {
                                   <div className="h-24 w-24 flex-shrink-0 overflow-clip rounded-md border border-gray-200">
                                     {product.images?.[0] ? (
                                       <img
-                                        src={`http://localhost:8080/api/shop/images/${product.images[0].id}`}
+                                        src={`https://dd26-2800-810-58c-89cc-c4ea-837e-4784-352b.ngrok-free.app/api/shop/images/${product.images[0].id}`}
                                         className="h-full w-full object-cover object-center"
                                         alt={product.name}
                                       />
@@ -120,18 +120,20 @@ export default function ShoppingCartList() {
                                       </div>
                                     </div>
                                     <div className="flex flex-1 items-center justify-between text-sm">
-                                    <div className="flex items-center m- gap-1">
-                                    <p className="text-gray-800 font-black">
-                                        Quantity {product.quantity}
-                                      </p>
-                                      <ModifyQuantityButton id={product.id}/>
-                                    </div>
+                                      <div className="flex items-center m- gap-1">
+                                        <p className="text-gray-800 font-black">
+                                          Quantity {product.quantity}
+                                        </p>
+                                        <ModifyQuantityButton id={product.id} />
+                                      </div>
 
                                       <div className="flex">
                                         <button
                                           type="button"
                                           className="font-medium text-indigo-600 hover:text-indigo-500"
-                                          onClick={()=> onClickRemoveProduct(product)}
+                                          onClick={() =>
+                                            onClickRemoveProduct(product)
+                                          }
                                         >
                                           Remove
                                         </button>

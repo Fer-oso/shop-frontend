@@ -1,62 +1,95 @@
 import express from "express";
 
-import cors from 'cors';
-import {MercadoPagoConfig,  Preference } from "mercadopago";
+import cors from "cors";
+import { MercadoPagoConfig, Preference } from "mercadopago";
 
-export const ACCESS_TOKEN ='APP_USR-6466186508757279-020201-134d4870190481c29f95c880c78eb6c2-2243613633';
+export const ACCESS_TOKEN =
+  "APP_USR-6466186508757279-020201-134d4870190481c29f95c880c78eb6c2-2243613633";
 
 const client = new MercadoPagoConfig({
-    accessToken: ACCESS_TOKEN,
-})
+  accessToken: ACCESS_TOKEN,
+});
 
 const app = express();
 const port = 3000;
 
 app.use(cors());
 
-app.use( express.json());
+app.use(express.json());
 
-app.get("/",(req,res) =>{
-    res.send("syo el server :)");
+app.get("/", (req, res) => {
+  res.send("syo el server :)");
 });
 
-app.post("/create-preference", async( req,res) =>{
-    try {
-    
-        const body = {
-            items: [
-                {
-                    title: req.body.name,
-                    quantity: Number(req.body.quantity),
-                    unit_price: Number(req.body.price),
-                    currency_id: "ARS",
-                },
-            ],
-            back_urls:{
-                success: "https://www.youtube.com",
-                failure: "https://www.youtube.com",
-                pending: "https://www.youtube.com",
-            },
-            auto_return: "approved",
-        };
+app.post("/create-preference", async (req, res) => {
+  try {
+    const preference = new Preference(client);
 
-        const preference = new Preference(client);
+    const products = req.body.products;
 
-        const result = await preference.create({body});
+    const items = products.map((product) => ({
+      title: product.title,
+      quantity: Number(product.quantity),
+      unit_price: Number(product.unitPrice),
+      currency_id: "ARS",
+    }));
 
-        res.json({
-            id: result.id
-        });
+    const body = {
+      items,
+      back_urls: {
+        success: `https://bell-examinations-jurisdiction-gem.trycloudflare.com/shopping-cart/payment-status?status=success`,
+        failure: `https://bell-examinations-jurisdiction-gem.trycloudflare.com/shopping-cart/payment-status?status=failure`,
+        pending: `https://bell-examinations-jurisdiction-gem.trycloudflare.com/shopping-cart/payment-status?status=pending`,
+      },
+      auto_return: "approved",
+      notification_url:
+        "https://tapes-casinos-aim-scored.trycloudflare.com/payments",
+    };
 
-    } catch (error) {
-        console.log(error)
-        res.status(500).json({
-            error
-        })
+    const result = await preference.create({ body });
+
+    console.log();
+
+    res.json({
+      id: result.id,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      error,
+    });
+  }
+});
+
+app.post("/payments", async (req, res) => {
+  try {
+    const paymentId = req.query.id;
+
+    const response = await fetch(
+      `https://api.mercadopago.com/v1/payments/${paymentId}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${client.accessToken}`,
+        },
+      }
+    );
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data);
+      return res.status(200).json({ data });
+    } else {
+      return res
+        .status(response.status)
+        .json({ error: "Failed to fetch payment info" });
     }
-})
+  } catch (error) {
+    console.error("Error", error);
+    res.sendStatus(500);
+  }
+});
 
-
-app.listen(port,()=>{
-    console.log(`el servidor esta corriendo en el puerto ${port}`)
-})
+app.listen(port, () => {
+  console.log(`el servidor esta corriendo en el puerto ${port}`);
+});

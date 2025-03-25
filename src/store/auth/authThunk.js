@@ -6,34 +6,30 @@ export const startLoginUserWithUsernameAndPassword = ({
   password,
 }) => {
   return async (dispatch) => {
-    const { status, userAuthenticated } = await loginWithEmailAndPassword({
-      username,
-      password,
-    });
+    const { status, message, userAuthenticated } =
+      await loginWithEmailAndPassword({
+        username,
+        password,
+      });
 
     if (status === "authenticated") {
-      dispatch(login({ status, userAuthenticated }));
+      dispatch(login({ status, message, userAuthenticated }));
 
       localStorage.setItem(
         "auth",
-        JSON.stringify({ status, userAuthenticated })
+        JSON.stringify({ status, message, userAuthenticated })
       );
     }
   };
 };
 
 export const startLogoutUser = () => {
-
   return (dispatch) => {
-
     const status = "unauthenticated";
     const userAuthenticated = {};
 
     dispatch(logout({ status, userAuthenticated }));
 
     localStorage.setItem("auth", JSON.stringify({ status, userAuthenticated }));
-  }
+  };
 };
-
-
-

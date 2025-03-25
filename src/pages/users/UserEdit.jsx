@@ -7,36 +7,43 @@ import { startEditUser, startLoadUser } from "../../store/users/userThunk";
 import { RoleSelector } from "./components/RoleSelector";
 
 export const UserEdit = () => {
-
   const { user } = useLoaderData();
 
   const dispatch = useDispatch();
 
-  const { formState,setFormState, onInputChange, onCheckboxChange } = useForm(user);
+  const { formState, setFormState, onInputChange, onCheckboxChange } =
+    useForm(user);
 
-  const {username,password,enabled,accountNonExpired,accountNonLocked,credentialsNonExpired,profileImages} = formState;
+  const {
+    username,
+    password,
+    enabled,
+    accountNonExpired,
+    accountNonLocked,
+    credentialsNonExpired,
+    profileImages,
+  } = formState;
 
   const { files, error, handleFileChange, resetFiles } = useFileInput();
 
-  useEffect(()=>{
-   dispatch(startLoadUser(user)) 
-  },[dispatch])
-
+  useEffect(() => {
+    dispatch(startLoadUser(user));
+  }, [dispatch]);
 
   const editUser = () => {
     dispatch(startEditUser(user.id, formState, files));
   };
 
-    const availableRoles = [
-      { roleName: "ADMIN" },
-      { roleName: "USER" },
-      { roleName: "INVITED" },
-    ];
+  const availableRoles = [
+    { roleName: "ADMIN" },
+    { roleName: "USER" },
+    { roleName: "INVITED" },
+  ];
 
-    const handleSubmit = (e) => {
-      e.preventDefault();
-    };
-    
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div className="container align-content-center">
       <form onSubmit={handleSubmit} className="col-md-8">

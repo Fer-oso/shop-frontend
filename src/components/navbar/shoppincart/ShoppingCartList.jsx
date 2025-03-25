@@ -7,23 +7,15 @@ import {
   TransitionChild,
 } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/solid";
-import { useDispatch } from "react-redux";
-import { startRemoveProductInShoppingCart } from "../../../store/shoppingcart/shoppingCartThunk";
 import { ShoppingCartButton } from "./ShoppingCartButton";
 import { ModifyQuantityButton } from "../../buttons/ModifyQuantityButton";
 import { useGetShoppingCart } from "../../hooks/useGetShoppingCart";
 import { Link } from "react-router-dom";
 
 export default function ShoppingCartList() {
-  const dispatch = useDispatch();
-
   const { productsList, total } = useGetShoppingCart();
 
   const [open, setOpen] = useState(false);
-
-  const onClickRemoveProduct = (product) => {
-    dispatch(startRemoveProductInShoppingCart(product));
-  };
 
   return !productsList.length > 0 ? (
     <>
@@ -92,7 +84,7 @@ export default function ShoppingCartList() {
                                   <div className="h-24 w-24 flex-shrink-0 overflow-clip rounded-md border border-gray-200">
                                     {product.images?.[0] ? (
                                       <img
-                                        src={`https://dd26-2800-810-58c-89cc-c4ea-837e-4784-352b.ngrok-free.app/api/shop/images/${product.images[0].id}`}
+                                        src={`https://cicada-open-partly.ngrok-free.app/api/shop/images/${product.images[0].id}`}
                                         className="h-full w-full object-cover object-center"
                                         alt={product.name}
                                       />
@@ -120,23 +112,13 @@ export default function ShoppingCartList() {
                                       </div>
                                     </div>
                                     <div className="flex flex-1 items-center justify-between text-sm">
-                                      <div className="flex items-center m- gap-1">
+                                      <div className="flex items-center mt-3 ml-3 gap-2">
                                         <p className="text-gray-800 font-black">
                                           Quantity {product.quantity}
                                         </p>
-                                        <ModifyQuantityButton id={product.id} />
-                                      </div>
-
-                                      <div className="flex">
-                                        <button
-                                          type="button"
-                                          className="font-medium text-indigo-600 hover:text-indigo-500"
-                                          onClick={() =>
-                                            onClickRemoveProduct(product)
-                                          }
-                                        >
-                                          Remove
-                                        </button>
+                                        <ModifyQuantityButton
+                                          product={product}
+                                        />
                                       </div>
                                     </div>
                                   </div>
@@ -159,6 +141,7 @@ export default function ShoppingCartList() {
                           <Link
                             to="/shopping-cart/checkout"
                             className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+                            onClick={() => setOpen(false)}
                           >
                             Checkout
                           </Link>

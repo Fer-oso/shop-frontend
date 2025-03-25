@@ -1,5 +1,4 @@
-import axios from "axios";
-import { axiosInstance } from "../hooks/axiosInstace";
+import { axiosInstance } from "../axios/axiosInstace";
 
 const API_URL = "auth/login";
 
@@ -10,11 +9,13 @@ export const loginWithEmailAndPassword = async ({ username, password }) => {
       password,
     });
 
-    console.log(response);
-
     const userAuthenticated = await response.data;
 
-    return { status: "authenticated", userAuthenticated };
+    return {
+      status: "authenticated",
+      message: "User authenticated",
+      userAuthenticated,
+    };
   } catch (error) {
     // Verificar si el error proviene de la respuesta del servidor
     if (error.response) {

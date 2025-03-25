@@ -25,7 +25,7 @@ export const Hero = () => {
 
   return (
     <div className="mx-auto my-auto ">
-      <section className="relative bg-gradient-to-r from-gray-100 to-white py-16">
+      <section className="relative py-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col lg:flex-row items-center lg:justify-between">
           {/* Texto y Botón */}
           <div className="text-center lg:text-left max-w-2xl ">

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 const useFileInput = (initialFiles = []) => {
   const [files, setFiles] = useState(initialFiles);
@@ -13,7 +13,14 @@ const useFileInput = (initialFiles = []) => {
     }
 
     // Validación: solo permitir archivos válidos
-    const validTypes = ['image/jpeg', 'image/png', 'image/gif','image/webp'];
+    const validTypes = [
+      "image/jpeg",
+      "image/png",
+      "image/gif",
+      "image/webp",
+      "image/avif",
+    ];
+
     const maxSize = 2 * 1024 * 1024; // 2 MB por archivo
 
     const invalidFiles = selectedFiles.filter(
@@ -24,7 +31,7 @@ const useFileInput = (initialFiles = []) => {
       setError(
         `Algunos archivos no son válidos: ${invalidFiles
           .map((file) => file.name)
-          .join(', ')}`
+          .join(", ")}`
       );
       setFiles([]);
       return;
@@ -33,8 +40,6 @@ const useFileInput = (initialFiles = []) => {
     setFiles(selectedFiles);
     setMessageERror(null);
   };
-
-
 
   const resetFiles = () => {
     setFiles([]);

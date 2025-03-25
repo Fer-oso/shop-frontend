@@ -7,8 +7,8 @@ export const SearchButton = ({ onSearch }) => {
 
   const handleSearch = () => {
     if (category.trim() === "") return; // Evita búsquedas vacías
-   // onSearch(category);
-    setModalOpen(false)
+    // onSearch(category);
+    setModalOpen(false);
   };
 
   return (
@@ -16,7 +16,7 @@ export const SearchButton = ({ onSearch }) => {
       <div className="ml-5">
         <button
           onClick={() => setModalOpen(true)}
-          className=" px-4 h-8 text-center bg-transparent text-sm/6 font-semibold text-gray-900 rounded-md hover:bg-black transition duration-300"
+          className=" h-8 text-center bg-transparent text-sm/6 font-semibold text-gray-900 rounded-md hover:bg-black transition duration-300"
         >
           search 🔍
         </button>

@@ -25,7 +25,9 @@ app.post("/create-preference", async (req, res) => {
   try {
     const preference = new Preference(client);
 
-    const products = req.body.products;
+    console.log(req.body);
+
+    const products = req.body;
 
     const items = products.map((product) => ({
       title: product.title,
@@ -37,18 +39,18 @@ app.post("/create-preference", async (req, res) => {
     const body = {
       items,
       back_urls: {
-        success: `https://bell-examinations-jurisdiction-gem.trycloudflare.com/shopping-cart/payment-status?status=success`,
-        failure: `https://bell-examinations-jurisdiction-gem.trycloudflare.com/shopping-cart/payment-status?status=failure`,
-        pending: `https://bell-examinations-jurisdiction-gem.trycloudflare.com/shopping-cart/payment-status?status=pending`,
+        success: `https://viii-express-tennessee-action.trycloudflare.com/shopping-cart/payment-status?status=success`,
+        failure: `https://viii-express-tennessee-action.trycloudflare.com/shopping-cart/payment-status?status=failure`,
+        pending: `https://viii-express-tennessee-action.trycloudflare.com/shopping-cart/payment-status?status=pending`,
       },
       auto_return: "approved",
       notification_url:
-        "https://tapes-casinos-aim-scored.trycloudflare.com/payments",
+        "https://vatican-time-drums-monitors.trycloudflare.com/payments",
     };
 
     const result = await preference.create({ body });
 
-    console.log();
+    console.log(result.id);
 
     res.json({
       id: result.id,

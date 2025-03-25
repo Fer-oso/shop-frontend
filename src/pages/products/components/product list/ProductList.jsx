@@ -3,20 +3,12 @@ import { useModal } from "./hooks/useModal";
 import { useDispatch } from "react-redux";
 import { startAddProductToShoppingCart } from "../../../../store/shoppingcart/shoppingCartThunk";
 import { Toaster } from "sonner";
-import {
-  ControlPointOutlined,
-  Details,
-  HeartBroken,
-  RemoveRedEye,
-  RemoveRedEyeOutlined,
-  Share,
-  ShoppingCart,
-} from "@mui/icons-material";
+import { ControlPointOutlined, ShoppingCart } from "@mui/icons-material";
+import { ShoppingBag } from "lucide-react";
 
 export default function ProductList({ products }) {
   const dispatch = useDispatch();
 
-  // Función para añadir producto al carrito
   const addToCart = (product) => {
     dispatch(startAddProductToShoppingCart(product));
   };
@@ -24,23 +16,26 @@ export default function ProductList({ products }) {
   const { showModal, openModal, closeModal, selectedItem } = useModal();
 
   return (
-    <div className="bg-white mt-10">
-      <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-        <h2 className="text-2xl font-bold tracking-tight text-gray-900 mb-8">
-          List of all our products
-        </h2>
+    <div className="">
+      <div className=" mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+        <div className="flex items-center justify-center mb-12">
+          <ShoppingBag className="w-8 h-8 text-indigo-600 mr-3 mt-16" />
+          <h1 className="text-4xl font-bold text-gray-90 mt-16">
+            Productos Destacados
+          </h1>
+        </div>
 
         <div className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-4">
           {products.map((product) => (
             <div
               key={product.id}
-              className="group relative border flex flex-col"
+              className="group relative border flex flex-col transform transition duration-300 hover:scale-105 "
             >
               <div className="aspect-w-1 aspect-h-1 cursor-pointer">
                 {product.images?.[0] ? (
                   <img
-                    src={`https://8079-2800-810-58c-89cc-c4ea-837e-4784-352b.ngrok-free.app/api/shop/images/${product.images[0].id}`}
-                    className="aspect-square w-full h-full object-contain  rounded-md bg-white lg:aspect-auto lg:h-80 lg:w-full transition-opacity duration-300 "
+                    src={product.images[0].downloadUrl}
+                    className="aspect-square w-full h-full object-contain  bg-transparent lg:aspect-auto lg:h-full lg:w-full transition-opacity duration-300 "
                     alt={product.name}
                     onClick={() => openModal(product)}
                   />
@@ -112,7 +107,7 @@ export default function ProductList({ products }) {
                     <div className=" aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-gray-200 mb-4">
                       {selectedItem.images?.[0] ? (
                         <img
-                          src={`https://8079-2800-810-58c-89cc-c4ea-837e-4784-352b.ngrok-free.app/api/shop/images/${selectedItem.images[0].id}`}
+                          src={selectedItem.images[0].downloadUrl}
                           className="h-full w-full object-cover object-center"
                           alt={selectedItem.name}
                         />

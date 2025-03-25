@@ -2,16 +2,20 @@ import React, { useEffect } from "react";
 import { Navigate, Outlet, useNavigation } from "react-router-dom";
 
 import { Loading } from "../components/loading/Loading";
-import { NavBar } from "../components/navbar/NavBar";
 import { useCheckUserauthenticated } from "../providers/hooks/useCheckUserAuthenticated";
+
+import { useDispatch, useSelector } from "react-redux";
+import { useCheckUserShoppingCart } from "../providers/hooks/useCheckUserShoppingCart";
+import { GeneralLayout } from "../pages/themes/GeneralLayout";
+import { NavBar } from "../components/navbar/NavBar";
 import { Footer } from "../pages/home/components/footer/Footer";
 
-import { useDispatch } from "react-redux";
-import { checkUserShoppingCart } from "../providers/hooks/CheckUserShoppingCart";
-
 export const ProtectedRoute = () => {
+  //const { status, userAuthenticated } = useCheckUserauthenticated();
 
-  const { status, userAuthenticated } = useCheckUserauthenticated();
+  const { status, userAuthenticated } = useSelector(
+    (state) => state.authentication
+  );
 
   const dispatch = useDispatch();
 
@@ -19,25 +23,22 @@ export const ProtectedRoute = () => {
 
   const roles = userAuthenticated?.roles?.map((role) => role.roleName);
 
+  const isLoading = navigation.state === "loading";
+
   useEffect(() => {
     if (status === "authenticated") {
-      checkUserShoppingCart(userAuthenticated, dispatch);
+      useCheckUserShoppingCart(userAuthenticated, dispatch);
     }
   }, [status]);
 
-  
-  if (status === "unauthenticated") {
-    return <Navigate to="/login" />;
-  }
-
-  return (
-    <div className="overflow-hidden">
-    <NavBar roles={roles} />
-    <main>
-      <Outlet context={roles}/>
-      {navigation.state === "loading" && <Loading />}
-    </main>
-    <Footer />
-  </div>
+  return userAuthenticated.id ? (
+    <GeneralLayout>
+      <NavBar roles={roles} />
+      <Outlet context={{ roles }} />
+      {isLoading && <Loading />}
+      <Footer />
+    </GeneralLayout>
+  ) : (
+    <Navigate to="/login" replace />
   );
 };

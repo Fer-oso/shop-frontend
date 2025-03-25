@@ -1,4 +1,4 @@
-import { axiosInstance } from "../hooks/axiosInstace";
+import { axiosInstance } from "../axios/axiosInstace";
 
 const PATH_USERS = "users";
 

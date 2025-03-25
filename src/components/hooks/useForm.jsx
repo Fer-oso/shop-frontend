@@ -25,6 +25,7 @@ export const useForm = (initialFormState = {}) => {
 
   return {
     formState,
+    setFormState,
     onInputChange,
     onCheckboxChange,
   };

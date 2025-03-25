@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 const useRoleSelection = (initialRoles = [], updateFormState) => {
-    
   const [selectedRoles, setSelectedRoles] = useState(
     initialRoles.map((role) => role.roleName)
   );

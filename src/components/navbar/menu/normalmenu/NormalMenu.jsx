@@ -46,13 +46,13 @@ export const NormalMenu = ({ generalRoutes, productRoutes }) => {
       </Popover>
 
       {generalRoutes.map(({ name, href }, key) => (
-        <a
+        <Link
           key={key}
-          href={href}
+          to={href}
           className="text-sm/6 font-semibold text-gray-900"
         >
           {name}
-        </a>
+        </Link>
       ))}
     </PopoverGroup>
   );

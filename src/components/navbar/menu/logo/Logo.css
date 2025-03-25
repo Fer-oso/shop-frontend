@@ -1,0 +1,12 @@
+.logo {
+  background-image: url("/images/logo3.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/*
+Ajusta según necesites 
+width: 120px;
+height: 60px;
+*/

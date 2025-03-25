@@ -1,12 +1,10 @@
-import { axiosInstance } from "../hooks/axiosInstace";
+import { axiosInstance } from "../axios/axiosInstace";
 
 const PATH_PRODUCTS = "products";
 
 export const loadProducts = async () => {
   try {
     const response = await axiosInstance.get(PATH_PRODUCTS);
-
-    console.log(response);
 
     const data = await response.data;
 

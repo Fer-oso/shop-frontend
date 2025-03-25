@@ -1,17 +1,14 @@
-import { axiosInstance } from "../hooks/axiosInstace";
+import { axiosInstance } from "../axios/axiosInstace";
 
 const PATH_PRODUCTS = "products";
 
 export const deleteProductById = async (id) => {
-
   try {
-    
     const response = await axiosInstance.delete(`${PATH_PRODUCTS}/${id}`);
 
     const data = await response.data;
 
     return { data };
-
   } catch (error) {
     // Verificar si el error proviene de la respuesta del servidor
     if (error.response) {

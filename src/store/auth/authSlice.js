@@ -4,20 +4,19 @@ const initialState = JSON.parse(localStorage.getItem("auth")) || {
   status: "unauthenticated",
   message: "No user authenticated",
   userAuthenticated: {},
-}; 
-/*initial state*/
+};
+
 export const authslice = createSlice({
   name: "authentication",
   initialState,
-  /* reducer/action */
   reducers: {
     login: (state, action) => {
       state.status = action.payload.status;
       state.message = action.payload.message;
       state.userAuthenticated = action.payload.userAuthenticated;
     },
-    
-    logout: (state,action) =>{
+
+    logout: (state, action) => {
       state.status = action.payload.status;
       state.message = "";
       state.userAuthenticated = {};

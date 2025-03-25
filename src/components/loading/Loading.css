@@ -1,0 +1,56 @@
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  border-left-color: #09f;
+  animation: spin 1s ease infinite;
+  position: relative; /* Permite posicionar el logo */
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Logo en el centro */
+.logo-spinner {
+  width: 80%; /* Ajusta el tamaño del logo según necesites */
+  height: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Puntos animados */
+.dots-loading {
+  font-size: 50px;
+  font-weight: bold;
+  display: flex;
+  gap: 4px;
+}
+
+.dots-loading span {
+  animation: blink 1.5s infinite;
+}
+
+.dots-loading span:nth-child(1) {
+  animation-delay: 0s;
+}
+.dots-loading span:nth-child(2) {
+  animation-delay: 0.3s;
+}
+.dots-loading span:nth-child(3) {
+  animation-delay: 0.6s;
+}
+
+@keyframes blink {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}

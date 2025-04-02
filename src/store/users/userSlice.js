@@ -22,6 +22,12 @@ export const usersSlice = createSlice({
       state.userEdited = action.payload.userEdited;
     },
 
+    registerUser: (state, action) => {
+      state.userRegistered = action.payload.userRegistered;
+      state.user = action.payload.user;
+      state.message = action.payload.message;
+    },
+
     editUser: (state, action) => {
       state.userEdited = action.payload.userEdited;
       state.user = action.payload.user;
@@ -29,13 +35,14 @@ export const usersSlice = createSlice({
     },
 
     deleteUser: (state, action) => {
-       state.userDeleted = action.payload.userDeleted;
-        state.message = action.payload.message;
-        state.users = state.users.filter(
-          (user) => user.id !== action.payload.userDeleted.id
-        );
-    }
+      state.userDeleted = action.payload.userDeleted;
+      state.message = action.payload.message;
+      state.users = state.users.filter(
+        (user) => user.id !== action.payload.userDeleted.id
+      );
+    },
   },
 });
 
-export const { loadUsers, loadUser, editUser, deleteUser } = usersSlice.actions;
+export const { loadUsers, loadUser, registerUser, editUser, deleteUser } =
+  usersSlice.actions;

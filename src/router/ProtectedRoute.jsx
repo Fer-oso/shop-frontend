@@ -1,29 +1,20 @@
 import React, { useEffect } from "react";
-import { Navigate, Outlet, useNavigation } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 
 import { Loading } from "../components/loading/Loading";
-import { useCheckUserauthenticated } from "../providers/hooks/useCheckUserAuthenticated";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useCheckUserShoppingCart } from "../providers/hooks/useCheckUserShoppingCart";
 import { GeneralLayout } from "../pages/themes/GeneralLayout";
 import { NavBar } from "../components/navbar/NavBar";
 import { Footer } from "../pages/home/components/footer/Footer";
+import { useGetUserAuthenticated } from "../store/hooks/useGetUserAuthenticated";
 
 export const ProtectedRoute = () => {
-  //const { status, userAuthenticated } = useCheckUserauthenticated();
-
-  const { status, userAuthenticated } = useSelector(
-    (state) => state.authentication
-  );
+  const { status, userAuthenticated, roles, isLoading } =
+    useGetUserAuthenticated();
 
   const dispatch = useDispatch();
-
-  const navigation = useNavigation();
-
-  const roles = userAuthenticated?.roles?.map((role) => role.roleName);
-
-  const isLoading = navigation.state === "loading";
 
   useEffect(() => {
     if (status === "authenticated") {

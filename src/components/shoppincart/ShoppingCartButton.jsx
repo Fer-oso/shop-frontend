@@ -1,6 +1,6 @@
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 
-export const ShoppingCartButton = ({ show, productsList }) => {
+export const ShoppingCartButton = ({ show, quantityProducts }) => {
   return (
     <button
       type="button"
@@ -11,7 +11,7 @@ export const ShoppingCartButton = ({ show, productsList }) => {
         className="w-6  hover:text-gray-900"
         aria-hidden="true"
       />
-      <p className="ml-2 font-black"> {productsList.length}</p>
+      <p className="ml-2 font-black"> {quantityProducts}</p>
     </button>
   );
 };

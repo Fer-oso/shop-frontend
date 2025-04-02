@@ -4,6 +4,7 @@ import { ErrorMessage } from "../../components/alerts/ErrorMessage";
 
 import ProductList from "./components/product list/ProductList";
 import { useGetProducts } from "./hooks/useGetProducts";
+import { ShoppingBag } from "lucide-react";
 
 export const Products = () => {
   const { data, error } = useLoaderData();
@@ -21,9 +22,14 @@ export const Products = () => {
         />
       ) : (
         <>
+          <div className="flex items-center justify-center mb-12">
+            <ShoppingBag className="w-8 h-8 text-indigo-600 mr-3 mt-16" />
+            <h1 className="text-4xl font-bold text-gray-90 mt-16">
+              Productos Destacados
+            </h1>
+          </div>
           <div className="container-fluid bg-gradient-to-br from-indigo-50 to-purple-50">
             <ProductList products={products} />
-            {/*<ProductsTable products={products} />*/}
           </div>
         </>
       )}

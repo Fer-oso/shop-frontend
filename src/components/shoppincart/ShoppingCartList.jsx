@@ -8,22 +8,24 @@ import {
 } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { ShoppingCartButton } from "./ShoppingCartButton";
-import { ModifyQuantityButton } from "../../buttons/ModifyQuantityButton";
-import { useGetShoppingCart } from "../../hooks/useGetShoppingCart";
+
 import { Link } from "react-router-dom";
+import { ModifyQuantityButton } from "../buttons/ModifyQuantityButton";
+import { useGetShoppingCart } from "../hooks/useGetShoppingCart";
 
 export default function ShoppingCartList() {
   const { productsList, total } = useGetShoppingCart();
 
   const [open, setOpen] = useState(false);
 
-  return !productsList.length > 0 ? (
-    <>
-      <div></div>
-    </>
-  ) : (
+  if (!productsList.length > 0) return null;
+
+  return (
     <div>
-      <ShoppingCartButton show={setOpen} productsList={productsList} />
+      <ShoppingCartButton
+        show={setOpen}
+        quantityProducts={productsList.length}
+      />
       <Transition show={open}>
         <Dialog className="relative z-10" onClose={setOpen}>
           <TransitionChild
@@ -84,7 +86,7 @@ export default function ShoppingCartList() {
                                   <div className="h-24 w-24 flex-shrink-0 overflow-clip rounded-md border border-gray-200">
                                     {product.images?.[0] ? (
                                       <img
-                                        src={`https://cicada-open-partly.ngrok-free.app/api/shop/images/${product.images[0].id}`}
+                                        src={product.images[0].downloadUrl}
                                         className="h-full w-full object-cover object-center"
                                         alt={product.name}
                                       />

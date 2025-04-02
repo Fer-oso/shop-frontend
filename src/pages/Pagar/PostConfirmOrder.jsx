@@ -48,7 +48,7 @@ export const PostConfirmOrder = () => {
                       {/* Imagen del producto */}
                       {product.images?.[0] ? (
                         <img
-                          src={`https://cicada-open-partly.ngrok-free.app/api/shop/images/${product.images[0].id}`}
+                          src={product.images[0].downloadUrl}
                           alt={product.name}
                           className="w-24 h-24 rounded-md object-cover shadow-md"
                         />

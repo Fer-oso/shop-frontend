@@ -2,7 +2,9 @@ import { useState } from "react";
 
 const useFileInput = (initialFiles = []) => {
   const [files, setFiles] = useState(initialFiles);
-  const [messageError, setMessageERror] = useState(null);
+  const [messageError, setMessageERror] = useState(
+    "No se seleccionaron archivos"
+  );
 
   const handleFileChange = (e) => {
     const selectedFiles = Array.from(e.target.files); // Convierte FileList en un array
@@ -43,7 +45,7 @@ const useFileInput = (initialFiles = []) => {
 
   const resetFiles = () => {
     setFiles([]);
-    setMessageERror(null);
+    setMessageERror("No se seleccionaron archivos");
   };
 
   return { files, messageError, handleFileChange, resetFiles };

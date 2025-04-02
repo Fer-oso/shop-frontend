@@ -13,9 +13,8 @@ import { loadProduct } from "../providers/products/loadProduct";
 import { CreateProductForm } from "../pages/products/createproduct/CreateProductForm";
 import { ProductDetail } from "../pages/products/productdetails/ProductDetail";
 import { EditProductForm } from "../pages/products/editproduct/EditproductForm";
-import { LoginForm } from "../pages/login/LoginForm";
+
 import { ProtectedRoute } from "./ProtectedRoute";
-import { PublicRoute } from "./PublicRoute";
 import { Home } from "../pages/home/Home";
 
 import Checkout from "../pages/checkout/CheckOut";
@@ -23,6 +22,9 @@ import { PostConfirmOrder } from "../pages/Pagar/PostConfirmOrder";
 
 import { Construccion } from "../pages/construccion/Construccion";
 import PaymentStatus from "../components/payment status/PaymentStatus";
+
+import { Login } from "../pages/auth/login/Login";
+import { RegisterForm } from "../pages/auth/register/RegisterForm";
 
 export const routes = () => {
   const router = createBrowserRouter([
@@ -64,12 +66,10 @@ export const routes = () => {
     },
     {
       path: "/login",
-      element: (
-        <PublicRoute>
-          <LoginForm />
-        </PublicRoute>
-      ),
+      element: <Login />,
     },
+
+    { path: "/register", element: <RegisterForm /> },
   ]);
 
   return router;

@@ -1,29 +1,34 @@
-import React from 'react'
-import useRoleSelection from '../../../components/hooks/useRoleSelection';
+import React from "react";
+import useRoleSelection from "../../../components/hooks/useRoleSelection";
 
-export const RoleSelector = ({ roles, formState, setFormState }) => {
+export const RoleSelector = ({
+  roles,
+  availableRoles,
+  formState,
+  setFormState,
+}) => {
   const { selectedRoles, handleRoleChange } = useRoleSelection(
     formState.roles,
     setFormState
   );
 
-  return (
-    <div className="form-group">
-      <label htmlFor="exampleFormControlSelect1">Roles</label>
+  return roles?.includes("ADMIN") ? (
+    <div className="w-full">
+      <label className="block text-gray-700 font-semibold mb-2">Roles</label>
       <select
         multiple
-        className="form-control"
-        id="exampleFormControlSelect1"
+        className="w-full p-2 border rounded-lg focus:ring focus:ring-blue-300"
         onChange={handleRoleChange}
         value={selectedRoles}
       >
-        {roles.map((role, key) => (
-          <option key={key} value={role.roleName}>
+        {availableRoles.map((role, index) => (
+          <option key={index} value={role.roleName} className="p-2">
             {role.roleName}
           </option>
         ))}
       </select>
     </div>
+  ) : (
+    <></>
   );
 };
-

@@ -1,11 +1,7 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 
 export const ConfirmOrderButton = ({ confirmOrder, setConfirmOrder }) => {
-  const dispatch = useDispatch();
-
   const handleConfirmOrder = (e) => {
     e.preventDefault();
     alert("¡Pedido confirmado con éxito!");

@@ -6,10 +6,11 @@ import { HamburMenuOpenButton } from "./menu/hamburmenu/HamburMenuOpenButton";
 import { LoginButton } from "./menu/login/LoginButton";
 import { SearchButton } from "../../pages/products/components/form/SearchButton";
 import { adminRoutesProducts, userRoutesProducts } from "./utils/routesProduct";
-import ShoppingCartList from "./shoppincart/ShoppingCartList";
+
 import { UserIcon } from "./users/UserIcon";
 import { navBarGeneralRoutes } from "./utils/routes/navbarRoutes";
 import { Link } from "react-router-dom";
+import ShoppingCartList from "../shoppincart/ShoppingCartList";
 
 export const NavBar = ({ roles }) => {
   const productsRoutes = roles.includes("ADMIN")

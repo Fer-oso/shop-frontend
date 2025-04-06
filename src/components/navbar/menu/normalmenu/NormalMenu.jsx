@@ -8,11 +8,10 @@ import {
 } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
-import { userRoutesProducts } from "../../utils/routesProduct";
 
 export const NormalMenu = ({ generalRoutes, productRoutes }) => {
   return (
-    <PopoverGroup className="hidden lg:flex lg:gap-x-10">
+    <PopoverGroup className="hidden md:flex md:gap-x-10">
       <Popover className="relative">
         <PopoverButton className="flex items-center gap-x-1 text-sm/6 font-semibold text-gray-900">
           Product

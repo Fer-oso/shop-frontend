@@ -1,44 +1,42 @@
-import  { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { startLoadProduct, startLoadProducts } from '../../../store/product/productThunk';
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  startLoadProduct,
+  startLoadProducts,
+} from "../../../store/product/productThunk";
 
-export const useGetProducts = (data,error) => {
+export const useGetProducts = (data, error) => {
+  const dispatch = useDispatch();
 
-const dispatch = useDispatch();
+  const products = useSelector((state) => state.products.products);
 
-  const products = useSelector(state => state.products.products);
+  const message = error ? error.message : "";
 
-  const message = error? error.message: "";
+  useEffect(() => {
+    if (!products.length) {
+      const products = data ? data.response : [];
 
-  useEffect(()=>{
+      const message = error ? error.message : "Products founded 😊";
 
-    const products = data? data.response : [];
+      dispatch(startLoadProducts(products, message));
+    }
+  }, [data, dispatch]);
 
-    const message = error? error.message : "Products founded 😊";
+  return { products, message };
+};
 
-    dispatch(startLoadProducts(products,message));
+export const useGetProductDetails = (data, error) => {
+  const dispatch = useDispatch();
 
-  },[data, dispatch]);
+  const product = data.response;
 
-  return {products,message};
-   
-}
+  useEffect(() => {
+    const product = data ? data.response : {};
 
-export const useGetProductDetails = (data,error) =>{
+    const message = error ? error : "Product found and loaded successfully 😊";
 
-     const dispatch = useDispatch();
+    dispatch(startLoadProduct(product, message));
+  }, [data, dispatch]);
 
-     const product = data.response
-    
-      useEffect(() => {
-    
-        const product = data ? data.response : {};
-    
-        const message = error ? error : "Product found and loaded successfully 😊";
-    
-        dispatch(startLoadProduct(product, message));
-    
-      }, [data, dispatch])
-
-      return product
-}
+  return product;
+};

@@ -45,7 +45,6 @@ export const startRegisterUser = (userRegister, files) => {
       registerUser({ userRegistered, message })
     );
 
-    console.log(payload);
     return payload;
   };
 };
@@ -71,9 +70,13 @@ export const startEditUser = (id, userToEdit, files) => {
 
     const userEdited = user ? user : {};
 
-    const message = error ? error : "User edited succesfully 😊";
+    const message = error
+      ? error
+      : { code: "201", error: "User edited succesfully 😊" };
 
-    dispatch(editUser({ userEdited, message }));
+    const payload = await dispatch(editUser({ userEdited, message }));
+
+    return payload;
   };
 };
 

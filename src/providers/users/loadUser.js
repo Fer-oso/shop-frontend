@@ -2,13 +2,15 @@ import { axiosInstance } from "../axios/axiosInstace";
 
 const PATH_USER = "users";
 
-export const loadUser = async ({ params }) => {
+export const loadUser = async (id) => {
   try {
-    const response = await axiosInstance.get(`${PATH_USER}/${params.id}`);
+    const response = await axiosInstance.get(`${PATH_USER}/${id}`);
 
     const data = await response.data;
 
-    return { user: data };
+    console.log(data);
+
+    return { data };
   } catch (error) {
     // Verificar si el error proviene de la respuesta del servidor
     if (error.response) {

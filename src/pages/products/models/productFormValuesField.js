@@ -22,16 +22,16 @@ export const productFormValuesField = ({
       placeholder: "Ingrese marca del producto",
     },
     {
-      type: "number",
-      name: "price",
-      value: price,
-      placeholder: "Ingrese precio del producto",
-    },
-    {
       type: "textarea",
       name: "description",
       value: description,
       placeholder: "Ingrese descripcion del producto",
+    },
+    {
+      type: "number",
+      name: "price",
+      value: price,
+      placeholder: "Ingrese precio del producto",
     },
     {
       type: "number",

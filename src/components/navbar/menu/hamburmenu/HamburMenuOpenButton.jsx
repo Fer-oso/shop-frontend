@@ -6,11 +6,11 @@ export const HamburMenuOpenButton = ({ generalRoutes, productRoutes }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <div className="flex lg:hidden ">
+    <div className="md:hidden">
       <button
         type="button"
         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        className="inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+        className="absolute left-1/3 top-2 -translate-x-1/2 flex items-center justify-center rounded-md p-2.5 text-gray-700"
       >
         <Bars3Icon aria-hidden="true" className="size-6" />
       </button>

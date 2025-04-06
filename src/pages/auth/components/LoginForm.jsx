@@ -1,10 +1,13 @@
 import React from "react";
-import { InputField } from "../../../../components/forms/inputs/InputField";
+
 import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
-import { useForm } from "../../../../components/hooks/useForm";
+
 import { useDispatch } from "react-redux";
-import { startLoginUserWithUsernameAndPassword } from "../../../../store/auth/authThunk";
+
+import { Button } from "../../../components/buttons/Button";
+import { InputField } from "../../../components/forms/inputs/InputField";
+import { useForm } from "../../../components/hooks/useForm";
+import { startLoginUserWithUsernameAndPassword } from "../../../store/auth/authThunk";
 
 export const LoginForm = () => {
   const dispatch = useDispatch();
@@ -36,6 +39,9 @@ export const LoginForm = () => {
           value={username}
           onChange={onInputChange}
           placeholder="Ingrese su usuario"
+          className={
+            "w-full px-4 py-2 border rounded-lg focus:ring focus:ring-indigo-300"
+          }
         />
       </div>
 
@@ -47,15 +53,17 @@ export const LoginForm = () => {
           value={password}
           onChange={onInputChange}
           placeholder="Ingrese su contraseñña"
+          className={
+            "w-full px-4 py-2 border rounded-lg focus:ring focus:ring-indigo-300"
+          }
         />
       </div>
 
-      <button
+      <Button
         type="submit"
         className="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition duration-300"
-      >
-        Iniciar Sesión
-      </button>
+        children={"Inicia sesion"}
+      />
 
       <Link
         type="button"

@@ -1,36 +1,23 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import { ErrorMessage } from "../../components/alerts/ErrorMessage";
 import { Link, useLoaderData } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { startDeleteUser, startLoadUsers } from "../../store/users/userThunk";
-import {
-  EyeIcon,
-  PencilIcon,
-} from "@heroicons/react/24/outline";
+
+import { startDeleteUser } from "../../store/users/userThunk";
+import { EyeIcon, PencilIcon } from "@heroicons/react/24/outline";
 import DeleteUserButton from "./components/buttons/DeleteUserButton";
+import { useGetUsersData } from "./hooks/useGetUsersData";
 
 export const Users = () => {
-
   const { data, error } = useLoaderData();
 
-  const dispatch = useDispatch();
+  const { useLoadUsers } = useGetUsersData();
 
-  const users = useSelector((state) => state.users.users);
-
-  useEffect(() => {
-
-    const users = data ? data.response : [];
-
-    const message = error ? error.message : "Users founded 😊";
-
-    dispatch(startLoadUsers(users, message));
-
-  }, [data,dispatch]);
+  const { users } = useLoadUsers(data, error);
 
   const deleteUserById = (id) => () => {
     dispatch(startDeleteUser(id));
-  }
+  };
 
   const titles = [
     { name: "ID" },
@@ -41,9 +28,21 @@ export const Users = () => {
     { name: "User locked" },
     { name: "Credentials status" },
     { name: "Actions" },
-  ]
+  ];
 
-  const getStatusClass = (status) => status ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800";
+  const userStatusFields = [
+    { key: "enabled", trueText: "Enabled", falseText: "Disabled" },
+    { key: "accountNonExpired", trueText: "Not expired", falseText: "Expired" },
+    { key: "accountNonLocked", trueText: "Not locked", falseText: "Locked" },
+    {
+      key: "credentialsNonExpired",
+      trueText: "Not expired",
+      falseText: "Expired",
+    },
+  ];
+
+  const getStatusClass = (status) =>
+    status ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800";
 
   return (
     <>
@@ -107,34 +106,16 @@ export const Users = () => {
                         {user.roles.map((role) => role.roleName).join(", ")}
                       </td>
 
-                      <td
-                        className={`px-4 py-2 text-sm font-semibold ${getStatusClass(
-                          user.enabled
-                        )}`}
-                      >
-                        {user.enabled ? "Enabled" : "Disabled"}
-                      </td>
-                      <td
-                        className={`px-4 py-2 text-sm font-semibold ${getStatusClass(
-                          user.accountNonExpired
-                        )}`}
-                      >
-                        {user.accountNonExpired ? "Not expired" : "Expired"}
-                      </td>
-                      <td
-                        className={`px-4 py-2 text-sm font-semibold ${getStatusClass(
-                          user.accountNonLocked
-                        )}`}
-                      >
-                        {user.accountNonLocked ? "Not locked" : "Locked"}
-                      </td>
-                      <td
-                        className={`px-4 py-2 text-sm font-semibold ${getStatusClass(
-                          user.credentialsNonExpired
-                        )}`}
-                      >
-                        {user.credentialsNonExpired ? "Not expired" : "Expired"}
-                      </td>
+                      {userStatusFields.map(({ key, trueText, falseText }) => (
+                        <td
+                          key={key}
+                          className={`px-4 py-2 text-sm font-semibold ${getStatusClass(
+                            user[key]
+                          )}`}
+                        >
+                          {user[key] ? trueText : falseText}
+                        </td>
+                      ))}
 
                       <td className="px-4 py-2 text-sm">
                         <div className="flex space-x-2">
@@ -147,7 +128,9 @@ export const Users = () => {
                           >
                             <PencilIcon className="w-5 h-5 text-gray-700 hover:text-green-500" />
                           </Link>
-                          <DeleteUserButton onDelete={deleteUserById(user.id)} />
+                          <DeleteUserButton
+                            onDelete={deleteUserById(user.id)}
+                          />
                         </div>
                       </td>
                     </tr>

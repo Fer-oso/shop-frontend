@@ -6,6 +6,8 @@ import useFileInput from "../../components/hooks/useFileInput";
 import { startEditUser, startLoadUser } from "../../store/users/userThunk";
 
 import { UserForm } from "../../components/forms/form/UserForm";
+import { useEditUserAlert } from "./utils/useEditUserAlert";
+import { useUserAccountStatusValues } from "../models/user/usersModels";
 
 export const UserEdit = () => {
   const { user } = useLoaderData();
@@ -24,24 +26,12 @@ export const UserEdit = () => {
     credentialsNonExpired,
   } = formState;
 
-  const userAccountStatusValues = [
-    { label: "User Enabled", name: "enabled", state: enabled },
-    {
-      label: "Expired Account",
-      name: "accountNonExpired",
-      state: accountNonExpired,
-    },
-    {
-      label: "Locked Account",
-      name: "accountNonLocked",
-      state: accountNonLocked,
-    },
-    {
-      label: "Credentials Expired",
-      name: "credentialsNonExpired",
-      state: credentialsNonExpired,
-    },
-  ];
+  const userAccountStatusValues = useUserAccountStatusValues(
+    enabled,
+    accountNonExpired,
+    accountNonLocked,
+    credentialsNonExpired
+  );
 
   const filesHandler = useFileInput();
 
@@ -54,18 +44,20 @@ export const UserEdit = () => {
     ],
   };
 
+  const { showEditUserAlert } = useEditUserAlert();
+
   useEffect(() => {
     dispatch(startLoadUser(user));
   }, [dispatch]);
 
-  const editUser = () => {
-    dispatch(startEditUser(user.id, formState, files));
+  const editUser = async (formState, files) => {
+    return dispatch(startEditUser(user.id, formState, files));
   };
 
   return (
-    <div className="container align-content-center">
+    <div className="max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-xl">
       <UserForm
-        mode={"Edit"}
+        mode={"Editar"}
         formState={formState}
         setFormState={setFormState}
         onInputChange={onInputChange}
@@ -73,7 +65,9 @@ export const UserEdit = () => {
         userAccountStatusValues={userAccountStatusValues}
         filesHandler={filesHandler}
         rolesData={rolesData}
-        registerFunction={editUser}
+        userActionfunction={(formState, files) =>
+          showEditUserAlert(() => editUser(formState, files))
+        }
       />
     </div>
   );

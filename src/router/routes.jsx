@@ -25,6 +25,7 @@ import PaymentStatus from "../components/payment status/PaymentStatus";
 
 import { Login } from "../pages/auth/login/Login";
 import { RegisterForm } from "../pages/auth/register/RegisterForm";
+import { UserProfileEdit } from "../pages/users/UserProfileEdit";
 
 export const routes = () => {
   const router = createBrowserRouter([
@@ -35,8 +36,12 @@ export const routes = () => {
       children: [
         { index: true, element: <Home /> },
         { path: "/users", element: <Users />, loader: loadUsers },
-        { path: "/users/:id", element: <UserInfo />, loader: loadUser },
+        { path: "/users/:id", element: <UserInfo /> },
         { path: "/users/:id/edit", element: <UserEdit />, loader: loadUser },
+        {
+          path: "/users/:id/edit/perfil",
+          element: <UserProfileEdit />,
+        },
 
         { path: "/products", element: <Products />, loader: loadProducts },
         {

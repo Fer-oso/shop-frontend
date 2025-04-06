@@ -1,12 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../../components/styles/UserInfoStyles.css";
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData, useParams } from "react-router-dom";
 import { ErrorMessage } from "../../components/alerts/ErrorMessage";
+import {
+  Camera,
+  CheckCircle,
+  Mail,
+  MapPin,
+  Phone,
+  XCircle,
+} from "lucide-react";
+
+import { useGetUsersData } from "./hooks/useGetUsersData";
 
 export const UserInfo = () => {
-  
-  const { user, error } = useLoaderData();
+  const { useLoadUser } = useGetUsersData();
 
+  const params = useParams();
+
+  const id = params.id;
+
+  const { user, error } = useLoadUser(id);
+
+  console.log(user);
   return (
     <>
       {!user ? (
@@ -17,200 +33,72 @@ export const UserInfo = () => {
           timestamp={error.timestamp}
         />
       ) : (
-        <div className="container emp-profile">
-          <form method="post">
-            <div className="row">
-              <div className="col-md-4">
-                <div className="profile-img">
-                  <img
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog"
-                    alt=""
-                  />
-                  <div className="file btn btn-lg btn-primary">
-                    Change Photo
-                    <input type="file" name="file" />
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-6">
-                <div className="profile-head">
-                  <h5>{user.username}</h5>
-                  <h6>Web Developer and Designer</h6>
-                  <p className="proile-rating">
-                    RANKINGS : <span>8/10</span>
-                  </p>
-                  <ul className="nav nav-tabs" id="myTab" role="tablist">
-                    <li className="nav-item">
-                      <a
-                        className="nav-link active"
-                        id="home-tab"
-                        data-toggle="tab"
-                        href="#home"
-                        role="tab"
-                        aria-controls="home"
-                        aria-selected="true"
-                      >
-                        About
-                      </a>
-                    </li>
-                    <li className="nav-item">
-                      <a
-                        className="nav-link"
-                        id="profile-tab"
-                        data-toggle="tab"
-                        href="#profile"
-                        role="tab"
-                        aria-controls="profile"
-                        aria-selected="false"
-                      >
-                        Timeline
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div className="col-md-2">
-                <input
-                  type="submit"
-                  className="profile-edit-btn"
-                  name="btnAddMore"
-                  defaultValue="Edit Profile"
-                />
-              </div>
+        <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-2xl p-6 border border-gray-200">
+          {/* Sección de Imagen y Nombre */}
+          <div className="flex flex-col items-center space-y-4">
+            <div className="relative">
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog"
+                alt="User Profile"
+                className="w-32 h-32 rounded-full border-4 border-indigo-500 shadow-lg"
+              />
+              {/* Botón para cambiar foto */}
+              <button className="absolute bottom-0 right-0 bg-indigo-600 text-white p-2 rounded-full shadow-md hover:bg-indigo-700">
+                <Camera className="w-5 h-5" />
+              </button>
             </div>
-            <div className="row">
-              <div className="col-md-4">
-                <div className="profile-work">
-                  <p>WORK LINK</p>
-                  <a href="">Website Link</a>
-                  <br />
-                  <a href="">Bootsnipp Profile</a>
-                  <br />
-                  <a href="">Bootply Profile</a>
-                  <p>SKILLS</p>
-                  <a href="">Web Designer</a>
-                  <br />
-                  <a href="">Web Developer</a>
-                  <br />
-                  <a href="">WordPress</a>
-                  <br />
-                  <a href="">WooCommerce</a>
-                  <br />
-                  <a href="">PHP, .Net</a>
-                  <br />
-                </div>
-              </div>
-              <div className="col-md-8">
-                <div className="tab-content profile-tab" id="myTabContent">
-                  <div
-                    className="tab-pane fade show active"
-                    id="home"
-                    role="tabpanel"
-                    aria-labelledby="home-tab"
-                  >
-                    <div className="row">
-                      <div className="col-md-6">
-                        <label>User Id</label>
-                      </div>
-                      <div className="col-md-6">
-                        <p>{user.id}</p>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-6">
-                        <label>Username</label>
-                      </div>
-                      <div className="col-md-6">
-                        <p>{user.username}</p>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-6">
-                        <label>Email</label>
-                      </div>
-                      <div className="col-md-6">
-                        <p>kshitighelani@gmail.com</p>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-6">
-                        <label>Phone</label>
-                      </div>
-                      <div className="col-md-6">
-                        <p>123 456 7890</p>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-6">
-                        <label>Profession</label>
-                      </div>
-                      <div className="col-md-6">
-                        <p>
-                          {user.roles.map((role) => " " + role.roleName + " ")}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    className="tab-pane fade"
-                    id="profile"
-                    role="tabpanel"
-                    aria-labelledby="profile-tab"
-                  >
-                    <div className="row">
-                      <div className="col-md-6">
-                        <label>Experience</label>
-                      </div>
-                      <div className="col-md-6">
-                        <p>Expert</p>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-6">
-                        <label>Hourly Rate</label>
-                      </div>
-                      <div className="col-md-6">
-                        <p>10$/hr</p>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-6">
-                        <label>Total Projects</label>
-                      </div>
-                      <div className="col-md-6">
-                        <p>230</p>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-6">
-                        <label>English Level</label>
-                      </div>
-                      <div className="col-md-6">
-                        <p>Expert</p>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-6">
-                        <label>Availability</label>
-                      </div>
-                      <div className="col-md-6">
-                        <p>6 months</p>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <label>Your Bio</label>
-                        <br />
-                        <p>Your detail description</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </form>
+            <h2 className="text-2xl font-bold text-gray-900">
+              {user.username}
+            </h2>
+            <p className="text-gray-500 text-sm">Web Developer & Designer</p>
+          </div>
+
+          {/* Información del Usuario */}
+          <div className="mt-6 space-y-4 text-gray-700">
+            <p className="flex items-center gap-3 text-lg">
+              <Mail className="w-6 h-6 text-indigo-500" />
+              {user.email || "No email provided"}
+            </p>
+            <p className="flex items-center gap-3 text-lg">
+              <Phone className="w-6 h-6 text-indigo-500" />
+              {user.phone || "No phone provided"}
+            </p>
+            <p className="flex items-center gap-3 text-lg">
+              <MapPin className="w-6 h-6 text-indigo-500" />
+              {user.address || "No address provided"}
+            </p>
+            <p className="flex items-center gap-3 text-lg">
+              {user.enabled ? (
+                <CheckCircle className="w-6 h-6 text-green-500" />
+              ) : (
+                <XCircle className="w-6 h-6 text-red-500" />
+              )}
+              {user.enabled ? "Active User" : "Inactive User"}
+            </p>
+          </div>
+
+          {/* Botón Editar */}
+          <div className="mt-6 flex justify-center gap-1">
+            <Link
+              to={`/users/${user.id}/edit/perfil`}
+              className="bg-indigo-600 text-white px-6 py-2 rounded-lg shadow-md hover:bg-indigo-700 transition"
+            >
+              Editar perfil
+            </Link>
+            <Link
+              to={`/users/${user.id}/edit`}
+              className="bg-indigo-600 text-white px-6 py-2 rounded-lg shadow-md hover:bg-indigo-700 transition"
+            >
+              Editar usuario
+            </Link>
+          </div>
         </div>
       )}
     </>
   );
 };
+/*                 <div className="col-md-6">
+                        <p>
+                          {user.roles.map((role) => " " + role.roleName + " ")}
+                        </p>
+                      </div> */

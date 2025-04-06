@@ -1,11 +1,13 @@
 import React from "react";
 import { FieldSet } from "../fieldset/FieldSet";
-import { InputFile } from "../../../pages/hooks/InputFile";
+import { InputFile } from "../inputs/InputFile";
 import { RoleSelector } from "../../../pages/users/components/RoleSelector";
-import RegisterUserButton from "../../../pages/users/components/buttons/RegisterUserButton";
 import { Link, useNavigate } from "react-router-dom";
 import { InputField } from "../inputs/InputField";
 import { Label } from "../label/Label";
+
+import { Button } from "../../buttons/Button";
+import { ImageForm } from "../image/ImageForm";
 
 export const UserForm = ({
   mode,
@@ -16,15 +18,15 @@ export const UserForm = ({
   userAccountStatusValues,
   filesHandler,
   rolesData,
-  registerFunction,
+  userActionfunction,
 }) => {
   const title = rolesData.roles?.includes("ADMIN")
-    ? mode === "Edit"
-      ? "Edit User (ADMIN mode)"
-      : "Register User (ADMIN mode)"
-    : mode === "Edit"
-    ? "Edit User"
-    : "Register User";
+    ? mode === "Editar"
+      ? "Editar usuario (ADMIN mode)"
+      : "Registrar usuario (ADMIN mode)"
+    : mode === "Editar"
+    ? "Editar usuario"
+    : "Registrar Usuario";
 
   const { profileImages } = formState;
 
@@ -81,32 +83,30 @@ export const UserForm = ({
 
       <InputFile {...filesHandler} />
 
-      {profileImages > 0 ? (
-        <div className="form-group">
-          <label>Profile image</label>
-          <img src={profileImages?.[0]?.downloadUrl} className="w-96 h-96" />
-        </div>
-      ) : (
-        <></>
-      )}
+      <ImageForm text={"Profile image"} images={profileImages} />
+
       <RoleSelector
         {...rolesData}
         formState={formState}
         setFormState={setFormState}
       />
-
-      <RegisterUserButton
-        registerFunction={() => registerFunction(formState, files)}
-      />
-
-      <div className="text-center">
-        <Link
+      <div className="mt-6 flex justify-center gap-1">
+        <Button
           type="submit"
-          className="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition duration-300"
-          onClick={() => navigate(-1)}
-        >
-          🔙 Back
-        </Link>
+          className="bg-indigo-600 text-white px-6 py-2 rounded-lg shadow-md hover:bg-indigo-700 transition"
+          onClick={() => userActionfunction(formState, files)}
+          children={mode}
+        />
+
+        <div className="text-center">
+          <Link
+            type="submit"
+            className="bg-indigo-600 text-white px-6 py-2 rounded-lg shadow-md hover:bg-indigo-700 transition"
+            onClick={() => navigate(-1)}
+          >
+            🔙 Back
+          </Link>
+        </div>
       </div>
     </form>
   );

@@ -11,6 +11,8 @@ export const Products = () => {
 
   const { products, message } = useGetProducts(data, error);
 
+  console.log(data);
+
   return (
     <div className="bg-gradient-to-br from-indigo-50 to-purple-50">
       {message ? (
@@ -22,10 +24,10 @@ export const Products = () => {
         />
       ) : (
         <>
-          <div className="flex items-center justify-center mb-12">
-            <ShoppingBag className="w-8 h-8 text-indigo-600 mr-3 mt-16" />
-            <h1 className="text-4xl font-bold text-gray-90 mt-16">
-              Productos Destacados
+          <div className="flex flex-row  items-center justify-center gap-3 sm:gap-4 mb-6">
+            <ShoppingBag className="w-8 h-8 text-indigo-600 -mb-6" />
+            <h1 className="text-2xl sm:text-4xl font-bold text-gray-900 text-center mt-6">
+              Nuestros Productos
             </h1>
           </div>
           <div className="container-fluid bg-gradient-to-br from-indigo-50 to-purple-50">

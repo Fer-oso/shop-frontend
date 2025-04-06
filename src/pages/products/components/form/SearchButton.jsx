@@ -13,10 +13,10 @@ export const SearchButton = ({ onSearch }) => {
 
   return (
     <>
-      <div className="ml-5">
+      <div className=" md:ml-8 md:-mt-1 md:mr-8 lg:mr-0">
         <button
           onClick={() => setModalOpen(true)}
-          className=" h-8 text-center bg-transparent text-sm/6 font-semibold text-gray-900 rounded-md hover:bg-black transition duration-300"
+          className="text-cente mr-8 md:mr-0 bg-transparent text-sm/6 font-semibold text-gray-900 rounded-md hover:bg-black transition duration-300"
         >
           search 🔍
         </button>

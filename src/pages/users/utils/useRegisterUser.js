@@ -1,6 +1,7 @@
+import { useCallback } from "react";
 import Swal from "sweetalert2";
 
-const RegisterUserButton = ({ registerFunction }) => {
+export const useRegisterUserAlert = () => {
   const swalWithBootstrapButtons = Swal.mixin({
     customClass: {
       confirmButton: "btn btn-success",
@@ -9,7 +10,7 @@ const RegisterUserButton = ({ registerFunction }) => {
     buttonsStyling: false,
   });
 
-  const showCreateAlert = async () => {
+  const showCreateAlert = useCallback(async (registerFunction) => {
     const result = await swalWithBootstrapButtons.fire({
       title: "Are you sure?",
       text: "Check all fields are correct",
@@ -56,18 +57,7 @@ const RegisterUserButton = ({ registerFunction }) => {
         icon: "error",
       });
     }
-  };
+  });
 
-  return (
-    <div className="flex justify-center">
-      <button
-        onClick={showCreateAlert}
-        className="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition duration-300"
-      >
-        Register
-      </button>
-    </div>
-  );
+  return { showCreateAlert };
 };
-
-export default RegisterUserButton;

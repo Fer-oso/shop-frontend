@@ -1,13 +1,13 @@
 import React from "react";
 
-export const ImageForm = ({ images }) => {
+export const ImageForm = ({ images, text }) => {
   return (
     <>
-      {images.length > 0 ? (
+      {images?.length > 0 ? (
         <div className="flex gap-4 flex-wrap">
           {images.map((image) => (
             <div key={image.id} className="form-group">
-              <label>Profile image</label>
+              <label>{text}</label>
               <img
                 src={image.downloadUrl}
                 className="w-32 h-32 rounded-lg shadow-md object-cover"
@@ -16,7 +16,7 @@ export const ImageForm = ({ images }) => {
           ))}
         </div>
       ) : (
-        <p>No hay imágenes disponibles</p>
+        <></>
       )}
     </>
   );

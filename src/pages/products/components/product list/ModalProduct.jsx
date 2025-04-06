@@ -12,7 +12,7 @@ export const ModalProduct = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4 sm:p-0">
       <div className="bg-white rounded-lg shadow-lg overflow-hidden max-w-md sm:max-w-lg w-full">
         {/* Imagen del producto */}
-        <div className="relative w-full h-56 sm:h-64 bg-gray-200">
+        <div className="relative w-full h-56 sm:h-64 bg-white">
           {selectedItem.images?.[0] ? (
             <img
               src={selectedItem.images[0].downloadUrl}

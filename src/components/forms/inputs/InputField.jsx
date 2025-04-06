@@ -7,7 +7,7 @@ export const InputField = ({
   value,
   onChange,
   placeholder,
-  styles,
+  className,
 }) => {
   return (
     <>
@@ -17,7 +17,7 @@ export const InputField = ({
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className={styles}
+        className={className}
         required
       />
     </>

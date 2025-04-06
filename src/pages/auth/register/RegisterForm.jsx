@@ -1,5 +1,3 @@
-import React from "react";
-
 import { useDispatch, useSelector } from "react-redux";
 
 import { UserForm } from "../../../components/forms/form/UserForm";
@@ -7,14 +5,19 @@ import { useForm } from "../../../components/hooks/useForm";
 import {
   USER_TO_REGISTER,
   useUserAccountStatusValues,
-} from "../login/models/usersModels";
+} from "../../models/user/usersModels";
 import { startRegisterUser } from "../../../store/users/userThunk";
 import useFileInput from "../../../components/hooks/useFileInput";
+import { useRegisterUserAlert } from "../../users/utils/useRegisterUser";
 
 export const RegisterForm = () => {
   const { userAuthenticated } = useSelector((state) => state.authentication);
 
   const roles = userAuthenticated?.roles?.map((role) => role.roleName);
+
+  const filesHandler = useFileInput();
+
+  const { showCreateAlert } = useRegisterUserAlert();
 
   const dispatch = useDispatch();
 
@@ -28,8 +31,6 @@ export const RegisterForm = () => {
     credentialsNonExpired,
   } = formState;
 
-  const filesHandler = useFileInput();
-
   const userAccountStatusValues = useUserAccountStatusValues(
     enabled,
     accountNonExpired,
@@ -37,19 +38,19 @@ export const RegisterForm = () => {
     credentialsNonExpired
   );
 
-  const registerFunction = async (userRegisterd, files) => {
-    return dispatch(startRegisterUser(userRegisterd, files));
-  };
-
   const rolesData = {
     roles,
     availableRoles: [],
   };
 
+  const registerFunction = async (userRegisterd, files) => {
+    return dispatch(startRegisterUser(userRegisterd, files));
+  };
+
   return (
     <div className="max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-xl">
       <UserForm
-        mode={"Register"}
+        mode={"Registrar"}
         formState={formState}
         setFormState={setFormState}
         onInputChange={onInputChange}
@@ -57,7 +58,9 @@ export const RegisterForm = () => {
         userAccountStatusValues={userAccountStatusValues}
         filesHandler={filesHandler}
         rolesData={rolesData}
-        registerFunction={registerFunction}
+        userActionfunction={(userRegisterd, files) =>
+          showCreateAlert(() => registerFunction(userRegisterd, files))
+        }
       />
     </div>
   );

@@ -3,7 +3,6 @@ import * as React from "react";
 import { NormalMenu } from "./menu/normalmenu/NormalMenu";
 import { Logo } from "./menu/logo/Logo";
 import { HamburMenuOpenButton } from "./menu/hamburmenu/HamburMenuOpenButton";
-import { LoginButton } from "./menu/login/LoginButton";
 import { SearchButton } from "../../pages/products/components/form/SearchButton";
 import { adminRoutesProducts, userRoutesProducts } from "./utils/routesProduct";
 
@@ -18,39 +17,35 @@ export const NavBar = ({ roles }) => {
     : userRoutesProducts;
 
   return (
-    <header className="bg-gradient-to-br from-indigo-50 to-purple-50 top-0">
+    <header className="bg-gradient-to-br from-indigo-50 to-purple-50 top-0 w-full shadow-md">
       <nav
         aria-label="Global"
-        className="mx-auto  flex max-w-full items-center justify-between lg:px-8 "
+        className="mx-auto flex max-w-full items-center justify-between p-1"
       >
-        <div className="flex lg:flex-1 h- ">
-          <Link className="p-1">
-            <Logo width={"w-40"} height={"h-16"} />
+        <div className="flex flex-1">
+          <Link className="ml-0">
+            <Logo width={"w-24 md:w-40"} height={"h-12 md:h-16"} />
           </Link>
         </div>
 
-        <div className="flex items-center m-auto">
-          <HamburMenuOpenButton
-            generalRoutes={navBarGeneralRoutes}
-            productRoutes={productsRoutes}
-          />
-          <NormalMenu
-            generalRoutes={navBarGeneralRoutes}
-            productRoutes={productsRoutes}
-          />
-          <SearchButton />
+        {/* Menú normal solo en pantallas grandes */}
 
-          <ShoppingCartList />
+        <NormalMenu
+          generalRoutes={navBarGeneralRoutes}
+          productRoutes={productsRoutes}
+        />
+
+        <HamburMenuOpenButton
+          generalRoutes={navBarGeneralRoutes}
+          productRoutes={productsRoutes}
+        />
+
+        <SearchButton />
+        <ShoppingCartList />
+        {/* Ícono de usuario */}
+        <div className=" md:flex md:flex-1 justify-end">
+          {roles && <UserIcon />}
         </div>
-        {roles ? (
-          <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            <UserIcon />
-          </div>
-        ) : (
-          <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            <LoginButton />
-          </div>
-        )}
       </nav>
     </header>
   );

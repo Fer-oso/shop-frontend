@@ -3,8 +3,7 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Logo } from "../../../components/navbar/menu/logo/Logo";
-
-import { LoginForm } from "./components/LoginForm";
+import { LoginForm } from "../components/LoginForm";
 
 export const Login = () => {
   const { status } = useSelector((state) => state.authentication);

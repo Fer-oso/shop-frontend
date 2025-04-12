@@ -3,7 +3,6 @@ import { Navigate, Outlet } from "react-router-dom";
 
 import { Loading } from "../components/loading/Loading";
 
-import { useDispatch } from "react-redux";
 import { useCheckUserShoppingCart } from "../providers/hooks/useCheckUserShoppingCart";
 import { GeneralLayout } from "../pages/themes/GeneralLayout";
 import { NavBar } from "../components/navbar/NavBar";
@@ -14,13 +13,9 @@ export const ProtectedRoute = () => {
   const { status, userAuthenticated, roles, isLoading } =
     useGetUserAuthenticated();
 
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (status === "authenticated") {
-      useCheckUserShoppingCart(userAuthenticated, dispatch);
-    }
-  }, [status]);
+  useCheckUserShoppingCart(
+    status === "authenticated" ? userAuthenticated : null
+  );
 
   return userAuthenticated.id ? (
     <GeneralLayout>

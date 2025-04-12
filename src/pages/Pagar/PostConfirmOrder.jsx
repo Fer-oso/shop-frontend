@@ -27,11 +27,13 @@ export const PostConfirmOrder = () => {
   };
 
   return preferenceId ? (
-    <div className="flex justify-center items-start min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50 p-4">
+    <div className="flex justify-center items-start p-4">
       <div className="flex flex-col md:flex-row w-full max-w-4xl bg-white shadow-lg p-6 rounded-2xl gap-6">
         {/* Columna izquierda: Lista de productos */}
         <div className="w-full lg:w-2/3">
-          <h2 className="text-2xl font-bold mb-4">Resumen de Compra</h2>
+          <h2 className=" text-g font-bold text-gray-800 mb-8 tracking-tight">
+            Carrito de compras
+          </h2>
           {productsList.length === 0 ? (
             <p className="text-gray-500 text-center">
               No hay productos en el carrito.
@@ -59,11 +61,11 @@ export const PostConfirmOrder = () => {
                       )}
                     </div>
 
-                    <span>
+                    <span className="block mb-1 text-sm font-medium text-gray-700">
                       {product.name} (x{product.quantity})
                     </span>
 
-                    <span className="font-semibold">
+                    <span className="block mb-1 text-sm font-bold text-gray-700">
                       ${(product.price * product.quantity).toFixed(2)}
                     </span>
                   </li>
@@ -79,23 +81,39 @@ export const PostConfirmOrder = () => {
               Información del Comprador
             </h3>
             <ul className="text-gray-700 space-y-1">
-              <li>
-                <span className="font-bold">Name:</span> {buyer.fullName}
+              <li className="block mb-1 text-sm font-medium text-gray-700">
+                <span className="block mb-1 text-sm font-bold text-gray-700">
+                  Name:
+                </span>
+                {buyer.fullName}
               </li>
-              <li>
-                <span className="font-bold">Email:</span> {buyer.email}
+              <li className="block mb-1 text-sm font-medium text-gray-700">
+                <span className="block mb-1 text-sm font-bold text-gray-700">
+                  Email:
+                </span>
+                {buyer.email}
               </li>
-              <li>
-                <span className="font-bold">Address:</span> {buyer.address}
+              <li className="block mb-1 text-sm font-medium text-gray-700">
+                <span className="block mb-1 text-sm font-bold text-gray-700">
+                  Address:
+                </span>
+                {buyer.address}
               </li>
-              <li>
-                <span className="font-bold">Phone:</span> {buyer.phone}
+              <li className="block mb-1 text-sm font-medium text-gray-700">
+                <span className="block mb-1 text-sm font-bold text-gray-700">
+                  Phone:
+                </span>
+                {buyer.phone}
               </li>
             </ul>
 
             <div className="border-t pt-4 mt-4 text-lg font-semibold flex justify-between">
-              <span>Total:</span>
-              <span>{calculateTotal()}</span>
+              <span className="block mb-1 text-sm font-bold text-gray-700">
+                Total:
+              </span>
+              <span className="block mb-1 text-sm font-bold text-gray-700">
+                {calculateTotal()}
+              </span>
             </div>
 
             <div id="mt-6 flex flex-col gap-4">
@@ -111,7 +129,7 @@ export const PostConfirmOrder = () => {
               <Link
                 type="button"
                 variant="outline"
-                className="flex items-center gap-2 w-full  justify-center bg-indigo-600 text-white font-bold py-2 rounded-lg shadow-lg hover:bg-indigo-500 hover:shadow-xl transition-all duration-300"
+                className="flex items-center gap-2 w-full *:text-center text-base justify-center bg-indigo-600 text-white font-bold py-2 rounded-lg shadow-lg hover:bg-indigo-700 hover:shadow-xl transition-all duration-300"
                 to={"/shopping-cart/checkout"}
               >
                 <ArrowLeft size={16} /> Volver

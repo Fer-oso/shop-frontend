@@ -8,6 +8,7 @@ export const InputField = ({
   onChange,
   placeholder,
   className,
+  required,
 }) => {
   return (
     <>
@@ -18,7 +19,7 @@ export const InputField = ({
         onChange={onChange}
         placeholder={placeholder}
         className={className}
-        required
+        required={required || false}
       />
     </>
   );

@@ -1,14 +1,9 @@
 import React from "react";
 
-export const Button = ({
-  type = "button",
-  className = "",
-  onClick,
-  children,
-}) => {
+export const Button = ({ type, className = "", onClick, children }) => {
   return (
     <button
-      type={type}
+      type={type || "button"}
       className={className}
       onClick={onClick ? () => onClick() : undefined}
     >

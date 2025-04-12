@@ -1,14 +1,20 @@
+import { nanoid } from "nanoid";
 import { startLoadShoppingCart } from "../../store/shoppingcart/shoppingCartThunk";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
-export const useCheckUserShoppingCart = (logedUser, dispatch) => {
-  if (!logedUser) return;
+export const useCheckUserShoppingCart = (logedUser) => {
+  const dispatch = useDispatch();
 
-  const { id, username } = logedUser;
+  useEffect(() => {
+    if (!logedUser?.id) return;
 
-  let shoppingCart = JSON.parse(localStorage.getItem(`shopping-cart-${id}`));
+    const { id, username } = logedUser;
 
-  if (!shoppingCart) {
-    shoppingCart = {
+    const shoppingCart = JSON.parse(
+      localStorage.getItem(`shopping-cart-${id}`)
+    ) || {
+      shoppingCartId: nanoid(),
       productsList: [],
       buyer: {
         fullName: "",
@@ -21,7 +27,34 @@ export const useCheckUserShoppingCart = (logedUser, dispatch) => {
     };
 
     localStorage.setItem(`shopping-cart-${id}`, JSON.stringify(shoppingCart));
-  }
 
-  dispatch(startLoadShoppingCart(shoppingCart));
+    dispatch(startLoadShoppingCart(shoppingCart));
+  }, [logedUser, dispatch]);
 };
+/*
+const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!logedUser?.id) return;
+
+    const { id, username } = logedUser;
+
+    const shoppingCart = JSON.parse(
+      localStorage.getItem(`shopping-cart-${id}`)
+    ) || {
+      shoppingCartId: nanoid(),
+      productsList: [],
+      buyer: {
+        fullName: "",
+        email: "",
+        address: "",
+        phone: "",
+        user: { id, username },
+      },
+      total: 0,
+    };
+
+    localStorage.setItem(`shopping-cart-${id}`, JSON.stringify(shoppingCart));
+
+    dispatch(startLoadShoppingCart(shoppingCart));
+  }, [logedUser, dispatch]);*/

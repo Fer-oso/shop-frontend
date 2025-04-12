@@ -35,50 +35,50 @@ export const EditProductForm = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6 sm:p-8 bg-white rounded-xl shadow-lg transition-transform">
-      <h2 className="text-center text-2xl md:text-3xl font-semibold text-gray-800 mb-6">
+    <div className="max-w-4xl mx-auto p-8 bg-white rounded-2xl shadow-xl transition-transform duration-300">
+      <h2 className="text-center text-2xl font-bold text-gray-800 mb-8 tracking-tight">
         Editar Producto
       </h2>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {/* GRID en pantallas grandes y columna en móviles */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Campos de formulario */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {formFieldValues.map((values) => (
             <React.Fragment key={values.name}>
               {values.type === "textarea" ? (
-                <div className="col-span-2">
+                <div className="md:col-span-2">
                   <Label
                     labelText={values.name}
-                    className="font-medium text-gray-700"
+                    className="block mb-1 text-sm font-medium text-gray-700"
                   />
                   <TextArea
                     name={values.name}
-                    value={values.value}
+                    value={values.value || ""}
                     placeholder={values.placeholder}
                     onChange={onInputChange}
-                    styles="w-full p-3 text-sm md:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
               ) : values.type === "checkbox" ? (
-                <div className="flex items-center gap-2">
+                <div className="flex items-center space-x-3 md:col-span-2">
                   <CheckBox
                     id={values.name}
                     type={values.type}
                     name={values.name}
                     checked={values.value}
                     onChange={onCheckboxChange}
-                    styles="w-5 h-5 text-blue-500 border-gray-300 rounded focus:ring-blue-500"
+                    className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                   />
                   <Label
                     labelText={values.name}
-                    className="font-medium text-gray-700 text-sm md:text-base"
+                    className="text-sm font-medium text-gray-700"
                   />
                 </div>
               ) : (
                 <div>
                   <Label
                     labelText={values.name}
-                    className="font-medium text-gray-700 text-sm md:text-base"
+                    className="block mb-1 text-sm font-medium text-gray-700"
                   />
                   <InputField
                     type={values.type}
@@ -86,15 +86,21 @@ export const EditProductForm = () => {
                     value={values.value?.name || values.value}
                     onChange={onInputChange}
                     placeholder={values.placeholder}
-                    styles="w-full p-3 text-sm md:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
               )}
             </React.Fragment>
           ))}
         </div>
-        <ImageForm images={images} text={"product image"} />
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+
+        {/* Imagen actual */}
+        <div>
+          <ImageForm images={images} text="Imagen actual del producto" />
+        </div>
+
+        {/* Archivos + botón de editar */}
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           <InputFile
             files={files}
             error={error}
@@ -104,7 +110,7 @@ export const EditProductForm = () => {
 
           <EditProductButton
             editFunction={() => editFunction(id, formState, files)}
-            styles="w-full lg:w-auto px-6 py-3 md:py-4 bg-blue-600 text-white text-lg md:text-xl font-semibold rounded-lg hover:bg-blue-700 transition-all"
+            styles="w-full md:w-auto px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg shadow-sm transition-all"
           />
         </div>
       </form>

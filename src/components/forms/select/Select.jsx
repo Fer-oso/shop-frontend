@@ -1,5 +1,3 @@
-import React from "react";
-
 export const Select = ({ value, onChange, availableRoles, className }) => {
   return (
     <select multiple className={className} onChange={onChange} value={value}>
@@ -11,4 +9,4 @@ export const Select = ({ value, onChange, availableRoles, className }) => {
     </select>
   );
 };
-("w-full p-2 border rounded-lg focus:ring focus:ring-blue-300");
+

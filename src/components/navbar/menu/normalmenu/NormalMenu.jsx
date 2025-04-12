@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import {
   Popover,
@@ -20,7 +20,6 @@ export const NormalMenu = ({ generalRoutes, productRoutes }) => {
             className="size-5 flex-none text-gray-400"
           />
         </PopoverButton>
-
         <PopoverPanel
           transition
           className="absolute -left-8 top-full z-10 mt-2.5 w-screen max-w-md overflow-hidden bg-white shadow-lg ring-1 ring-gray-900/5 transition data-[closed]:translate-y-1 data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in"

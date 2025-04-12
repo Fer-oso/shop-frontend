@@ -1,4 +1,5 @@
 import { loginWithEmailAndPassword } from "../../providers/login/loginWithEmailAndPassword";
+import { resetShoppingCart } from "../shoppingcart/shoppingCartSlice";
 import { login, logout } from "./authSlice";
 
 export const startLoginUserWithUsernameAndPassword = ({
@@ -29,6 +30,7 @@ export const startLogoutUser = () => {
     const userAuthenticated = {};
 
     dispatch(logout({ status, userAuthenticated }));
+    dispatch(resetShoppingCart());
 
     localStorage.setItem("auth", JSON.stringify({ status, userAuthenticated }));
   };

@@ -28,7 +28,7 @@ export const LoginForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <h2 className="text-2xl font-bold text-center text-gray-700  mt-5">
+      <h2 className="text-xl font-bold  text-center text-gray-700 mt-5">
         Iniciar Sesión
       </h2>
       <div>
@@ -39,9 +39,8 @@ export const LoginForm = () => {
           value={username}
           onChange={onInputChange}
           placeholder="Ingrese su usuario"
-          className={
-            "w-full px-4 py-2 border rounded-lg focus:ring focus:ring-indigo-300"
-          }
+          className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+
         />
       </div>
 
@@ -53,21 +52,20 @@ export const LoginForm = () => {
           value={password}
           onChange={onInputChange}
           placeholder="Ingrese su contraseñña"
-          className={
-            "w-full px-4 py-2 border rounded-lg focus:ring focus:ring-indigo-300"
-          }
+          className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+
         />
       </div>
 
       <Button
         type="submit"
-        className="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition duration-300"
+        className="w-full bg-indigo-600 text-white py-2 text-base rounded-lg hover:bg-indigo-700 transition duration-300"
         children={"Inicia sesion"}
       />
 
       <Link
         type="button"
-        className="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition duration-300 text-center"
+        className="w-full bg-indigo-600 text-white py-2  text-base rounded-lg hover:bg-indigo-700 transition duration-300 text-center"
         to={"/register"}
       >
         Registrarse

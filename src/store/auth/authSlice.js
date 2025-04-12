@@ -1,10 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { useCheckUserauthenticated } from "../hooks/useCheckUserAuthenticated";
 
-const initialState = JSON.parse(localStorage.getItem("auth")) || {
-  status: "unauthenticated",
-  message: "No user authenticated",
-  userAuthenticated: {},
-};
+const initialState = useCheckUserauthenticated();
 
 export const authslice = createSlice({
   name: "authentication",
@@ -19,7 +16,7 @@ export const authslice = createSlice({
     logout: (state, action) => {
       state.status = action.payload.status;
       state.message = "";
-      state.userAuthenticated = {};
+      state.userAuthenticated = action.payload.userAuthenticated;
     },
   },
 });

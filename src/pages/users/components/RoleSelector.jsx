@@ -15,9 +15,11 @@ export const RoleSelector = ({
 
   return roles?.includes("ADMIN") ? (
     <div className="w-full">
-      <label className="block text-gray-700 font-semibold mb-2">Roles</label>
+      <label className="block mb-1 text-sm font-medium text-gray-700">
+        Roles
+      </label>
       <Select
-        className="w-full p-2 border rounded-lg focus:ring focus:ring-blue-300"
+        className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 font-bold text-gray-800 mb-8 tracking-tight"
         onChange={handleRoleChange}
         value={selectedRoles}
         availableRoles={availableRoles}
@@ -27,3 +29,5 @@ export const RoleSelector = ({
     <></>
   );
 };
+
+

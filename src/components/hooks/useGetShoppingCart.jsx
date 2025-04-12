@@ -15,6 +15,7 @@ export const useGetShoppingCart = () => {
   }, [shoppingCart]);
 
   return {
+    buyer,
     productsList,
     total,
   };

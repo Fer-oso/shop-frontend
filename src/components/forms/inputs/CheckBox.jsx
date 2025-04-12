@@ -5,8 +5,8 @@ export const CheckBox = ({
   type,
   name,
   checked,
-  onCheckboxChange,
-  styles,
+  onChange,
+  className,
 }) => {
   return (
     <input
@@ -14,8 +14,8 @@ export const CheckBox = ({
       type={type}
       name={name}
       checked={checked}
-      onChange={onCheckboxChange}
-      className={styles}
+      onChange={onChange}
+      className={className}
     />
   );
 };

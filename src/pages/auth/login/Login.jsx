@@ -17,7 +17,7 @@ export const Login = () => {
   }, [status]);
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-indigo-100 to-purple-200">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-indigo-100 to-purple-200  ">
       <div className="bg-white p-8 rounded-2xl shadow-lg w-96">
         {/* Logo */}
         <div className="flex justify-center">

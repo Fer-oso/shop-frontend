@@ -28,8 +28,7 @@ export default function ProductList({ products }) {
           ))}
         </div>
       </div>
-
-      {/* Modal de Producto */}
+      
       <ModalProduct
         showModal={showModal}
         closeModal={closeModal}

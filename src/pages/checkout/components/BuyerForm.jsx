@@ -3,6 +3,9 @@ import { ConfirmOrderButton } from "./button/ConfirmOrderButton";
 import { useForm } from "../../../components/hooks/useForm";
 import { useDispatch } from "react-redux";
 import { startSetBuyerInShoppingCart } from "../../../store/shoppingcart/shoppingCartThunk";
+import { Label } from "../../../components/forms/label/Label";
+import { InputField } from "../../../components/forms/inputs/InputField";
+import { toast } from "sonner";
 
 export const BuyerForm = ({ buyerInfo }) => {
   const dispatch = useDispatch();
@@ -17,86 +20,83 @@ export const BuyerForm = ({ buyerInfo }) => {
     dispatch(startSetBuyerInShoppingCart(formState));
   }, [formState]);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    alert("¡Pedido confirmado con éxito!");
+    setConfirmOrder(true);
+
+    toast.success("Pedido confirmado con éxito");
+  };
+
   return (
     <>
-      <form className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label
-            className="block text-gray-600 font-medium mb-1"
-            htmlFor="fullName"
-          >
-            Nombre Completo
-          </label>
-          <input
-            type="text"
-            id="fullName"
-            name="fullName"
+          <Label
+            labelText={"Nombre completo"}
+            className="block mb-1 text-sm font-medium text-gray-700"
+          />
+
+          <InputField
+            type={"text"}
+            name={"fullName"}
             value={fullName}
             onChange={onInputChange}
-            required
-            className="w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-400 focus:outline-none"
-            placeholder="Tu nombre completo"
+            placeholder={"Ejemplo ejemplito"}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
         <div>
-          <label
-            className="block text-gray-600 font-medium mb-1"
-            htmlFor="email"
-          >
-            Correo Electrónico
-          </label>
-          <input
+          <Label
+            className="block mb-1 text-sm font-medium text-gray-700"
+            labelText={" Correo Electrónico"}
+          />
+
+          <InputField
             type="email"
             id="email"
             name="email"
             value={email}
             onChange={onInputChange}
-            required
-            className="w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-400 focus:outline-none"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="ejemplo@correo.com"
           />
         </div>
         <div>
-          <label
-            className="block text-gray-600 font-medium mb-1"
-            htmlFor="address"
-          >
-            Dirección
-          </label>
-          <input
+          <Label
+            className="block mb-1 text-sm font-medium text-gray-700"
+            labelText={"Direccion"}
+          />
+          <InputField
             type="text"
             id="address"
             name="address"
             value={address}
             onChange={onInputChange}
-            required
-            className="w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-400 focus:outline-none"
+            required={true}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Tu dirección"
           />
         </div>
         <div>
-          <label
-            className="block text-gray-600 font-medium mb-1"
-            htmlFor="phone"
-          >
-            Teléfono
-          </label>
-          <input
+          <Label
+            className="block mb-1 text-sm font-medium text-gray-700"
+            labelText={"Telefono"}
+          />
+          <InputField
             type="tel"
             id="phone"
             name="phone"
             value={phone}
             onChange={onInputChange}
             required
-            className="w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-400 focus:outline-none"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Tu número de teléfono"
           />
         </div>
 
-        <ConfirmOrderButton
-          confirmOrder={confirmOrder}
-          setConfirmOrder={setConfirmOrder}
-        />
+        <ConfirmOrderButton confirmOrder={confirmOrder} />
       </form>
     </>
   );

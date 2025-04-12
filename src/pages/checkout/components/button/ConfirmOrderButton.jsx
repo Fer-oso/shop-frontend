@@ -1,31 +1,21 @@
 import { Link } from "react-router-dom";
-import { toast } from "sonner";
+import { Button } from "../../../../components/buttons/Button";
 
-export const ConfirmOrderButton = ({ confirmOrder, setConfirmOrder }) => {
-  const handleConfirmOrder = (e) => {
-    e.preventDefault();
-    alert("¡Pedido confirmado con éxito!");
-    setConfirmOrder(true);
-
-    toast.success("Pedido confirmado con éxito");
-  };
-
+export const ConfirmOrderButton = ({ confirmOrder }) => {
   return (
     <>
       {!confirmOrder ? (
-        <button
-          type="button"
-          className="w-full bg-indigo-600 text-white font-bold py-3 rounded-lg shadow-lg hover:bg-indigo-500 hover:shadow-xl transition-all duration-300"
-          onClick={handleConfirmOrder}
-        >
-          Confirmar Pedido
-        </button>
+        <Button
+          type="submit"
+          className="w-full bg-indigo-600 text-white py-2 text-base rounded-lg hover:bg-indigo-700 transition duration-300"
+          children={"  Confirmar Pedido"}
+        />
       ) : (
         <>
           {" "}
           <Link
             type="button"
-            className="w-full text-center bg-indigo-600 text-white font-bold py-3 rounded-lg shadow-lg hover:bg-indigo-500 hover:shadow-xl transition-all duration-300"
+            className="w-full text-center bg-indigo-600 text-white py-2 text-base rounded-lg hover:bg-indigo-700 transition duration-300"
             to="/shopping-cart/post-confirm-order"
           >
             ir a pagar

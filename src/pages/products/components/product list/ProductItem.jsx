@@ -8,54 +8,58 @@ export const ProductItem = ({ product, openModal, addToCart }) => {
   const { id, name, images, price, category } = product;
 
   return (
-    <div className="group relative border flex flex-col transform transition duration-300 hover:scale-105 ">
-      <div className="aspect-w-1 aspect-h-1 cursor-pointer">
-        {images?.[0] ? (
-          <img
-            src={images[0].downloadUrl}
-            className="aspect-square w-full h-full object-contain  bg-transparent lg:aspect-auto lg:h-full lg:w-full transition-opacity duration-300 "
-            alt={name}
-            onClick={() => openModal(product)}
-          />
-        ) : (
-          <img
-            src=""
-            alt="No image"
-            className="aspect-square w-full h-full object-cover text-center group-hover:opacity-75 rounded-md bg-gray-200 lg:aspect-auto lg:h-80 transition-opacity duration-300"
-            onClick={() => openModal(product)}
-          />
-        )}
-      </div>
+    <div className="group relative border rounded-lg bg-white shadow-sm hover:shadow-md transition-transform duration-300 hover:scale-[1.02] flex flex-col overflow-hidden">
+  {/* Imagen */}
+  <div
+    className="bg-gray-50 cursor-pointer flex items-center justify-center overflow-hidden h-52"
+    onClick={() => openModal(product)}
+  >
+    {images?.[0] ? (
+      <img
+        src={images[0].downloadUrl}
+        alt={name}
+        className="max-h-full max-w-full object-contain transition-opacity duration-300 group-hover:opacity-90"
+      />
+    ) : (
+      <div className="text-gray-400 text-sm">No image available</div>
+    )}
+  </div>
 
-      <div className="mt-4 space-y-2  flex flex-col h-full  transition-colors ">
-        <div className="flex justify-between  ">
-          <h3 className="text-sm text-gray-700 ml-1 group-hover:text-blue-500">
-            {name}
-          </h3>
-
-          <p className="text-sm font-black text-black-500 mr-1">${price}</p>
-        </div>
-
-        <p className="text-sm text-gray-500 ml-1">{category?.name}</p>
-
-        <div className="mt-auto flex flex-col gap-2">
-          <button
-            onClick={() => addToCart(product)}
-            className="w-full flex items-center justify-center space-x-2 bg-blue-500 text-white px-4 py-2  hover:bg-blue-600 transition-colors lg:text-xs"
-          >
-            <ShoppingCart size={20} />
-            <span>Add to Cart</span>
-          </button>
-
-          <Link
-            to={`/products/${id}`}
-            className="w-full flex items-center justify-center space-x-2 bg-gray-200 text-black px-4 py-2  hover:bg-gray-300 transition-colors lg:text-xs"
-          >
-            <ControlPointOutlined size={20} /> <span>View details</span>
-          </Link>
-        </div>
-      </div>
+  {/* Contenido */}
+  <div className="flex flex-col p-3 gap-2">
+    {/* Nombre y Precio */}
+    <div className="flex justify-between items-center">
+      <h3 className="text-sm font-medium text-gray-800 group-hover:text-blue-600 truncate">
+        {name}
+      </h3>
+      <p className="text-sm font-bold text-gray-900">${price}</p>
     </div>
+
+    {/* Categoría */}
+    <p className="text-xs text-gray-500">{category?.name}</p>
+
+    {/* Botones */}
+    <div className="flex flex-col gap-2 pt-1">
+      <button
+        onClick={() => addToCart(product)}
+        className="flex items-center justify-center gap-2 bg-indigo-600  hover:bg-indigo-700  text-white px-4 py-1.5 rounded-md text-xs font-medium transition duration-300"
+      >       
+
+        <ShoppingCart size={16} />
+        Add to Cart
+      </button>
+
+      <Link
+      type="button"
+        to={`/products/${id}`}
+        className="flex items-center justify-center gap-2 bg-indigo-600  hover:bg-indigo-700  text-white px-4 py-1.5 rounded-md text-xs font-medium transition duration-300"
+      >
+        <ControlPointOutlined  />
+        View Details
+      </Link>
+    </div>
+  </div>
+</div>
   );
 };
 

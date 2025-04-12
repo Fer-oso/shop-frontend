@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import { NormalMenu } from "./menu/normalmenu/NormalMenu";
 import { Logo } from "./menu/logo/Logo";
 import { HamburMenuOpenButton } from "./menu/hamburmenu/HamburMenuOpenButton";
@@ -17,7 +15,7 @@ export const NavBar = ({ roles }) => {
     : userRoutesProducts;
 
   return (
-    <header className="bg-gradient-to-br from-indigo-50 to-purple-50 top-0 w-full shadow-md">
+    <header className="top-0 w-full">
       <nav
         aria-label="Global"
         className="mx-auto flex max-w-full items-center justify-between p-1"

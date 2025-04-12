@@ -1,3 +1,3 @@
-export const Label = ({ labelText, styles }) => {
-  return <label className={styles}>{labelText}</label>;
+export const Label = ({ labelText, className }) => {
+  return <label className={className}>{labelText}</label>;
 };

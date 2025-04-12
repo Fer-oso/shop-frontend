@@ -4,9 +4,9 @@ import { Logo } from "../../components/navbar/menu/logo/Logo";
 
 export function Construccion() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50 flex items-center justify-center p-4">
+    <div className="flex items-center justify-center">
       <div className="text-center">
-        <div className="relative">
+        <div className="relative mt-10">
           <Construction className="w-32 h-32 text-indigo-600 mx-auto mb-6 animate-bounce" />
           <Hammer className="w-8 h-8 text-purple-500 absolute -right-0 top-0 animate-pulse" />
           <Wrench className="w-8 h-8 text-purple-500 absolute -left-0 bottom-0 animate-pulse" />

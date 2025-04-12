@@ -6,13 +6,15 @@ import { ErrorMessage } from "../../../components/alerts/ErrorMessage";
 import { ProductInfo } from "./ProductInfo";
 import { useGetProductDetails } from "../hooks/useGetProducts";
 
+
 export const ProductDetail = () => {
+
   const { data, error } = useLoaderData();
 
-  const product = useGetProductDetails(data, error);
+  const {product} = useGetProductDetails(data, error);
 
   return (
-    <div className="bg-gradient-to-br from-indigo-50 to-purple-50">
+    <>
       {error ? (
         <ErrorMessage
           message={error.message}
@@ -23,6 +25,6 @@ export const ProductDetail = () => {
       ) : (
         <ProductInfo product={product} />
       )}
-    </div>
+    </>
   );
 };

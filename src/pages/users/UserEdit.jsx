@@ -10,14 +10,16 @@ import { useEditUserAlert } from "./utils/useEditUserAlert";
 import { useUserAccountStatusValues } from "../models/user/usersModels";
 
 export const UserEdit = () => {
-  const { user } = useLoaderData();
+  const { data } = useLoaderData();
+
+  console.log(data);
 
   const { roles } = useOutletContext();
 
   const dispatch = useDispatch();
 
   const { formState, setFormState, onInputChange, onCheckboxChange } =
-    useForm(user);
+    useForm(data);
 
   const {
     enabled,
@@ -47,15 +49,15 @@ export const UserEdit = () => {
   const { showEditUserAlert } = useEditUserAlert();
 
   useEffect(() => {
-    dispatch(startLoadUser(user));
+    dispatch(startLoadUser(data));
   }, [dispatch]);
 
   const editUser = async (formState, files) => {
-    return dispatch(startEditUser(user.id, formState, files));
+    return dispatch(startEditUser(data.id, formState, files));
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-xl">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50 py-8">
       <UserForm
         mode={"Editar"}
         formState={formState}

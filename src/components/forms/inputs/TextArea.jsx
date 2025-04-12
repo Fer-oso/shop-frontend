@@ -4,9 +4,8 @@ export const TextArea = ({
   name,
   value,
   placeholder,
-  defaultValues,
   onChange,
-  styles,
+  className,
 }) => {
   return (
     <textarea
@@ -14,7 +13,7 @@ export const TextArea = ({
       value={value}
       placeholder={placeholder}
       onChange={onChange}
-      className={styles}
+      className={className}
     />
   );
 };

@@ -15,7 +15,7 @@ export const useCreatePreference = (productsList) => {
       title: prod.name,
       unitPrice: prod.price,
       description: prod.description,
-      pictureUrl: `https://cicada-open-partly.ngrok-free.app/api/shop/images/${prod.images[0].id}`,
+      pictureUrl: prod.images[0]?.downloadUrl,
       quantity: prod.quantity,
     };
   });

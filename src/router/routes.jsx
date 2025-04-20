@@ -4,7 +4,7 @@ import { NotFound } from "../pages/NotFound";
 import { loadUsers } from "../providers/users/loadUsers";
 import { loadUser } from "../providers/users/loadUser";
 import { Users } from "../pages/users/Users";
-import { UserInfo } from "../pages/users/UserInfo";
+
 import { Products } from "../pages/products/Products";
 import { UserEdit } from "../pages/users/UserEdit";
 import { loadProducts } from "../providers/products/loadProducts";
@@ -26,6 +26,7 @@ import PaymentStatus from "../components/payment status/PaymentStatus";
 import { Login } from "../pages/auth/login/Login";
 import { RegisterForm } from "../pages/auth/register/RegisterForm";
 import { UserProfileEdit } from "../pages/users/UserProfileEdit";
+import { UserInfo } from "../pages/users/pages/UserInfo";
 
 export const routes = () => {
   const router = createBrowserRouter([
@@ -36,7 +37,7 @@ export const routes = () => {
       children: [
         { index: true, element: <Home /> },
         { path: "/users", element: <Users />, loader: loadUsers },
-        { path: "/users/:id", element: <UserInfo /> },
+        { path: "/users/:id", element: <UserInfo />, loader: loadUser },
         { path: "/users/:id/edit", element: <UserEdit />, loader: loadUser },
         {
           path: "/users/:id/edit/perfil",

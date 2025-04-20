@@ -102,7 +102,7 @@ export default function ShoppingCartList() {
                                         <ul>
                                           <li>
                                             <p className="ml-4 font-black">
-                                              price ${product.price}
+                                              precio ${product.price}
                                             </p>
                                           </li>
                                           <li>
@@ -137,7 +137,7 @@ export default function ShoppingCartList() {
                           <p>${total}</p>
                         </div>
                         <p className="mt-0.5 text-sm text-black font-bold">
-                          ❕❕ Shipping and taxes calculated at checkout.
+                          ❕❕ Impuestos y envio calculado en el checkout
                         </p>
                         <div className="mt-6">
                           <Link

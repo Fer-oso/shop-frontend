@@ -1,7 +1,5 @@
-import React, { useEffect } from "react";
-import "../../components/styles/UserInfoStyles.css";
-import { Link, useLoaderData, useParams } from "react-router-dom";
-import { ErrorMessage } from "../../components/alerts/ErrorMessage";
+import { Link, useLoaderData } from "react-router-dom";
+
 import {
   Camera,
   CheckCircle,
@@ -11,26 +9,25 @@ import {
   XCircle,
 } from "lucide-react";
 
-import { useGetUsersData } from "./hooks/useGetUsersData";
+import { ErrorMessage } from "../../../components/alerts/ErrorMessage";
+import { useLoadUser } from "../../../providers/hooks/useLoadUser";
+import { Loading } from "../../../components/loading/Loading";
 
 export const UserInfo = () => {
-  const { useLoadUser } = useGetUsersData();
+  const { data, error } = useLoaderData();
 
-  const params = useParams();
+  const { user, isLoading, message } = useLoadUser(data, error);
 
-  const id = params.id;
+  if (isLoading) return <Loading />;
 
-  const { user, error } = useLoadUser(id);
-
-  console.log(user);
   return (
     <>
-      {!user ? (
+      {error?.status ? (
         <ErrorMessage
-          message={error.message}
-          code={error.code}
-          status={error.status}
-          timestamp={error.timestamp}
+          message={message.message}
+          code={message.code}
+          status={message.status}
+          timestamp={message.timestamp}
         />
       ) : (
         <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-2xl p-6 border border-gray-200">

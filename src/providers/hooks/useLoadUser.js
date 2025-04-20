@@ -1,36 +1,20 @@
 import { useEffect, useState } from "react";
-import { loadUser } from "../users/loadUser";
+import { useDispatch } from "react-redux";
+import { startLoadUser } from "../../store/users/userThunk";
 
-export const useLoadUser = (id) => {
+export const useLoadUser = (data, error) => {
+  const dispatch = useDispatch();
 
-  const [user, setUser] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const [isLoading, setIsLoading] = useState(false);
+  const user = data || {};
 
-  const [messageError, setMessageError] = useState({});
-
-  const showUser = async () => {
-
-    try {
-        
-      const userResponse = await loadUser(id);
-
-      setUser(userResponse);
-
-      setIsLoading(user !=  null);
-
-    } catch (error) {
-
-      setMessageError({
-        codeError: error.code,
-        message: error.message,
-      });
-    }
-  };
+  const message = error || "User founded";
 
   useEffect(() => {
-    showUser();
-  }, []);
+    dispatch(startLoadUser(user, message));
+    setIsLoading(false);
+  }, [data, dispatch]);
 
-  return { user, isLoading, messageError };
+  return { user, isLoading, message };
 };

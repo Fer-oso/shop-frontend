@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
 import { Loading } from "../components/loading/Loading";

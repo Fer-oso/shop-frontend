@@ -1,14 +1,17 @@
 import { axiosInstance } from "../axios/axiosInstace";
 
-const PATH_USER = "users";
+const PATH_SHOPPINGCART = "shoppingcart";
 
-export const loadUser = async ({ params }) => {
+export const createShoppingCartService = async (formDataProduct) => {
   try {
-    const response = await axiosInstance.get(`${PATH_USER}/${params.id}`);
+    const response = await axiosInstance.post(
+      `${PATH_SHOPPINGCART}`,
+      formDataProduct
+    );
+
+    console.log(response);
 
     const data = await response.data;
-
-    console.log(data);
 
     return { data };
   } catch (error) {

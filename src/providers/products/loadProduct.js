@@ -8,6 +8,8 @@ export const loadProduct = async ({ params }) => {
 
     const data = await response.data;
 
+    console.log(data);
+
     return { data };
   } catch (error) {
     // Verificar si el error proviene de la respuesta del servidor

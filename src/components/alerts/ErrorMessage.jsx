@@ -1,6 +1,6 @@
-import React from 'react'
+import React from "react";
 
-export const ErrorMessage = ({message,code,status,timestamp}) => {
+export const ErrorMessage = ({ message, code, status, timestamp }) => {
   return (
     <div>
       <div className="alert alert-danger" role="alert">
@@ -11,4 +11,4 @@ export const ErrorMessage = ({message,code,status,timestamp}) => {
       </div>
     </div>
   );
-}
+};

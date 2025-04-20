@@ -1,11 +1,10 @@
-import React from 'react'
-import { useDispatch } from 'react-redux'
-import { Link, NavLink } from 'react-router-dom'
-import { startLogoutUser } from '../../../store/auth/authThunk';
-import { MenuItem, Typography } from '@mui/material';
+import React from "react";
+import { useDispatch } from "react-redux";
+import { Link, NavLink } from "react-router-dom";
+import { startLogoutUser } from "../../../store/auth/authThunk";
+import { MenuItem, Typography } from "@mui/material";
 
-export const UserNav = ({ id,handleCloseUserMenu }) => {
-
+export const UserNav = ({ id, handleCloseUserMenu }) => {
   const dispatch = useDispatch();
 
   const onClickLogout = () => {

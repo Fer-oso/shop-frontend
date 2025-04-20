@@ -19,9 +19,8 @@ export const UserIcon = () => {
   };
 
   return (
-   
     <Box sx={{ flexGrow: 0 }}>
-      <Tooltip title={"Open settings"} >
+      <Tooltip title={"Open settings"}>
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
           <Avatar alt={username} src="/static/images/avatar/2.jpg" />
         </IconButton>
@@ -45,6 +44,5 @@ export const UserIcon = () => {
         <UserNav id={id} handleCloseUserMenu={handleCloseUserMenu} />
       </Menu>
     </Box>
-   
   );
 };

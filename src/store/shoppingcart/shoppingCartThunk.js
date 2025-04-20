@@ -6,10 +6,22 @@ import {
   setBuyerInfo,
   updateProductInShoppingCart,
 } from "./shoppingCartSlice";
+import { createShoppingCartService } from "../../providers/shoppingcart/createShoppingCartService";
+import { findShoppingCartById } from "../../providers/shoppingcart/findShoppingCartById";
 
 export const startLoadShoppingCart = (shoppingcart) => {
   return async (dispatch) => {
     if (shoppingcart) dispatch(loadShoppingCart(shoppingcart));
+  };
+};
+
+export const startCreateShoppingCart = (shoppingcart) => {
+  return async (dispatch) => {
+    const { data, error } = await findShoppingCartById(
+      shoppingcart.shoppingCartId
+    );
+    //  const { data, error } = await createShoppingCartService(shoppingcart);
+    console.log(data);
   };
 };
 

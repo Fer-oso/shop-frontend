@@ -3,7 +3,7 @@ export const useCheckUserauthenticated = () => {
 
   if (!session) {
     session = {
-      status: "unauthenticated",
+      status: "",
 
       userAuthenticated: {},
 

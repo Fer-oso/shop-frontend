@@ -35,15 +35,13 @@ export const useGetUsersData = () => {
     useEffect(() => {
       const findUser = async () => {
         if (!user.username) {
-          const { data, error } = await loadUser(id);
+          const { data, error } = await loadUser();
 
           const userfinded = data ? data : [];
 
           if (!error) {
             setErrorMessage("User found 😊" || error);
           }
-
-          console.log(errorMessage);
 
           dispatch(startLoadUser(userfinded, errorMessage));
         }

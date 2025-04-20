@@ -29,7 +29,7 @@ const Checkout = () => {
             <h1 className="text-xl font-semibold text-gray-900 mb-6 ">
               Checkout
             </h1>
-            <h2 className="text-lg font-medium text-center text-gray-800 mb-6">
+            <h2 className="text-md font-extralight text-center text-gray-800 mb-6">
               Productos en tu carrito
             </h2>
 

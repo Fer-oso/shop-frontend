@@ -12,8 +12,6 @@ import { useUserAccountStatusValues } from "../models/user/usersModels";
 export const UserEdit = () => {
   const { data } = useLoaderData();
 
-  console.log(data);
-
   const { roles } = useOutletContext();
 
   const dispatch = useDispatch();
@@ -50,7 +48,7 @@ export const UserEdit = () => {
 
   useEffect(() => {
     dispatch(startLoadUser(data));
-  }, [dispatch]);
+  }, [data, dispatch]);
 
   const editUser = async (formState, files) => {
     return dispatch(startEditUser(data.id, formState, files));

@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { nanoid } from "nanoid";
 import { useCheckUserauthenticated } from "../hooks/useCheckUserAuthenticated";
 
 const { userAuthenticated } = useCheckUserauthenticated();
@@ -7,6 +6,7 @@ const { userAuthenticated } = useCheckUserauthenticated();
 const initialState = JSON.parse(
   localStorage.getItem(`shopping-cart-${userAuthenticated.id}`)
 ) || {
+  shoppingCartId: "",
   productsList: [],
   buyer: {},
   total: 0,
@@ -51,7 +51,7 @@ export const shoppingCartSlice = createSlice({
     },
 
     resetShoppingCart: (state) => {
-      state.shoppingCartId = nanoid();
+      state.shoppingCartId = "";
       state.productsList = [];
       state.buyer = {};
       state.total = 0;

@@ -14,8 +14,6 @@ export const useCheckUserauthenticated = () => {
   }
 
   return {
-    status: session.status,
-    userAuthenticated: session.userAuthenticated,
-    message: session.message,
+    ...session,
   };
 };

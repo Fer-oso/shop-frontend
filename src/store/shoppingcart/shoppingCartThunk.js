@@ -1,13 +1,14 @@
 import { toast } from "sonner";
 import {
   addProductToShoppingCart,
+  createShoppingCart,
   loadShoppingCart,
   removeProductOfShoppingCart,
   setBuyerInfo,
   updateProductInShoppingCart,
 } from "./shoppingCartSlice";
 import { createShoppingCartService } from "../../providers/shoppingcart/createShoppingCartService";
-import { findShoppingCartById } from "../../providers/shoppingcart/findShoppingCartById";
+import { updateShoppingCartService } from "../../providers/shoppingcart/updateShoppingCartService";
 
 export const startLoadShoppingCart = (shoppingcart) => {
   return async (dispatch) => {
@@ -17,48 +18,62 @@ export const startLoadShoppingCart = (shoppingcart) => {
 
 export const startCreateShoppingCart = (shoppingcart) => {
   return async (dispatch) => {
-    const { data, error } = await findShoppingCartById(
-      shoppingcart.shoppingCartId
-    );
-    //  const { data, error } = await createShoppingCartService(shoppingcart);
-    console.log(data);
+    try {
+      const { status } = await createShoppingCartService(shoppingcart);
+
+      if (status === 200 || status === 201) {
+        dispatch(createShoppingCart(shoppingcart));
+        toast.success("Pedido confirmado con éxito");
+      }
+
+      return status;
+    } catch (error) {
+      console.error("Error al crear el carrito:", error);
+      return toast.error(
+        "Error al crear el carrito. View reason: " + error.message,
+      );
+    }
   };
 };
 
 export const startAddProductToShoppingCart = (productSelected) => {
   return async (dispatch, getState) => {
     try {
-      const { productsList } = getState().shoppingCart;
+      const { products } = getState().shoppingCart;
 
-      if (productsList.some((product) => product.id === productSelected.id)) {
+      const existingProduct = products.find(
+        (item) => item.product.id === productSelected.id,
+      );
+
+      if (existingProduct) {
         dispatch(
-          startIncreaseQuantityOfProductInShoppingCart(productSelected.id)
+          startIncreaseQuantityOfProductInShoppingCart(productSelected.id),
         );
 
         toast.info("Product already added. Quantity updated");
       } else {
-        const product = {
-          ...productSelected,
+        const newProduct = {
+          product: productSelected,
           quantity: 1,
           subtotal: productSelected.price,
         };
 
-        dispatch(addProductToShoppingCart(product));
+        dispatch(addProductToShoppingCart(newProduct));
 
         toast.success("Product added sucessfully");
       }
     } catch (error) {
-      return toast.error("Product not added. view reason" + error);
+      return toast.error("Product not added. view reason" + error.message);
     }
   };
 };
 
 export const startRemoveProductInShoppingCart = (productSelected) => {
   return async (dispatch, getState) => {
-    const { productsList } = getState().shoppingCart;
+    const { products } = getState().shoppingCart;
 
-    const newList = productsList.filter(
-      (product) => product.id !== productSelected.id
+    const newList = products.filter(
+      (product) => product.product.id !== productSelected.id,
     );
 
     dispatch(removeProductOfShoppingCart(newList));
@@ -67,20 +82,20 @@ export const startRemoveProductInShoppingCart = (productSelected) => {
 
 export const startIncreaseQuantityOfProductInShoppingCart = (productId) => {
   return async (dispatch, getState) => {
-    const { productsList } = getState().shoppingCart;
+    const { products } = getState().shoppingCart;
 
-    const productIndex = productsList.findIndex(
-      (product) => product.id === productId
+    const productIndex = products.findIndex(
+      (product) => product.product.id === productId,
     );
 
-    const updatedCart = productsList.map((product, index) =>
+    const updatedCart = products.map((product, index) =>
       index === productIndex
         ? {
             ...product,
             quantity: product.quantity + 1,
-            subtotal: product.subtotal + product.price,
+            subtotal: product.subtotal + product.product.price,
           }
-        : product
+        : product,
     );
 
     dispatch(updateProductInShoppingCart(updatedCart));
@@ -89,20 +104,20 @@ export const startIncreaseQuantityOfProductInShoppingCart = (productId) => {
 
 export const startDecreaseQuantityOfProductInShoppingCart = (productId) => {
   return async (dispatch, getState) => {
-    const { productsList } = getState().shoppingCart;
+    const { products } = getState().shoppingCart;
 
-    const productIndex = productsList.findIndex(
-      (product) => product.id === productId
+    const productIndex = products.findIndex(
+      (product) => product.product.id === productId,
     );
 
-    const updatedCart = productsList.map((product, index) =>
+    const updatedCart = products.map((product, index) =>
       index === productIndex
         ? {
             ...product,
             quantity: product.quantity - 1,
-            subtotal: product.subtotal - product.price,
+            subtotal: product.subtotal - product.product.price,
           }
-        : product
+        : product,
     );
 
     dispatch(updateProductInShoppingCart(updatedCart));
@@ -112,5 +127,13 @@ export const startDecreaseQuantityOfProductInShoppingCart = (productId) => {
 export const startSetBuyerInShoppingCart = (buyerInfo) => {
   return async (dispatch) => {
     dispatch(setBuyerInfo(buyerInfo));
+  };
+};
+
+export const startUpdateShoppingCart = (shoppingCart) => {
+  return async (dispatch) => {
+    const { data } = await updateShoppingCartService(shoppingCart);
+
+    console.log(data);
   };
 };

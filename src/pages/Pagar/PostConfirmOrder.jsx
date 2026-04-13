@@ -11,14 +11,21 @@ import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export const PostConfirmOrder = () => {
-  const { productsList, buyer } = useSelector((state) => state.shoppingCart);
+  const { shoppingCartId, products, buyer, total } = useSelector(
+    (state) => state.shoppingCart,
+  );
 
-  const { preferenceId } = useCreatePreference(productsList);
+  const { preferenceId } = useCreatePreference({
+    shoppingCartId,
+    products,
+    buyer,
+    total,
+  });
 
   const calculateTotal = () => {
-    const total = productsList.reduce(
-      (total, product) => total + product.price * product.quantity,
-      0
+    const total = products.reduce(
+      (total, product) => total + product.product.price * product.quantity,
+      0,
     );
     return total.toLocaleString("es-AR", {
       style: "currency",
@@ -34,16 +41,16 @@ export const PostConfirmOrder = () => {
           <h2 className=" text-g font-bold text-gray-800 mb-8 tracking-tight">
             Carrito de compras
           </h2>
-          {productsList.length === 0 ? (
+          {products.length === 0 ? (
             <p className="text-gray-500 text-center">
               No hay productos en el carrito.
             </p>
           ) : (
             <div>
               <ul className="divide-y divide-gray-300 ">
-                {productsList.map((product) => (
+                {products.map(({ product, quantity }, key) => (
                   <li
-                    key={product.id}
+                    key={key}
                     className="flex flex-col sm:flex-row items-center justify-between py-3"
                   >
                     <div className="flex items-center gap-4">
@@ -62,11 +69,11 @@ export const PostConfirmOrder = () => {
                     </div>
 
                     <span className="block mb-1 text-sm font-medium text-gray-700">
-                      {product.name} (x{product.quantity})
+                      {product.name} (x{quantity})
                     </span>
 
                     <span className="block mb-1 text-sm font-bold text-gray-700">
-                      ${(product.price * product.quantity).toFixed(2)}
+                      ${(product.price * quantity).toFixed(2)}
                     </span>
                   </li>
                 ))}
@@ -85,7 +92,7 @@ export const PostConfirmOrder = () => {
                 <span className="block mb-1 text-sm font-bold text-gray-700">
                   Name:
                 </span>
-                {buyer.fullName}
+                {buyer.firstname} {buyer.lastname}
               </li>
               <li className="block mb-1 text-sm font-medium text-gray-700">
                 <span className="block mb-1 text-sm font-bold text-gray-700">
@@ -103,7 +110,7 @@ export const PostConfirmOrder = () => {
                 <span className="block mb-1 text-sm font-bold text-gray-700">
                   Phone:
                 </span>
-                {buyer.phone}
+                {buyer.phone.areaCode} {buyer.phone.number}
               </li>
             </ul>
 

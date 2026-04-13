@@ -4,10 +4,10 @@ import { useCheckUserauthenticated } from "../hooks/useCheckUserAuthenticated";
 const { userAuthenticated } = useCheckUserauthenticated();
 
 const initialState = JSON.parse(
-  localStorage.getItem(`shopping-cart-${userAuthenticated.id}`)
+  localStorage.getItem(`shopping-cart-${userAuthenticated.id}`),
 ) || {
   shoppingCartId: "",
-  productsList: [],
+  products: [],
   buyer: {},
   total: 0,
 };
@@ -16,54 +16,62 @@ export const shoppingCartSlice = createSlice({
   name: "shoppingCart",
   initialState,
   reducers: {
+    createShoppingCart: (state, action) => {
+      state.shoppingCartId = action.payload.shoppingCartId;
+      state.products = action.payload.products;
+      state.buyer = action.payload.buyer;
+      state.total = action.payload.total;
+    },
+
     loadShoppingCart: (state, action) => {
       state.shoppingCartId = action.payload.shoppingCartId;
-      state.productsList = action.payload.productsList;
+      state.products = action.payload.products;
       state.buyer = action.payload.buyer;
-      state.total = state.productsList.reduce(
+      state.total = state.products.reduce(
         (total, product) => total + product.subtotal,
-        0
+        0,
       );
     },
 
     addProductToShoppingCart: (state, action) => {
-      state.productsList = [...state.productsList, action.payload];
-      state.total = state.productsList.reduce(
+      state.products = [...state.products, action.payload];
+      state.total = state.products.reduce(
         (total, product) => total + product.subtotal,
-        0
+        0,
       );
     },
 
     removeProductOfShoppingCart: (state, action) => {
-      state.productsList = action.payload;
-      state.total = state.productsList.reduce(
+      state.products = action.payload;
+      state.total = state.products.reduce(
         (total, product) => total + product.subtotal,
-        0
+        0,
       );
     },
 
     updateProductInShoppingCart: (state, action) => {
-      state.productsList = action.payload;
-      state.total = state.productsList.reduce(
+      state.products = action.payload;
+      state.total = state.products.reduce(
         (total, product) => total + product.subtotal,
-        0
+        0,
       );
     },
 
     resetShoppingCart: (state) => {
       state.shoppingCartId = "";
-      state.productsList = [];
+      state.products = [];
       state.buyer = {};
       state.total = 0;
     },
 
     setBuyerInfo: (state, action) => {
-      state.buyer = action.payload;
+      state.buyer = { ...state.buyer, ...action.payload };
     },
   },
 });
 
 export const {
+  createShoppingCart,
   loadShoppingCart,
   addProductToShoppingCart,
   updateProductInShoppingCart,

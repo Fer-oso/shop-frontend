@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { CheckCircle, AlertCircle, XCircle, RefreshCw } from "lucide-react";
-
-const status = ["success" | "pending" | "canceled"];
+import { CheckCircle, XCircle, RefreshCw } from "lucide-react";
+import { useLocation } from "react-router-dom";
 
 function PaymentStatus() {
-  const [status, setStatus] = useState("success");
+  const { search } = useLocation();
+  const queryParams = new URLSearchParams(search);
+
+  const status = queryParams.get("status") || "pending";
 
   const statusConfig = {
     success: {
@@ -23,7 +25,7 @@ function PaymentStatus() {
       bgColor: "bg-yellow-50",
       borderColor: "border-yellow-200",
     },
-    canceled: {
+    failure: {
       icon: XCircle,
       title: "Payment Canceled",
       description: "Your payment has been canceled",
@@ -78,40 +80,6 @@ function PaymentStatus() {
               </span>
             </div>
           </div>
-        </div>
-
-        {/* Status Toggle Buttons (for demo purposes) */}
-        <div className="mt-6 flex gap-2 justify-center">
-          <button
-            onClick={() => setStatus("success")}
-            className={`px-4 py-2 rounded ${
-              status === "success"
-                ? "bg-green-500 text-white"
-                : "bg-gray-200 text-gray-700"
-            }`}
-          >
-            Success
-          </button>
-          <button
-            onClick={() => setStatus("pending")}
-            className={`px-4 py-2 rounded ${
-              status === "pending"
-                ? "bg-yellow-500 text-white"
-                : "bg-gray-200 text-gray-700"
-            }`}
-          >
-            Pending
-          </button>
-          <button
-            onClick={() => setStatus("canceled")}
-            className={`px-4 py-2 rounded ${
-              status === "canceled"
-                ? "bg-red-500 text-white"
-                : "bg-gray-200 text-gray-700"
-            }`}
-          >
-            Canceled
-          </button>
         </div>
       </div>
     </div>

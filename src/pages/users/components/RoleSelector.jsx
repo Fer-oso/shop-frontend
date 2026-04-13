@@ -10,7 +10,7 @@ export const RoleSelector = ({
 }) => {
   const { selectedRoles, handleRoleChange } = useRoleSelection(
     formState.roles,
-    setFormState
+    setFormState,
   );
 
   return roles?.includes("ADMIN") ? (
@@ -22,12 +22,10 @@ export const RoleSelector = ({
         className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 font-bold text-gray-800 mb-8 tracking-tight"
         onChange={handleRoleChange}
         value={selectedRoles}
-        availableRoles={availableRoles}
+        options={availableRoles}
       />
     </div>
   ) : (
     <></>
   );
 };
-
-

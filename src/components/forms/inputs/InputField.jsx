@@ -9,6 +9,7 @@ export const InputField = ({
   placeholder,
   className,
   required,
+  list,
 }) => {
   return (
     <>
@@ -20,6 +21,7 @@ export const InputField = ({
         placeholder={placeholder}
         className={className}
         required={required || false}
+        list={list}
       />
     </>
   );

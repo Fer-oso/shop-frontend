@@ -12,7 +12,7 @@ export const NotFound = () => {
       <div className="flex justify-center items-center">
         <Logo width={"w-96"} height={"h-40"} />
       </div>
-      <p className="text-xl text-gray-600 max-w-md mx-auto mb-8">
+      <p className="text-xl text-gray-600 max-w-md mx-auto mt-5">
         Lo sentimos, la página que buscas no existe o fue movida.
       </p>
       <Link

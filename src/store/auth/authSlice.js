@@ -6,6 +6,7 @@ const initialState = useCheckUserauthenticated();
 export const authslice = createSlice({
   name: "authentication",
   initialState,
+
   reducers: {
     login: (state, action) => {
       state.status = action.payload.status;

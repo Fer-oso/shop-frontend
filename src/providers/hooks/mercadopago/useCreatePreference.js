@@ -3,33 +3,44 @@ import { createPreferenceService } from "../../mercadopago/mercadoPagoService";
 import { PUBLIC_KEY } from "../../../mercadopago/credentials";
 import { initMercadoPago } from "@mercadopago/sdk-react";
 
-export const useCreatePreference = (productsList) => {
+export const useCreatePreference = ({
+  shoppingCartId,
+  products,
+  buyer,
+  total,
+}) => {
   const [preferenceId, setPreferenceId] = useState(null);
 
   initMercadoPago(PUBLIC_KEY, {
     locale: "es-AR",
   });
 
-  const products = productsList.map((prod) => {
+  const productsList = products.map(({ product, quantity }) => {
+    console.log(product);
     return {
-      title: prod.name,
-      unitPrice: prod.price,
-      description: prod.description,
-      pictureUrl: prod.images[0]?.downloadUrl,
-      quantity: prod.quantity,
+      title: product.name,
+      unitPrice: product.price,
+      description: product.description,
+      categoryId: product.category.name,
+      pictureUrl: product.images[0]?.downloadUrl,
+      quantity: quantity,
     };
   });
 
   const getPreferenceId = async () => {
     try {
-      const response = await createPreferenceService(products);
-
-      //con java
-      // const id = response.data;
+      const response = await createPreferenceService({
+        orderNumber: shoppingCartId,
+        shoppingCartId,
+        products: productsList,
+        buyer,
+        total,
+        status: "pending",
+      });
 
       //con express
       const id = response;
-      console.log(id);
+      console.log(response);
 
       if (id) {
         setPreferenceId(id);

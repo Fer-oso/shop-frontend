@@ -10,22 +10,19 @@ import { XMarkIcon } from "@heroicons/react/24/solid";
 import { ShoppingCartButton } from "./ShoppingCartButton";
 
 import { Link } from "react-router-dom";
-import { ModifyQuantityButton } from "../buttons/ModifyQuantityButton";
 import { useGetShoppingCart } from "../hooks/useGetShoppingCart";
+import { ShoppingCartProduct } from "./ShoppingCartProduct";
 
 export default function ShoppingCartList() {
-  const { productsList, total } = useGetShoppingCart();
+  const { products, total } = useGetShoppingCart();
 
   const [open, setOpen] = useState(false);
 
-  if (!productsList.length > 0) return null;
+  if (!products?.length > 0) return null;
 
   return (
     <div>
-      <ShoppingCartButton
-        show={setOpen}
-        quantityProducts={productsList.length}
-      />
+      <ShoppingCartButton show={setOpen} quantityProducts={products.length} />
       <Transition show={open}>
         <Dialog className="relative z-10" onClose={setOpen}>
           <TransitionChild
@@ -75,60 +72,7 @@ export default function ShoppingCartList() {
                           </div>
                         </div>
 
-                        <div className="mt-8">
-                          <div className="flow-root">
-                            <ul
-                              role="list"
-                              className="-my-6 divide-y divide-gray-400"
-                            >
-                              {productsList.map((product) => (
-                                <li key={product.id} className="flex py-6">
-                                  <div className="h-24 w-24 flex-shrink-0 overflow-clip rounded-md border border-gray-200">
-                                    {product.images?.[0] ? (
-                                      <img
-                                        src={product.images[0].downloadUrl}
-                                        className="h-full w-full object-cover object-center"
-                                        alt={product.name}
-                                      />
-                                    ) : (
-                                      <span>No Image</span>
-                                    )}
-                                  </div>
-
-                                  <div className="ml-4 flex flex-1 flex-col">
-                                    <div>
-                                      <div className="flex justify-between text-base font-medium text-gray-900">
-                                        <h3>{product.name}</h3>
-                                        <ul>
-                                          <li>
-                                            <p className="ml-4 font-black">
-                                              precio ${product.price}
-                                            </p>
-                                          </li>
-                                          <li>
-                                            <p className="ml-4 mt-4 font-black">
-                                              subtotal ${product.subtotal}
-                                            </p>
-                                          </li>
-                                        </ul>
-                                      </div>
-                                    </div>
-                                    <div className="flex flex-1 items-center justify-between text-sm">
-                                      <div className="flex items-center mt-3 ml-3 gap-2">
-                                        <p className="text-gray-800 font-black">
-                                          Quantity {product.quantity}
-                                        </p>
-                                        <ModifyQuantityButton
-                                          product={product}
-                                        />
-                                      </div>
-                                    </div>
-                                  </div>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        </div>
+                        <ShoppingCartProduct products={products} />
                       </div>
 
                       <div className="border-t border-gray-200 px-4 py-6 sm:px-6">

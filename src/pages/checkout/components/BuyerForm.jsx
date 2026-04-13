@@ -1,103 +1,135 @@
 import React, { useEffect, useState } from "react";
 import { ConfirmOrderButton } from "./button/ConfirmOrderButton";
 import { useForm } from "../../../components/hooks/useForm";
-import { useDispatch } from "react-redux";
-import { startSetBuyerInShoppingCart } from "../../../store/shoppingcart/shoppingCartThunk";
-import { Label } from "../../../components/forms/label/Label";
-import { InputField } from "../../../components/forms/inputs/InputField";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  startCreateShoppingCart,
+  startSetBuyerInShoppingCart,
+} from "../../../store/shoppingcart/shoppingCartThunk";
 import { toast } from "sonner";
+import calculateTotalShoppingCart from "../../utils/calculateTotalShoppingCart";
+import { FormField } from "../../../components/forms/formfield/FormField";
 
-export const BuyerForm = ({ buyerInfo }) => {
+export const BuyerForm = () => {
   const dispatch = useDispatch();
+
+  const shoppingCart = useSelector((state) => state.shoppingCart);
+
+  const { buyer, products } = shoppingCart;
 
   const [confirmOrder, setConfirmOrder] = useState(false);
 
-  const { formState, onInputChange } = useForm(buyerInfo);
+  const { formState, onInputChange } = useForm(buyer);
 
-  const { fullName, email, address, phone } = formState;
+  const { firstname, lastname, email, address, areaCode, number } = formState;
 
   useEffect(() => {
-    dispatch(startSetBuyerInShoppingCart(formState));
+    var payer = {
+      firstname,
+      lastname,
+      email,
+      address,
+      phone: { areaCode, number },
+    };
+
+    dispatch(startSetBuyerInShoppingCart(payer));
   }, [formState]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    alert("¡Pedido confirmado con éxito!");
+    dispatch(startCreateShoppingCart(shoppingCart));
     setConfirmOrder(true);
-
-    toast.success("Pedido confirmado con éxito");
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <Label
-            labelText={"Nombre completo"}
-            className="block mb-1 text-sm font-medium text-gray-700"
-          />
+    <div className="bg-white shadow-lg rounded-lg p-6 sticky top-8">
+      <h2 className=" text-lg font-bold text-gray-800 mb-8 tracking-tight">
+        Información del Usuario
+      </h2>
 
-          <InputField
-            type={"text"}
-            name={"fullName"}
-            value={fullName}
-            onChange={onInputChange}
-            placeholder={"Ejemplo ejemplito"}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
-        <div>
-          <Label
-            className="block mb-1 text-sm font-medium text-gray-700"
-            labelText={" Correo Electrónico"}
-          />
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <FormField
+          label={"Nombre"}
+          name={"firstname"}
+          type={"text"}
+          value={firstname || ""}
+          required={true}
+          onChange={onInputChange}
+          placeholder={"Ejemplo ejemplito"}
+          error={false}
+        />
 
-          <InputField
-            type="email"
-            id="email"
-            name="email"
-            value={email}
-            onChange={onInputChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="ejemplo@correo.com"
-          />
-        </div>
-        <div>
-          <Label
-            className="block mb-1 text-sm font-medium text-gray-700"
-            labelText={"Direccion"}
-          />
-          <InputField
-            type="text"
-            id="address"
-            name="address"
-            value={address}
-            onChange={onInputChange}
-            required={true}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Tu dirección"
-          />
-        </div>
-        <div>
-          <Label
-            className="block mb-1 text-sm font-medium text-gray-700"
-            labelText={"Telefono"}
-          />
-          <InputField
-            type="tel"
-            id="phone"
-            name="phone"
-            value={phone}
-            onChange={onInputChange}
-            required
-            className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Tu número de teléfono"
-          />
-        </div>
+        <FormField
+          label={"Apellido"}
+          name={"lastname"}
+          type={"text"}
+          value={lastname || ""}
+          required={true}
+          onChange={onInputChange}
+          placeholder={"Ejemplo ejemplito"}
+          error={false}
+        />
+
+        <FormField
+          label={" Correo Electrónico"}
+          name={"email"}
+          type={"email"}
+          value={email || ""}
+          required={true}
+          onChange={onInputChange}
+          placeholder="ejemplo@correo.com"
+          error={false}
+        />
+
+        <FormField
+          label={"Direccion"}
+          name={"address"}
+          type={"address"}
+          value={address || ""}
+          required={true}
+          onChange={onInputChange}
+          placeholder="Tu dirección"
+          error={false}
+        />
+
+        <FormField
+          label={"Codigo de area"}
+          name={"areaCode"}
+          type={"tel"}
+          value={areaCode || ""}
+          required={true}
+          onChange={onInputChange}
+          placeholder="Tu código de área"
+          error={false}
+        />
+
+        <FormField
+          label={"Telefono"}
+          name={"number"}
+          type={"tel"}
+          value={number || ""}
+          required={true}
+          onChange={onInputChange}
+          placeholder="Tu número de teléfono"
+          error={false}
+        />
 
         <ConfirmOrderButton confirmOrder={confirmOrder} />
       </form>
-    </>
+
+      <div className="mt-6 border-t border-gray-200 pt-4">
+        <h2 className="text-md font-semibold text-gray-700">
+          Resumen del pedido
+        </h2>
+        <div className="flex justify-between py-2">
+          <span className="block mb-1 text-sm font-bold text-gray-700">
+            Total:
+          </span>
+          <span className="block mb-1 text-sm font-bold text-gray-700">
+            {calculateTotalShoppingCart(products)}
+          </span>
+        </div>
+      </div>
+    </div>
   );
 };

@@ -2,16 +2,18 @@ import { axiosInstance } from "../axios/axiosInstace";
 
 const PATH_SHOPPINGCART = "shoppingcart";
 
-export const createShoppingCartService = async (formDataProduct) => {
+export const updateShoppingCartService = async (formDataProduct) => {
   try {
-    const response = await axiosInstance.post(
+    const response = await axiosInstance.put(
       `${PATH_SHOPPINGCART}`,
-      formDataProduct,
+      formDataProduct
     );
 
     console.log(response);
 
-    return { data: response.data, status: response.status };
+    const data = await response.data;
+
+    return { data };
   } catch (error) {
     // Verificar si el error proviene de la respuesta del servidor
     if (error.response) {

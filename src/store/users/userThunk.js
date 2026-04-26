@@ -1,3 +1,4 @@
+import { object } from "prop-types";
 import { createUserFormData } from "../../pages/users/utils/createUserFormData";
 import { deleteUserById } from "../../providers/users/deleteUserById";
 import { editUserById } from "../../providers/users/editUserById";
@@ -22,30 +23,22 @@ export const startLoadUser = (user, message) => {
   };
 };
 
-export const startRegisterUser = (userRegister, files) => {
+export const startRegisterUser = (formDataUserRegistered) => {
   return async (dispatch) => {
-    const object = {
-      requestName: "user",
-      object: userRegister,
-      requestNameFiles: "image",
-      files,
-    };
+    const { data, error } = await registerNewUser(formDataUserRegistered);
 
-    const formDataUserRegistered = createUserFormData(object);
+    console.log(error);
 
-    const { user, error } = await registerNewUser(formDataUserRegistered);
+    console.log(data);
 
-    const userRegistered = user ? user : {};
-
+    const userRegistered = data.response;
     const message = error
-      ? error
-      : { code: "201", message: "User registered succesfully 😊" };
+      ? error.response
+      : { code: "201", response: "User registered successfully" };
 
-    const { payload } = await dispatch(
-      registerUser({ userRegistered, message })
-    );
+    dispatch(registerUser({ userRegistered, message }));
 
-    return payload;
+    return { message };
   };
 };
 

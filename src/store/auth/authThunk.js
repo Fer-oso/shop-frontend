@@ -1,37 +1,51 @@
 import { loginWithEmailAndPassword } from "../../providers/login/loginWithEmailAndPassword";
+import { refreshToken } from "../../providers/login/refreshtoken";
 import { resetShoppingCart } from "../shoppingcart/shoppingCartSlice";
-import { login, logout } from "./authSlice";
+import { login, logout, setToken } from "./authSlice";
 
 export const startLoginUserWithUsernameAndPassword = ({
   username,
   password,
 }) => {
   return async (dispatch) => {
-    const { status, message, userAuthenticated } =
-      await loginWithEmailAndPassword({
-        username,
-        password,
-      });
+    const { data, status, error } = await loginWithEmailAndPassword({
+      username,
+      password,
+    });
 
-    if (status === "authenticated") {
-      dispatch(login({ status, message, userAuthenticated }));
+    if (data) {
+      const userAuthenticated = data;
 
-      localStorage.setItem(
-        "auth",
-        JSON.stringify({ status, message, userAuthenticated })
-      );
+      dispatch(login({ userAuthenticated, status }));
+
+      return { userAuthenticated, status };
     }
+
+    return { error };
   };
 };
 
 export const startLogoutUser = () => {
-  return (dispatch) => {
-    const status = "unauthenticated";
-    const userAuthenticated = {};
+  const status = "unauthenticated";
+  const userAuthenticated = {};
+  localStorage.setItem("auth", JSON.stringify({ status, userAuthenticated }));
 
+  return (dispatch) => {
     dispatch(logout({ status, userAuthenticated }));
     dispatch(resetShoppingCart());
+  };
+};
 
-    localStorage.setItem("auth", JSON.stringify({ status, userAuthenticated }));
+export const startRefreshToken = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await refreshToken();
+
+      dispatch(setToken(data));
+
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
   };
 };

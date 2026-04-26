@@ -1,8 +1,28 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { startLoadUser, startLoadUsers } from "../../../store/users/userThunk";
-import { useLoaderData } from "react-router-dom";
+import {
+  startLoadUser,
+  startLoadUsers,
+  startRegisterUser,
+} from "../../../store/users/userThunk";
 import { loadUser } from "../../../providers/users/loadUser";
+import { createUserFormData } from "../utils/createUserFormData";
+
+export const useCreateUser = () => {
+  const dispatch = useDispatch();
+
+  const createUser = async (userRegister, files) => {
+    const formDataUserRegistered = createUserFormData(userRegister, files);
+
+    const { message } = await dispatch(
+      startRegisterUser(formDataUserRegistered),
+    );
+
+    return { message };
+  };
+
+  return { createUser };
+};
 
 export const useGetUsersData = () => {
   /* useLoadUsers */

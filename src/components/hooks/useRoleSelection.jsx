@@ -2,7 +2,7 @@ import { useState } from "react";
 
 const useRoleSelection = (initialRoles = [], updateFormState) => {
   const [selectedRoles, setSelectedRoles] = useState(
-    initialRoles.map((role) => role.roleName)
+    initialRoles.map((role) => role.roleName),
   );
 
   const handleRoleChange = (event) => {
@@ -13,7 +13,6 @@ const useRoleSelection = (initialRoles = [], updateFormState) => {
 
     setSelectedRoles(selected);
 
-    // Actualiza `roles` en el `formState` con los objetos transformados
     const updatedRoles = selected.map((roleName) => ({ roleName }));
     updateFormState((prevState) => ({
       ...prevState,

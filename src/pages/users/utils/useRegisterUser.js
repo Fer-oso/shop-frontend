@@ -10,54 +10,58 @@ export const useRegisterUserAlert = () => {
     buttonsStyling: false,
   });
 
-  const showCreateAlert = useCallback(async (registerFunction) => {
-    const result = await swalWithBootstrapButtons.fire({
-      title: "Are you sure?",
-      text: "Check all fields are correct",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Yes, create it!",
-      cancelButtonText: "No, cancel!",
-    });
+  const showCreateAlert = useCallback(
+    async (registerFunction) => {
+      const result = await swalWithBootstrapButtons.fire({
+        title: "Are you sure?",
+        text: "Check all fields are correct",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, create it!",
+        cancelButtonText: "No, cancel!",
+      });
 
-    if (result.isConfirmed) {
-      try {
-        const { message } = await registerFunction();
+      if (result.isConfirmed) {
+        try {
+          const { message } = await registerFunction();
 
-        console.log(message);
-        if (message.code === "201") {
-          await swalWithBootstrapButtons.fire({
-            title: "Create!",
-            text: "Your user has been registered succesfully.",
-            icon: "success",
-          });
-        } else {
+          console.log(message);
+
+          if (message.code === "201") {
+            await swalWithBootstrapButtons.fire({
+              title: "Create!",
+              text: "Your user has been registered succesfully.",
+              icon: "success",
+            });
+          } else {
+            await swalWithBootstrapButtons.fire({
+              title: "Error",
+              text: "There was an issue registring your user.",
+              icon: "error",
+            });
+          }
+        } catch (error) {
+          // Manejo de errores en caso de fallo en registerFunction
+          console.error("Error registring user:", error);
           await swalWithBootstrapButtons.fire({
             title: "Error",
-            text: "There was an issue registring your user.",
+            text: "There was an unexpected issue. Please try again.",
             icon: "error",
           });
         }
-      } catch (error) {
-        // Manejo de errores en caso de fallo en registerFunction
-        console.error("Error registring user:", error);
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
         await swalWithBootstrapButtons.fire({
-          title: "Error",
-          text: "There was an unexpected issue. Please try again.",
+          title: "Cancelled",
+          text: "Your user has not registered",
           icon: "error",
         });
       }
-    } else if (
-      /* Read more about handling dismissals below */
-      result.dismiss === Swal.DismissReason.cancel
-    ) {
-      await swalWithBootstrapButtons.fire({
-        title: "Cancelled",
-        text: "Your user has not registered",
-        icon: "error",
-      });
-    }
-  });
+    },
+    [swalWithBootstrapButtons],
+  );
 
   return { showCreateAlert };
 };

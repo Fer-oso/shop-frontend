@@ -1,4 +1,4 @@
-import { axiosInstance } from "../axios/axiosInstace";
+import { axiosInstance, axiosPublic } from "../axios/axiosInstace";
 
 const API_URL = "auth/login";
 
@@ -9,13 +9,10 @@ export const loginWithEmailAndPassword = async ({ username, password }) => {
       password,
     });
 
-    const userAuthenticated = await response.data;
+    const data = await response.data;
+    const status = "authenticated";
 
-    return {
-      status: "authenticated",
-      message: "User authenticated",
-      userAuthenticated,
-    };
+    return { data, status };
   } catch (error) {
     // Verificar si el error proviene de la respuesta del servidor
     if (error.response) {

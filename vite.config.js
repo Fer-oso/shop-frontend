@@ -5,8 +5,6 @@ import react from "@vitejs/plugin-react-swc";
 export default defineConfig({
   plugins: [react()],
   server: {
-    allowedHosts: [
-      "restaurant-interest-acdbentity-converted.trycloudflare.com",
-    ],
+    allowedHosts: ["orchestra-webcast-learners-innovation.trycloudflare.com"],
   },
 });

@@ -8,37 +8,57 @@ import { Label } from "../label/Label";
 
 import { Button } from "../../buttons/Button";
 import { ImageForm } from "../image/ImageForm";
+import useFileInput from "../../hooks/useFileInput";
+import {
+  USER_TO_REGISTER,
+  useUserAccountStatusValues,
+} from "../../../pages/models/user/usersModels";
+import { useForm } from "../../hooks/useForm";
+import { useSelector } from "react-redux";
 
-export const UserForm = ({
-  mode,
-  formState,
-  setFormState,
-  onInputChange,
-  onCheckboxChange,
-  userAccountStatusValues,
-  filesHandler,
-  rolesData,
-  userActionfunction,
-}) => {
+export const UserForm = ({ mode, userActionfunction }) => {
+  const { userAuthenticated } = useSelector((state) => state.authentication);
+
+  const roles = userAuthenticated?.roles?.map((role) => role.roleName);
+
+  const rolesData = { roles, availableRoles: ["USER", "ADMIN", "INVITED"] };
+
+  const { formState, setFormState, onInputChange, onCheckboxChange } =
+    useForm(USER_TO_REGISTER);
+
+  const {
+    username,
+    password,
+    profileImages,
+    enabled,
+    accountNonExpired,
+    accountNonLocked,
+    credentialsNonExpired,
+  } = formState;
+
+  const { files, handleFileChange, resetFiles, messageError } = useFileInput();
+
+  const userAccountStatusValues = useUserAccountStatusValues(
+    enabled,
+    accountNonExpired,
+    accountNonLocked,
+    credentialsNonExpired,
+  );
+
   const title = rolesData.roles?.includes("ADMIN")
     ? mode === "Editar"
       ? "Editar usuario (ADMIN mode)"
       : "Registrar usuario (ADMIN mode)"
     : mode === "Editar"
-    ? "Editar usuario"
-    : "Registrar Usuario";
-
-  const { profileImages } = formState;
-
-  const { files } = filesHandler;
+      ? "Editar usuario"
+      : "Registrar Usuario";
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    userActionfunction(formState, files);
   };
 
   const navigate = useNavigate();
-
-  const { username, password } = formState;
 
   return (
     <div className="max-w-md md:max-w-2xl mx-auto p-8 bg-white rounded-2xl shadow-xl transition-transform duration-300">
@@ -80,17 +100,23 @@ export const UserForm = ({
         </div>
 
         <FieldSet
-          roles={rolesData.roles}
+          {...rolesData}
           fieldsetValues={userAccountStatusValues}
           onCheckboxChange={onCheckboxChange}
         />
 
-        <InputFile {...filesHandler} />
+        <InputFile
+          files={files}
+          messageError={messageError}
+          handleFileChange={handleFileChange}
+          resetFiles={resetFiles}
+        />
 
         <ImageForm text={"Profile image"} images={profileImages} />
 
         <RoleSelector
-          {...rolesData}
+          roles={rolesData?.roles?.map((role) => role)}
+          availableRoles={rolesData.availableRoles}
           formState={formState}
           setFormState={setFormState}
         />
@@ -98,7 +124,6 @@ export const UserForm = ({
         <Button
           type="submit"
           className="w-full bg-indigo-600 text-white py-2 text-base rounded-lg hover:bg-indigo-700 transition duration-300"
-          onClick={() => userActionfunction(formState, files)}
           children={mode}
         />
 

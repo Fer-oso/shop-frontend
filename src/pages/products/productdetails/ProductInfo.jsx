@@ -28,7 +28,7 @@ export const ProductInfo = ({ product }) => {
 
   const { roles } = useOutletContext();
 
-  const [imageSelected, setImageSelected] = useState(images[0] || null);
+  const [imageSelected, setImageSelected] = useState(images?.[0] || null);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">

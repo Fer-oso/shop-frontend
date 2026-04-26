@@ -55,7 +55,5 @@ export const useCheckUserShoppingCart = (loggedUser) => {
     );
 
     dispatch(startLoadShoppingCart(newShoppingCart));
-    console.log(newShoppingCart);
-    //  dispatch(startCreateShoppingCart(newshoppingCart));
   }, [loggedUser, shoppingCart, dispatch]);
 };

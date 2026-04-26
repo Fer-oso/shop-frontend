@@ -1,19 +1,25 @@
 import React from "react";
-import "./ProductDetailsPage.css";
-
-import { ErrorMessage } from "../../../components/alerts/ErrorMessage";
-import { ProductInfo } from "./ProductInfo";
 import { useGetProductDetails } from "../hooks/useProducts";
 import { useParams } from "react-router-dom";
+import { EditProductForm } from "./EditproductForm";
+import { ErrorMessage } from "../../../components/alerts/ErrorMessage";
 import { Loading } from "../../../components/loading/Loading";
 
-export const ProductDetail = () => {
+export const EditProduct = () => {
   const { id } = useParams();
 
   const { product, message } = useGetProductDetails(id);
+  console.log(product);
 
   if (product) {
-    return <ProductInfo product={product} />;
+    return (
+      <div className="max-w-4xl mx-auto p-8 bg-white rounded-2xl shadow-xl transition-transform duration-300">
+        <h2 className="text-center text-2xl font-bold text-gray-800 mb-8 tracking-tight">
+          Editar Producto
+        </h2>
+        <EditProductForm product={product} message={message} />
+      </div>
+    );
   }
 
   return (

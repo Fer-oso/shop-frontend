@@ -6,16 +6,16 @@ import {
   startCreateShoppingCart,
   startSetBuyerInShoppingCart,
 } from "../../../store/shoppingcart/shoppingCartThunk";
-import { toast } from "sonner";
 import calculateTotalShoppingCart from "../../utils/calculateTotalShoppingCart";
 import { FormField } from "../../../components/forms/formfield/FormField";
+import { startCreateOrder } from "../../../store/order/orderThunk";
 
 export const BuyerForm = () => {
   const dispatch = useDispatch();
 
   const shoppingCart = useSelector((state) => state.shoppingCart);
 
-  const { buyer, products } = shoppingCart;
+  const { shoppingCartId, buyer, products, total } = shoppingCart;
 
   const [confirmOrder, setConfirmOrder] = useState(false);
 
@@ -37,7 +37,16 @@ export const BuyerForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(startCreateShoppingCart(shoppingCart));
+    const payload = await dispatch(startCreateShoppingCart(shoppingCart));
+    console.log(payload);
+    dispatch(
+      startCreateOrder({
+        orderNumber: "",
+        shoppingCartId,
+        total,
+        status: "pending",
+      }),
+    );
     setConfirmOrder(true);
   };
 

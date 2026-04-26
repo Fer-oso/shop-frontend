@@ -19,19 +19,18 @@ export const startLoadShoppingCart = (shoppingcart) => {
 export const startCreateShoppingCart = (shoppingcart) => {
   return async (dispatch) => {
     try {
-      const { status } = await createShoppingCartService(shoppingcart);
+      const { data, status } = await createShoppingCartService(shoppingcart);
 
-      if (status === 200 || status === 201) {
-        dispatch(createShoppingCart(shoppingcart));
+      if (status === 201) {
+        dispatch(createShoppingCart(data));
         toast.success("Pedido confirmado con éxito");
       }
 
-      return status;
+      return { data, status };
     } catch (error) {
       console.error("Error al crear el carrito:", error);
-      return toast.error(
-        "Error al crear el carrito. View reason: " + error.message,
-      );
+      toast.error("Error al crear el carrito. View reason: " + error.message);
+      return { error: error.message };
     }
   };
 };

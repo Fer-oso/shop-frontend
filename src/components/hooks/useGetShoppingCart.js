@@ -7,11 +7,10 @@ export const useGetShoppingCart = () => {
   const { products, buyer, total } = shoppingCart;
 
   useEffect(() => {
-    console.log("me ejecute");
     if (buyer?.user?.id)
       localStorage.setItem(
         `shopping-cart-${buyer.user.id}`,
-        JSON.stringify(shoppingCart)
+        JSON.stringify(shoppingCart),
       );
   }, [shoppingCart]);
 

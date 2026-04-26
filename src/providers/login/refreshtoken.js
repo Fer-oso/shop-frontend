@@ -1,17 +1,12 @@
-import { axiosInstance } from "../axios/axiosInstace";
+import { axiosPublic } from "../axios/axiosInstace";
 
-const PATH_USER = "users";
+const PATH_REFRESH_TOKEN = "auth/refresh";
 
-export const registerNewUser = async (formDataUserEdited) => {
+export const refreshToken = async () => {
   try {
-    const response = await axiosInstance.post(
-      `${PATH_USER}`,
-      formDataUserEdited,
-    );
+    const response = await axiosPublic.post(PATH_REFRESH_TOKEN);
 
-    const data = response;
-
-    console.log(data);
+    const data = await response.data;
 
     return { data };
   } catch (error) {
@@ -20,14 +15,19 @@ export const registerNewUser = async (formDataUserEdited) => {
       // La respuesta del servidor tiene un código de error (por ejemplo, 404)
       console.log("Server Error:", error.response.data);
 
-      return { error: error.response.data }; // Devuelve el mensaje de error del servidor
+      return {
+        error: {
+          status: error.response.status,
+          message: error.response.data?.message,
+        },
+      }; // Devuelve el mensaje de error del servidor
     } else if (error.request) {
       // No hubo respuesta del servidor
       console.log("No response received from server:", error.request);
 
       return { error: { message: "No response from server" } };
     } else {
-      // Error al configurar la solicitud
+      // Error al configurar la solicitu
       console.log("Error setting up request:", error.message);
 
       return { error: "Error setting up request" };

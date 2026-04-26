@@ -19,7 +19,7 @@ export const RoleSelector = ({
         Roles
       </label>
       <Select
-        className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 font-bold text-gray-800 mb-8 tracking-tight"
+        className="w-full px-3 py-2 border border-gray-300 rounded-md text-md focus:outline-none focus:ring-2 focus:ring-blue-500 font-bold text-black mb-8 tracking-tight"
         onChange={handleRoleChange}
         value={selectedRoles}
         options={availableRoles}

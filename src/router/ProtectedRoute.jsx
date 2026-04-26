@@ -13,7 +13,7 @@ export const ProtectedRoute = () => {
     useGetUserAuthenticated();
 
   useCheckUserShoppingCart(
-    status === "authenticated" ? userAuthenticated : null
+    status === "authenticated" ? userAuthenticated : null,
   );
 
   return userAuthenticated.id ? (

@@ -4,7 +4,7 @@ import { useCheckUserauthenticated } from "../hooks/useCheckUserAuthenticated";
 const { userAuthenticated } = useCheckUserauthenticated();
 
 const initialState = JSON.parse(
-  localStorage.getItem(`shopping-cart-${userAuthenticated.id}`),
+  localStorage.getItem(`shopping-cart-${userAuthenticated?.id}`),
 ) || {
   shoppingCartId: "",
   products: [],

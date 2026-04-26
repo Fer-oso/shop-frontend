@@ -1,17 +1,12 @@
 import React from "react";
 
 import { Link } from "react-router-dom";
-
-import { useDispatch } from "react-redux";
-
 import { Button } from "../../../components/buttons/Button";
 import { InputField } from "../../../components/forms/inputs/InputField";
 import { useForm } from "../../../components/hooks/useForm";
-import { startLoginUserWithUsernameAndPassword } from "../../../store/auth/authThunk";
+import { useAuth } from "../../../providers/hooks/auth/useAuth";
 
 export const LoginForm = () => {
-  const dispatch = useDispatch();
-
   const loginModel = {
     username: "",
     password: "",
@@ -21,9 +16,11 @@ export const LoginForm = () => {
 
   const { username, password } = formState;
 
+  const { login } = useAuth();
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(startLoginUserWithUsernameAndPassword(formState));
+    login(formState);
   };
 
   return (
@@ -40,7 +37,6 @@ export const LoginForm = () => {
           onChange={onInputChange}
           placeholder="Ingrese su usuario"
           className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-
         />
       </div>
 
@@ -53,7 +49,6 @@ export const LoginForm = () => {
           onChange={onInputChange}
           placeholder="Ingrese su contraseñña"
           className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-
         />
       </div>
 

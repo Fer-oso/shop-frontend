@@ -1,25 +1,22 @@
 import React from "react";
-import { useLoaderData } from "react-router-dom";
+
 import { ErrorMessage } from "../../components/alerts/ErrorMessage";
 
 import ProductList from "./components/product list/ProductList";
 
 import { ShoppingBag } from "lucide-react";
-import { useGetProducts } from "./hooks/useGetProducts";
+import { useGetProducts } from "./hooks/useProducts";
 
 export const Products = () => {
-  const { data, error } = useLoaderData();
-
-  const products = useGetProducts(data, error);
-
+  const { products, message } = useGetProducts();
   return (
     <>
-      {error ? (
+      {message?.error ? (
         <ErrorMessage
-          message={error.message}
-          status={error.status}
-          code={error.code}
-          timestamp={error.timestamp}
+          message={message}
+          status={message}
+          code={message}
+          timestamp={message}
         />
       ) : (
         <div>

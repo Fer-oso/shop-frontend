@@ -7,12 +7,9 @@ import { Users } from "../pages/users/Users";
 
 import { Products } from "../pages/products/Products";
 import { UserEdit } from "../pages/users/UserEdit";
-import { loadProducts } from "../providers/products/loadProducts";
-import { loadProduct } from "../providers/products/loadProduct";
 
 import { CreateProductForm } from "../pages/products/createproduct/CreateProductForm";
 import { ProductDetail } from "../pages/products/productdetails/ProductDetail";
-import { EditProductForm } from "../pages/products/editproduct/EditproductForm";
 
 import { ProtectedRoute } from "./ProtectedRoute";
 import { Home } from "../pages/home/Home";
@@ -27,6 +24,7 @@ import { Login } from "../pages/auth/login/Login";
 import { RegisterForm } from "../pages/auth/register/RegisterForm";
 import { UserProfileEdit } from "../pages/users/UserProfileEdit";
 import { UserInfo } from "../pages/users/pages/UserInfo";
+import { EditProduct } from "../pages/products/editproduct/EditProduct";
 
 export const routes = () => {
   const router = createBrowserRouter([
@@ -44,17 +42,18 @@ export const routes = () => {
           element: <UserProfileEdit />,
         },
 
-        { path: "/products", element: <Products />, loader: loadProducts },
+        {
+          path: "/products",
+          element: <Products />,
+        },
         {
           path: "/products/:id",
           element: <ProductDetail />,
-          loader: loadProduct,
         },
         { path: "/products/create", element: <CreateProductForm /> },
         {
           path: "/products/:id/edit",
-          element: <EditProductForm />,
-          loader: loadProduct,
+          element: <EditProduct />,
         },
 
         { path: "/products/offers", element: <Construccion /> },

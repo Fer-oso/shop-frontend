@@ -4,6 +4,7 @@ import { startAddProductToShoppingCart } from "../../../../store/shoppingcart/sh
 import { Toaster } from "sonner";
 import { ProductItem } from "./ProductItem";
 import { ModalProduct } from "./ModalProduct";
+import { Loading } from "../../../../components/loading/Loading";
 
 export default function ProductList({ products }) {
   const dispatch = useDispatch();
@@ -14,28 +15,36 @@ export default function ProductList({ products }) {
 
   const { openModal, closeModal, showModal, selectedItem } = useModal();
 
+  if (products.length > 0) {
+    return (
+      <>
+        <div className=" mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+          <div className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-4">
+            {products.map((product) => (
+              <ProductItem
+                key={product.id}
+                product={product}
+                openModal={openModal}
+                addToCart={addToCart}
+              />
+            ))}
+          </div>
+        </div>
+
+        <ModalProduct
+          showModal={showModal}
+          closeModal={closeModal}
+          selectedItem={selectedItem}
+          addToCart={addToCart}
+        />
+        <Toaster richColors />
+      </>
+    );
+  }
+
   return (
     <>
-      <div className=" mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-        <div className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-4">
-          {products.map((product) => (
-            <ProductItem
-              key={product.id}
-              product={product}
-              openModal={openModal}
-              addToCart={addToCart}
-            />
-          ))}
-        </div>
-      </div>
-      
-      <ModalProduct
-        showModal={showModal}
-        closeModal={closeModal}
-        selectedItem={selectedItem}
-        addToCart={addToCart}
-      />
-      <Toaster richColors />
+      <Loading />
     </>
   );
 }

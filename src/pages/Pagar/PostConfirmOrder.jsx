@@ -24,7 +24,7 @@ export const PostConfirmOrder = () => {
 
   const calculateTotal = () => {
     const total = products.reduce(
-      (total, product) => total + product.product.price * product.quantity,
+      (total, { product }) => total + product.price * product.quantity,
       0,
     );
     return total.toLocaleString("es-AR", {

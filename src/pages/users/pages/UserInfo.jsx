@@ -1,4 +1,4 @@
-import { Link, useLoaderData } from "react-router-dom";
+import { Link, useLoaderData, useParams } from "react-router-dom";
 
 import {
   Camera,
@@ -10,19 +10,20 @@ import {
 } from "lucide-react";
 
 import { ErrorMessage } from "../../../components/alerts/ErrorMessage";
-import { useLoadUser } from "../../../providers/hooks/useLoadUser";
+
 import { Loading } from "../../../components/loading/Loading";
+import { useLoadUser } from "../hooks/useGetUsersData";
 
 export const UserInfo = () => {
-  const { data, error } = useLoaderData();
+  const { id } = useParams();
 
-  const { user, isLoading, message } = useLoadUser(data, error);
+  const { user, message, isLoading } = useLoadUser(id);
 
   if (isLoading) return <Loading />;
 
   return (
     <>
-      {error?.status ? (
+      {message?.error ? (
         <ErrorMessage
           message={message.message}
           code={message.code}

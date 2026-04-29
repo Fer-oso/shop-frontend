@@ -2,16 +2,11 @@ import { axiosInstance } from "../axios/axiosInstace";
 
 const PATH_USER = "users";
 
-export const registerNewUser = async (formDataUserEdited) => {
+export const loadUserService = async (id) => {
   try {
-    const response = await axiosInstance.post(
-      `${PATH_USER}`,
-      formDataUserEdited,
-    );
+    const response = await axiosInstance.get(`${PATH_USER}/${id}`);
 
-    const data = response;
-
-    console.log(data);
+    const data = await response.data;
 
     return { data };
   } catch (error) {

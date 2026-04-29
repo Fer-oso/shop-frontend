@@ -2,11 +2,14 @@ import { axiosInstance } from "../axios/axiosInstace";
 
 const PATH_USER = "users";
 
-export const loadUser = async ({ params }) => {
+export const createUserService = async (formDataUserEdited) => {
   try {
-    const response = await axiosInstance.get(`${PATH_USER}/${params.id}`);
+    const response = await axiosInstance.post(
+      `${PATH_USER}`,
+      formDataUserEdited,
+    );
 
-    const data = await response.data;
+    const data = response;
 
     console.log(data);
 

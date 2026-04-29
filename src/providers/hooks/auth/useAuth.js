@@ -20,14 +20,6 @@ export const useAuth = () => {
     }
   };
 
-  useEffect(() => {
-    const initAuth = async () => {
-      await refreshToken();
-    };
-
-    initAuth();
-  }, []);
-
   const login = async ({ username, password }) => {
     const { userAuthenticated, status, error } = await dispatch(
       startLoginUserWithUsernameAndPassword({ username, password }),

@@ -1,4 +1,3 @@
-import { createProductFormData } from "../../pages/products/utils/createProductFormData";
 import { createProductService } from "../../providers/products/createProductService";
 import { deleteProductById } from "../../providers/products/deleteProductById";
 import { editProductById } from "../../providers/products/editProductById";
@@ -42,17 +41,8 @@ export const startLoadProduct = (productId) => {
   };
 };
 
-export const startCreateProduct = (product, files) => {
+export const startCreateProduct = (formDataProduct) => {
   return async (dispatch) => {
-    const object = {
-      nameProduct: "product",
-      product,
-      nameFiles: "image",
-      files,
-    };
-
-    const formDataProduct = createProductFormData(object);
-
     const { data, error } = await createProductService(formDataProduct);
 
     const productCreated = data ? data.response : null;
@@ -61,11 +51,13 @@ export const startCreateProduct = (product, files) => {
       ? error
       : { code: "201", message: "Product created Succesfully 😊" };
 
-    const { payload } = await dispatch(
-      createProduct({ productCreated, message }),
-    );
+    console.log(message);
 
-    return payload;
+    console.log(productCreated);
+
+    dispatch(createProduct({ productCreated, message }));
+
+    return { productCreated, message };
   };
 };
 

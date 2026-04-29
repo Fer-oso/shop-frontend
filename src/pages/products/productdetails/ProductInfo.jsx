@@ -24,8 +24,6 @@ export const ProductInfo = ({ product }) => {
     images,
   } = product;
 
-  const navigate = useNavigate();
-
   const { roles } = useOutletContext();
 
   const [imageSelected, setImageSelected] = useState(images?.[0] || null);
@@ -37,13 +35,13 @@ export const ProductInfo = ({ product }) => {
         {roles?.includes("ADMIN") && (
           <div className="bg-gray-50 px-4 py-2 border-b border-gray-200 flex items-center justify-between">
             {/* Botón Volver */}
-            <button
-              onClick={() => navigate(-1)} // o a una ruta específica: () => navigate('/products')
+            <Link
+              to="/products" // o a una ruta específica: () => navigate('/products')
               className="inline-flex items-center text-sm text-gray-700 hover:text-indigo-700 font-medium"
             >
               <ArrowLeft className="w-4 h-4 mr-1" />
               Back
-            </button>
+            </Link>
             {/* Botón Editar */}
             <Link
               to="edit"

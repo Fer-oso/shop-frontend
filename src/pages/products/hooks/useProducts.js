@@ -1,62 +1,72 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  startCreateProduct,
   startLoadProduct,
   startLoadProducts,
 } from "../../../store/product/productThunk";
-import { startRefreshToken } from "../../../store/auth/authThunk";
 import { useNavigate } from "react-router-dom";
+import { createProductFormData } from "../utils/createProductFormData";
 
-export const useGetProducts = () => {
+export const useProducts = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { products, message } = useSelector((state) => state.products);
+  const useCreateProduct = async (product, files) => {
+    const formDataProductCreated = createProductFormData(product, files);
 
-  useEffect(() => {
-    const load = async () => {
-      const { message } = await dispatch(startLoadProducts());
+    console.log(formDataProductCreated);
 
-      if (message?.error === 401) {
-        try {
-          await dispatch(startRefreshToken());
-          await dispatch(startLoadProducts());
-        } catch (e) {
-          navigate("/login");
+    const { message } = await dispatch(
+      startCreateProduct(formDataProductCreated),
+    );
+
+    return { message };
+  };
+
+  const useGetProducts = () => {
+    useEffect(() => {
+      if (products !== null) return;
+
+      const load = async () => {
+        const { message } = await dispatch(startLoadProducts());
+
+        if (message?.error === 401) {
+          try {
+            await dispatch(startLoadProducts());
+          } catch (e) {
+            navigate("/login");
+          }
         }
-      }
-    };
+      };
 
-    load();
-  }, [dispatch, navigate]);
+      load();
+    }, [dispatch, navigate]);
 
-  return { products, message };
-};
+    const { products, message } = useSelector((state) => state.products);
 
-export const useGetProductDetails = (productId) => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+    return { products, message };
+  };
 
-  const { product, message } = useSelector((state) => state.products);
+  const useGetProductDetails = (productId) => {
+    const [product, setProduct] = useState(null);
+    const [message, setMessage] = useState("");
 
-  useEffect(() => {
-    const load = async () => {
-      const { message } = await dispatch(startLoadProduct(productId));
+    useEffect(() => {
+      const load = async () => {
+        const { product, message } = await dispatch(
+          startLoadProduct(productId),
+        );
 
-      console.log(message);
+        setProduct(product);
+        setMessage(message);
+      };
 
-      if (message?.error === 401) {
-        try {
-          await dispatch(startRefreshToken());
-          await dispatch(startLoadProduct(productId));
-        } catch (error) {
-          navigate("/login");
-        }
-      }
-    };
+      load();
+    }, [productId, dispatch, navigate]);
 
-    load();
-  }, [dispatch, navigate]);
+    return { product, message };
+  };
 
-  return { product, message };
+  return { useCreateProduct, useGetProducts, useGetProductDetails };
 };

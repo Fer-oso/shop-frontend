@@ -40,11 +40,15 @@ export const setupInterceptors = (store) => {
   axiosInstance.interceptors.request.use(async (config) => {
     const token = getToken();
 
+    const username = store.getState().authentication.userAuthenticated.username;
+
     if (token && isTokenExpired(token)) {
       if (!refreshPromise) {
-        refreshPromise = store.dispatch(startRefreshToken()).finally(() => {
-          refreshPromise = null;
-        });
+        refreshPromise = store
+          .dispatch(startRefreshToken(username))
+          .finally(() => {
+            refreshPromise = null;
+          });
       }
 
       try {
@@ -81,23 +85,23 @@ export const setupInterceptors = (store) => {
     async (error) => {
       const originalRequest = error.config;
 
-      const { status } = store.getState().authentication;
-
-      console.log(status);
-
       // 🚫 Evitar loop infinito con refresh
       if (originalRequest.url.includes("/auth/refresh")) {
         return Promise.reject(error);
       }
+      const username =
+        store.getState().authentication.userAuthenticated.username;
 
       if (error.response?.status === 401 && !originalRequest._retry) {
         originalRequest._retry = true;
 
         try {
           if (!refreshPromise) {
-            refreshPromise = store.dispatch(startRefreshToken()).finally(() => {
-              refreshPromise = null;
-            });
+            refreshPromise = store
+              .dispatch(startRefreshToken(username))
+              .finally(() => {
+                refreshPromise = null;
+              });
           }
 
           const response = await refreshPromise;

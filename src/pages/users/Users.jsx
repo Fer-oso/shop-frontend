@@ -1,7 +1,7 @@
 import React from "react";
 
 import { ErrorMessage } from "../../components/alerts/ErrorMessage";
-import { Link, useLoaderData } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { startDeleteUser } from "../../store/users/userThunk";
 import { EyeIcon, PencilIcon } from "@heroicons/react/24/outline";
@@ -9,11 +9,11 @@ import DeleteUserButton from "./components/buttons/DeleteUserButton";
 import { useGetUsersData } from "./hooks/useGetUsersData";
 
 export const Users = () => {
-  const { data, error } = useLoaderData();
-
   const { useLoadUsers } = useGetUsersData();
 
-  const { users } = useLoadUsers(data, error);
+  const { users, message } = useLoadUsers();
+
+  console.log(message);
 
   const deleteUserById = (id) => () => {
     dispatch(startDeleteUser(id));
@@ -46,12 +46,12 @@ export const Users = () => {
 
   return (
     <>
-      {error ? (
+      {message.code ? (
         <ErrorMessage
-          message={error.message}
-          status={error.status}
-          code={error.code}
-          timestamp={error.timestamp}
+          message={message.message}
+          status={message.status}
+          code={message.code}
+          timestamp={message.timestamp}
         />
       ) : (
         <div className="container mx-auto bg-white py-24 sm:py-32">
@@ -94,7 +94,7 @@ export const Users = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
-                  {users.map((user, key) => (
+                  {users?.map((user, key) => (
                     <tr className="hover:bg-slate-100" key={key}>
                       <td className="px-4 py-2 text-sm text-gray-500">
                         {user.id}
@@ -110,7 +110,7 @@ export const Users = () => {
                         <td
                           key={key}
                           className={`px-4 py-2 text-sm font-semibold ${getStatusClass(
-                            user[key]
+                            user[key],
                           )}`}
                         >
                           {user[key] ? trueText : falseText}

@@ -6,7 +6,7 @@ export const editUserById = async (id, formDataUserEdited) => {
   try {
     const response = await axiosInstance.put(
       `${PATH_USER}/${id}`,
-      formDataUserEdited
+      formDataUserEdited,
     );
 
     const data = await response.data;

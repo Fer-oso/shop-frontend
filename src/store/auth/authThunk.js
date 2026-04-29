@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import { loginWithEmailAndPassword } from "../../providers/login/loginWithEmailAndPassword";
 import { refreshToken } from "../../providers/login/refreshtoken";
 import { resetShoppingCart } from "../shoppingcart/shoppingCartSlice";
@@ -36,13 +37,11 @@ export const startLogoutUser = () => {
   };
 };
 
-export const startRefreshToken = () => {
+export const startRefreshToken = (username) => {
   return async (dispatch) => {
     try {
-      const { data } = await refreshToken();
-
+      const { data } = await refreshToken(username);
       dispatch(setToken(data));
-
       return data;
     } catch (error) {
       console.log(error);

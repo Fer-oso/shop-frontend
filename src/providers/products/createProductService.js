@@ -6,12 +6,12 @@ export const createProductService = async (formDataProduct) => {
   try {
     const response = await axiosInstance.post(
       `${PATH_PRODUCT}`,
-      formDataProduct
+      formDataProduct,
     );
 
-    console.log(response);
+    console.log(response.data);
 
-    const data = await response.data;
+    const data = response.data;
 
     return { data };
   } catch (error) {

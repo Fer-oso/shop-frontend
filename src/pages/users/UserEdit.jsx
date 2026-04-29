@@ -1,74 +1,55 @@
-import React, { useEffect } from "react";
-import { useLoaderData, useOutletContext } from "react-router-dom";
-import { useForm } from "../../components/hooks/useForm";
-import { useDispatch } from "react-redux";
-import useFileInput from "../../components/hooks/useFileInput";
-import { startEditUser, startLoadUser } from "../../store/users/userThunk";
+import React from "react";
 
 import { UserForm } from "../../components/forms/form/UserForm";
 import { useEditUserAlert } from "./utils/useEditUserAlert";
-import { useUserAccountStatusValues } from "../models/user/usersModels";
+import { useParams } from "react-router-dom";
+
+import { useLoadUser } from "../../pages/users/hooks/useGetUsersData";
+import { Loading } from "../../components/loading/Loading";
+import { ErrorMessage } from "../../components/alerts/ErrorMessage";
+import { useEditUser } from "../../pages/users/hooks/useGetUsersData";
 
 export const UserEdit = () => {
-  const { data } = useLoaderData();
+  const { id } = useParams();
 
-  const { roles } = useOutletContext();
-
-  const dispatch = useDispatch();
-
-  const { formState, setFormState, onInputChange, onCheckboxChange } =
-    useForm(data);
-
-  const {
-    enabled,
-    accountNonExpired,
-    accountNonLocked,
-    credentialsNonExpired,
-  } = formState;
-
-  const userAccountStatusValues = useUserAccountStatusValues(
-    enabled,
-    accountNonExpired,
-    accountNonLocked,
-    credentialsNonExpired
-  );
-
-  const filesHandler = useFileInput();
-
-  const rolesData = {
-    roles,
-    availableRoles: [
-      { roleName: "ADMIN" },
-      { roleName: "USER" },
-      { roleName: "INVITED" },
-    ],
-  };
+  const { user, message } = useLoadUser(id);
 
   const { showEditUserAlert } = useEditUserAlert();
 
-  useEffect(() => {
-    dispatch(startLoadUser(data));
-  }, [data, dispatch]);
+  const { editUser } = useEditUser();
 
-  const editUser = async (formState, files) => {
-    return dispatch(startEditUser(data.id, formState, files));
+  const editUserFunction = async (user, files) => {
+    const { message } = await editUser(id, user, files);
+
+    return { message };
   };
 
+  if (user) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50 py-8">
+        <UserForm
+          mode={"Editar"}
+          formInitialstate={user}
+          userActionfunction={(user, files) =>
+            showEditUserAlert(() => editUserFunction(user, files))
+          }
+        />
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50 py-8">
-      <UserForm
-        mode={"Editar"}
-        formState={formState}
-        setFormState={setFormState}
-        onInputChange={onInputChange}
-        onCheckboxChange={onCheckboxChange}
-        userAccountStatusValues={userAccountStatusValues}
-        filesHandler={filesHandler}
-        rolesData={rolesData}
-        userActionfunction={(formState, files) =>
-          showEditUserAlert(() => editUser(formState, files))
-        }
-      />
-    </div>
+    <>
+      {message?.error ? (
+        <ErrorMessage
+          message={message}
+          status={message}
+          code={message}
+          timestamp={message}
+        />
+      ) : (
+        <Loading />
+      )}
+    </>
   );
 };

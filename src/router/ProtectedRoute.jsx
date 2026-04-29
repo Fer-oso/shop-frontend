@@ -16,7 +16,7 @@ export const ProtectedRoute = () => {
     status === "authenticated" ? userAuthenticated : null,
   );
 
-  return userAuthenticated.id ? (
+  return status === "authenticated" ? (
     <GeneralLayout>
       <NavBar roles={roles} />
       <Outlet context={{ roles }} />

@@ -3,12 +3,14 @@ import "./ProductDetailsPage.css";
 
 import { ErrorMessage } from "../../../components/alerts/ErrorMessage";
 import { ProductInfo } from "./ProductInfo";
-import { useGetProductDetails } from "../hooks/useProducts";
+import { useProducts } from "../hooks/useProducts";
 import { useParams } from "react-router-dom";
 import { Loading } from "../../../components/loading/Loading";
 
 export const ProductDetail = () => {
   const { id } = useParams();
+
+  const { useGetProductDetails } = useProducts();
 
   const { product, message } = useGetProductDetails(id);
 

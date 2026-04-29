@@ -1,8 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 
 import { NotFound } from "../pages/NotFound";
-import { loadUsers } from "../providers/users/loadUsers";
-import { loadUser } from "../providers/users/loadUser";
 import { Users } from "../pages/users/Users";
 
 import { Products } from "../pages/products/Products";
@@ -34,9 +32,9 @@ export const routes = () => {
       errorElement: <NotFound />,
       children: [
         { index: true, element: <Home /> },
-        { path: "/users", element: <Users />, loader: loadUsers },
-        { path: "/users/:id", element: <UserInfo />, loader: loadUser },
-        { path: "/users/:id/edit", element: <UserEdit />, loader: loadUser },
+        { path: "/users", element: <Users /> },
+        { path: "/users/:id", element: <UserInfo /> },
+        { path: "/users/:id/edit", element: <UserEdit /> },
         {
           path: "/users/:id/edit/perfil",
           element: <UserProfileEdit />,

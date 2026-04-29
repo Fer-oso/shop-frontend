@@ -2,9 +2,9 @@ import { axiosPublic } from "../axios/axiosInstace";
 
 const PATH_REFRESH_TOKEN = "auth/refresh";
 
-export const refreshToken = async () => {
+export const refreshToken = async (username) => {
   try {
-    const response = await axiosPublic.post(PATH_REFRESH_TOKEN);
+    const response = await axiosPublic.post(PATH_REFRESH_TOKEN, username);
 
     const data = await response.data;
 

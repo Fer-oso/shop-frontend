@@ -3,8 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 export const usersSlice = createSlice({
   name: "users",
   initialState: {
-    users: [],
-    user: {},
+    users: null,
+    user: null,
     message: "",
   },
 
@@ -28,8 +28,7 @@ export const usersSlice = createSlice({
     },
 
     editUser: (state, action) => {
-      state.userEdited = action.payload.userEdited;
-      state.user = action.payload.user;
+      state.user = action.payload.userEdited;
       state.message = action.payload.message;
     },
 
@@ -37,7 +36,7 @@ export const usersSlice = createSlice({
       state.userDeleted = action.payload.userDeleted;
       state.message = action.payload.message;
       state.users = state.users.filter(
-        (user) => user.id !== action.payload.userDeleted.id
+        (user) => user.id !== action.payload.userDeleted.id,
       );
     },
   },

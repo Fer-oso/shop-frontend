@@ -1,5 +1,5 @@
 import React from "react";
-import { useGetProductDetails } from "../hooks/useProducts";
+import { useProducts } from "../hooks/useProducts";
 import { useParams } from "react-router-dom";
 import { EditProductForm } from "./EditproductForm";
 import { ErrorMessage } from "../../../components/alerts/ErrorMessage";
@@ -8,8 +8,9 @@ import { Loading } from "../../../components/loading/Loading";
 export const EditProduct = () => {
   const { id } = useParams();
 
+  const { useGetProductDetails } = useProducts();
+
   const { product, message } = useGetProductDetails(id);
-  console.log(product);
 
   if (product) {
     return (

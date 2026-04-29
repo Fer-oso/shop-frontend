@@ -1,8 +1,8 @@
-import { object } from "prop-types";
-import { createUserFormData } from "../../pages/users/utils/createUserFormData";
 import { deleteUserById } from "../../providers/users/deleteUserById";
 import { editUserById } from "../../providers/users/editUserById";
-import { registerNewUser } from "../../providers/users/registerUser";
+import { loadUserService } from "../../providers/users/loadUserService";
+import { loadUsersService } from "../../providers/users/loadUsersService";
+import { createUserService } from "../../providers/users/createUserService";
 import {
   deleteUser,
   editUser,
@@ -11,27 +11,42 @@ import {
   registerUser,
 } from "./userSlice";
 
-export const startLoadUsers = (users, message) => {
+export const startLoadUsers = () => {
   return async (dispatch) => {
+    const { data, error } = await loadUsersService();
+
+    const users = data ? data.response : null;
+
+    const message = error
+      ? error
+      : { status: data.status, timestamp: data.timestamp };
+
     dispatch(loadUsers({ users, message }));
+
+    return { users, message };
   };
 };
 
-export const startLoadUser = (user, message) => {
+export const startLoadUser = (id) => {
   return async (dispatch) => {
+    const { data, error } = await loadUserService(id);
+
+    const user = data ? data : null;
+
+    const message = error
+      ? error.response
+      : { code: "200", response: "User founded successfully" };
+
     dispatch(loadUser({ user, message }));
+
+    return { user, message };
   };
 };
 
 export const startRegisterUser = (formDataUserRegistered) => {
   return async (dispatch) => {
-    const { data, error } = await registerNewUser(formDataUserRegistered);
-
-    console.log(error);
-
-    console.log(data);
-
-    const userRegistered = data.response;
+    const { data, error } = await createUserService(formDataUserRegistered);
+    const userRegistered = data ? data.response : null;
     const message = error
       ? error.response
       : { code: "201", response: "User registered successfully" };
@@ -42,34 +57,19 @@ export const startRegisterUser = (formDataUserRegistered) => {
   };
 };
 
-export const startEditUser = (id, userToEdit, files) => {
+export const startEditUser = (id, formDataUserEdited) => {
   return async (dispatch) => {
-    const userJSON = JSON.stringify(userToEdit);
-
-    const userBlob = new Blob([userJSON], {
-      type: "application/json",
-    });
-
-    const formDataUserEdited = new FormData();
-    formDataUserEdited.append("user", userBlob);
-
-    if (files && files.length > 0) {
-      files.forEach((file) => {
-        formDataUserEdited.append("image", file);
-      });
-    }
-
     const { user, error } = await editUserById(id, formDataUserEdited);
 
-    const userEdited = user ? user : {};
+    const userEdited = user ? user : null;
 
     const message = error
-      ? error
-      : { code: "201", error: "User edited succesfully 😊" };
+      ? error.response
+      : { code: "201", response: "User edited succesfully 😊" };
 
-    const payload = await dispatch(editUser({ userEdited, message }));
+    dispatch(editUser({ userEdited, message }));
 
-    return payload;
+    return { message };
   };
 };
 

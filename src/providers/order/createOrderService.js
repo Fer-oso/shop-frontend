@@ -2,9 +2,9 @@ import { axiosInstance } from "../axios/axiosInstace";
 
 const PATH_ORDERS = "orders";
 
-export const createOrderService = async (formDataOrder) => {
+export const createOrderService = async (order) => {
   try {
-    const response = await axiosInstance.post(`${PATH_ORDERS}`, formDataOrder);
+    const response = await axiosInstance.post(`${PATH_ORDERS}`, order);
 
     console.log(response);
 

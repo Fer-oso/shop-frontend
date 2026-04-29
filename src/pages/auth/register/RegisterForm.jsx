@@ -1,4 +1,5 @@
 import { UserForm } from "../../../components/forms/form/UserForm";
+import { USER_TO_REGISTER } from "../../models/user/usersModels";
 import { useCreateUser } from "../../users/hooks/useGetUsersData";
 
 import { useRegisterUserAlert } from "../../users/utils/useRegisterUser";
@@ -14,8 +15,6 @@ export const RegisterForm = () => {
   const registerFunction = async (userRegisterd, files) => {
     const { message } = await createUser(userRegisterd, files);
 
-    console.log(message);
-
     if (message.code === "201") {
       navigation("/login", { replace: true });
     }
@@ -25,6 +24,7 @@ export const RegisterForm = () => {
   return (
     <UserForm
       mode={"Registrar"}
+      formInitialstate={USER_TO_REGISTER}
       userActionfunction={(userRegisterd, files) =>
         showCreateAlert(() => registerFunction(userRegisterd, files))
       }

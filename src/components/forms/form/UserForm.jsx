@@ -9,14 +9,11 @@ import { Label } from "../label/Label";
 import { Button } from "../../buttons/Button";
 import { ImageForm } from "../image/ImageForm";
 import useFileInput from "../../hooks/useFileInput";
-import {
-  USER_TO_REGISTER,
-  useUserAccountStatusValues,
-} from "../../../pages/models/user/usersModels";
+import { useUserAccountStatusValues } from "../../../pages/models/user/usersModels";
 import { useForm } from "../../hooks/useForm";
 import { useSelector } from "react-redux";
 
-export const UserForm = ({ mode, userActionfunction }) => {
+export const UserForm = ({ mode, userActionfunction, formInitialstate }) => {
   const { userAuthenticated } = useSelector((state) => state.authentication);
 
   const roles = userAuthenticated?.roles?.map((role) => role.roleName);
@@ -24,7 +21,7 @@ export const UserForm = ({ mode, userActionfunction }) => {
   const rolesData = { roles, availableRoles: ["USER", "ADMIN", "INVITED"] };
 
   const { formState, setFormState, onInputChange, onCheckboxChange } =
-    useForm(USER_TO_REGISTER);
+    useForm(formInitialstate);
 
   const {
     username,
@@ -65,7 +62,6 @@ export const UserForm = ({ mode, userActionfunction }) => {
       <h2 className="text-center text-2xl  font-bold text-gray-800 mb-8 tracking-tight">
         {title}
       </h2>
-
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1">
           <div className="mb-4">

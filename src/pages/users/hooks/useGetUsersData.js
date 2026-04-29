@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
+  startEditUser,
   startLoadUser,
   startLoadUsers,
   startRegisterUser,
 } from "../../../store/users/userThunk";
-import { loadUser } from "../../../providers/users/loadUser";
 import { createUserFormData } from "../utils/createUserFormData";
+import { useNavigate } from "react-router-dom";
 
 export const useCreateUser = () => {
   const dispatch = useDispatch();
@@ -24,54 +25,82 @@ export const useCreateUser = () => {
   return { createUser };
 };
 
+export const useEditUser = () => {
+  const dispatch = useDispatch();
+
+  const editUser = async (id, user, files) => {
+    const formDataUserEdited = createUserFormData(user, files);
+
+    const { message } = await dispatch(startEditUser(id, formDataUserEdited));
+
+    return { message };
+  };
+
+  return { editUser };
+};
+
 export const useGetUsersData = () => {
   /* useLoadUsers */
-  const useLoadUsers = (data, error) => {
+  const useLoadUsers = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    const users = useSelector((state) => state.users.users);
+    const [users, setUsers] = useState(null);
+
+    const [message, setMessage] = useState("");
 
     useEffect(() => {
-      if (!users.length) {
-        const users = data ? data.response : [];
+      const load = async () => {
+        const { users, message } = await dispatch(startLoadUsers());
 
-        const message = error ? error.message : "Users founded 😊";
+        setUsers(users);
+        setMessage(message);
 
-        dispatch(startLoadUsers(users, message));
-      }
-    }, [data, dispatch]);
-
-    return { users };
-  };
-
-  /*useLoadUser */
-  const useLoadUser = (id) => {
-    const dispatch = useDispatch();
-
-    const { user } = useSelector((state) => state.users);
-
-    const [errorMessage, setErrorMessage] = useState();
-
-    useEffect(() => {
-      const findUser = async () => {
-        if (!user.username) {
-          const { data, error } = await loadUser();
-
-          const userfinded = data ? data : [];
-
-          if (!error) {
-            setErrorMessage("User found 😊" || error);
+        if (message?.error === 401) {
+          try {
+            await dispatch(startLoadUsers());
+          } catch (error) {
+            navigate("/login");
           }
-
-          dispatch(startLoadUser(userfinded, errorMessage));
         }
       };
+      load();
+    }, [dispatch, navigate]);
 
-      findUser();
-    }, [user, dispatch]);
-
-    return { user, error: errorMessage };
+    return { users, message };
   };
 
-  return { useLoadUsers, useLoadUser };
+  return { useLoadUsers };
+};
+
+/*useLoadUser */
+export const useLoadUser = (id) => {
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
+  const [user, setUser] = useState(null);
+  const [message, setMessage] = useState("");
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const load = async () => {
+      const { user, message } = await dispatch(startLoadUser(id));
+      setUser(user);
+      setMessage(message);
+      setIsLoading(!isLoading);
+      if (message?.error === 401) {
+        try {
+          await dispatch(startLoadUser(id));
+        } catch (error) {
+          navigate("/login");
+        }
+      }
+    };
+
+    load();
+  }, [id, dispatch, navigate]);
+
+  return { user, message, isLoading };
 };

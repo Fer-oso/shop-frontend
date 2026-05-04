@@ -3,12 +3,18 @@ import { createSlice } from "@reduxjs/toolkit";
 export const orderSlice = createSlice({
   name: "order",
   initialState: {
-    order: {},
+    orderNumber: null,
+    status: "pending",
+    shoppingCartId: "",
+    total: 0,
   },
 
   reducers: {
     createOrder: (state, action) => {
-      state.order = action.payload.order;
+      state.orderNumber = action.payload.orderNumber;
+      state.status = action.payload.status;
+      state.shoppingCartId = action.payload.shoppingCartId;
+      state.total = action.payload.total;
     },
   },
 });

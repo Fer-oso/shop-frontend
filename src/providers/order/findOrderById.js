@@ -1,17 +1,16 @@
 import { axiosInstance } from "../axios/axiosInstace";
 
-const PATH_PRODUCTS = "products";
+const PATH_ORDERS = "orders";
 
-export const editProductById = async (id, formDataProduct) => {
+export const findOrderById = async (id) => {
   try {
-    const response = await axiosInstance.put(
-      `${PATH_PRODUCTS}/${id}`,
-      formDataProduct
-    );
+    const response = await axiosInstance.get(`${PATH_ORDERS}/${id}`);
+
+    console.log(response);
 
     const data = await response.data;
 
-    return { data };
+    return { data, status: response.status };
   } catch (error) {
     // Verificar si el error proviene de la respuesta del servidor
     if (error.response) {

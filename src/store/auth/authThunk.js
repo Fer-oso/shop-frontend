@@ -1,6 +1,6 @@
-import { useSelector } from "react-redux";
 import { loginWithEmailAndPassword } from "../../providers/login/loginWithEmailAndPassword";
 import { refreshToken } from "../../providers/login/refreshtoken";
+import { resetProducts } from "../product/productSilce";
 import { resetShoppingCart } from "../shoppingcart/shoppingCartSlice";
 import { login, logout, setToken } from "./authSlice";
 
@@ -9,15 +9,19 @@ export const startLoginUserWithUsernameAndPassword = ({
   password,
 }) => {
   return async (dispatch) => {
-    const { data, status, error } = await loginWithEmailAndPassword({
+    const { data, error, timestamp } = await loginWithEmailAndPassword({
       username,
       password,
     });
 
+    const message = error ? error : "success";
+
     if (data) {
       const userAuthenticated = data;
 
-      dispatch(login({ userAuthenticated, status }));
+      const status = "authenticated";
+
+      dispatch(login({ userAuthenticated, status, message, timestamp }));
 
       return { userAuthenticated, status };
     }
@@ -26,14 +30,11 @@ export const startLoginUserWithUsernameAndPassword = ({
   };
 };
 
-export const startLogoutUser = () => {
-  const status = "unauthenticated";
-  const userAuthenticated = {};
-  localStorage.setItem("auth", JSON.stringify({ status, userAuthenticated }));
-
-  return (dispatch) => {
+export const startLogoutUser = (userAuthenticated, status) => {
+  return async (dispatch) => {
     dispatch(logout({ status, userAuthenticated }));
     dispatch(resetShoppingCart());
+    dispatch(resetProducts());
   };
 };
 

@@ -1,18 +1,15 @@
-import { axiosInstance, axiosPublic } from "../axios/axiosInstace";
+import { axiosInstance } from "../axios/axiosInstace";
 
 const API_URL = "auth/login";
 
 export const loginWithEmailAndPassword = async ({ username, password }) => {
   try {
-    const response = await axiosInstance.post(`${API_URL}`, {
+    const { data, status } = await axiosInstance.post(`${API_URL}`, {
       username,
       password,
     });
 
-    const data = await response.data;
-    const status = "authenticated";
-
-    return { data, status };
+    return { data: data.response, status, timestamp: data.timestamp };
   } catch (error) {
     // Verificar si el error proviene de la respuesta del servidor
     if (error.response) {

@@ -1,23 +1,16 @@
 import { axiosInstance } from "../axios/axiosInstace";
 
-const PATH_PRODUCT = "products";
+const PATH_PRODUCTS = "products";
 
-export const createProductService = async (formDataProduct) => {
+export const loadProductsService = async () => {
   try {
-    const { data } = await axiosInstance.post(
-      `${PATH_PRODUCT}`,
-      formDataProduct,
-    );
+    const { data, status } = await axiosInstance.get(PATH_PRODUCTS);
 
-    console.log();
-
-    const productCreated = data ? data.response : null;
+    const products = data ? data.response : null;
     const timestamp = data ? data.timestamp : null;
-    const code = data ? data.code : null;
-    return { productCreated, timestamp, code };
+
+    return { products, timestamp, status };
   } catch (error) {
-    console.log(error);
-    // Verificar si el error proviene de la respuesta del servidor
     if (error.response) {
       // Verificar si el error proviene de la respuesta del servidor
       console.log("Server Error:", {

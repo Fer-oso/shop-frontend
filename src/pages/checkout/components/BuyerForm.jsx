@@ -15,7 +15,7 @@ export const BuyerForm = () => {
 
   const shoppingCart = useSelector((state) => state.shoppingCart);
 
-  const { shoppingCartId, buyer, products, total } = shoppingCart;
+  const { buyer, products } = shoppingCart;
 
   const [confirmOrder, setConfirmOrder] = useState(false);
 
@@ -37,16 +37,22 @@ export const BuyerForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const payload = await dispatch(startCreateShoppingCart(shoppingCart));
-    console.log(payload);
-    dispatch(
-      startCreateOrder({
-        orderNumber: "",
-        shoppingCartId,
-        total,
-        status: "pending",
-      }),
+    const { data, status, error } = await dispatch(
+      startCreateShoppingCart(shoppingCart),
     );
+    console.log(data);
+
+    if (status === 201) {
+      await dispatch(
+        startCreateOrder({
+          orderNumber: "",
+          shoppingCartId: data.shoppingCartId,
+          total: data.total,
+          status: "pending",
+        }),
+      );
+    }
+
     setConfirmOrder(true);
   };
 

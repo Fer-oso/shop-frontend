@@ -3,12 +3,13 @@ import { useDispatch } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import { startLogoutUser } from "../../../store/auth/authThunk";
 import { MenuItem, Typography } from "@mui/material";
+import { useAuth } from "../../../providers/hooks/auth/useAuth";
 
 export const UserNav = ({ id, handleCloseUserMenu }) => {
-  const dispatch = useDispatch();
+  const { logout } = useAuth();
 
   const onClickLogout = () => {
-    dispatch(startLogoutUser());
+    logout();
   };
 
   return (

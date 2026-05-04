@@ -4,13 +4,9 @@ const PATH_ORDERS = "orders";
 
 export const createOrderService = async (order) => {
   try {
-    const response = await axiosInstance.post(`${PATH_ORDERS}`, order);
+    const { data, status } = await axiosInstance.post(`${PATH_ORDERS}`, order);
 
-    console.log(response);
-
-    const data = await response.data;
-
-    return { data };
+    return { data: data.response, status };
   } catch (error) {
     // Verificar si el error proviene de la respuesta del servidor
     if (error.response) {

@@ -7,15 +7,16 @@ import { InputField } from "../../../../components/forms/inputs/InputField";
 import { InputFile } from "../../../../components/forms/inputs/InputFile";
 import useFileInput from "../../../../components/hooks/useFileInput";
 import { Button } from "../../../../components/buttons/Button";
+import { useForm } from "../../../../components/hooks/useForm";
+import { ImageForm } from "../../../../components/forms/image/ImageForm";
 
-export const ProductForm = ({
-  mode,
-  formState,
-  onCheckboxChange,
-  onInputChange,
-  userActionFunction,
-}) => {
+export const ProductForm = ({ mode, initialFormState, userActionFunction }) => {
+  const { formState, onCheckboxChange, onInputChange } =
+    useForm(initialFormState);
+
   const formFieldValues = productFormValuesField({ ...formState });
+
+  const { images } = formState;
 
   const { files, messageError, handleFileChange, resetFiles } = useFileInput();
 
@@ -83,7 +84,7 @@ export const ProductForm = ({
                   <InputField
                     type={values.type}
                     name={values.name}
-                    value={values.value}
+                    value={values.value?.name || values.value}
                     onChange={onInputChange}
                     placeholder={values.placeholder}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -92,6 +93,10 @@ export const ProductForm = ({
               )}
             </React.Fragment>
           ))}
+        </div>
+
+        <div>
+          <ImageForm images={images} text="Imagen actual del producto" />
         </div>
 
         {/* Sección de Archivo y Botón en Fila en Pantallas Grandes */}

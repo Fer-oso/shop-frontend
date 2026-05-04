@@ -1,22 +1,15 @@
 import { axiosInstance } from "../axios/axiosInstace";
 
-const PATH_PRODUCT = "products";
+const PATH_PRODUCTS = "products";
 
-export const createProductService = async (formDataProduct) => {
+export const deleteProductByIdService = async (id) => {
   try {
-    const { data } = await axiosInstance.post(
-      `${PATH_PRODUCT}`,
-      formDataProduct,
-    );
+    const response = await axiosInstance.delete(`${PATH_PRODUCTS}/${id}`);
 
-    console.log();
+    const data = await response.data;
 
-    const productCreated = data ? data.response : null;
-    const timestamp = data ? data.timestamp : null;
-    const code = data ? data.code : null;
-    return { productCreated, timestamp, code };
+    return { data };
   } catch (error) {
-    console.log(error);
     // Verificar si el error proviene de la respuesta del servidor
     if (error.response) {
       // Verificar si el error proviene de la respuesta del servidor
@@ -28,7 +21,6 @@ export const createProductService = async (formDataProduct) => {
       });
 
       return { error: { ...error.response.data } };
-      // Devuelve el mensaje de error del servidor
     } else if (error.request) {
       // No hubo respuesta del servidor
       console.log("No response received from server:", error.request);
@@ -42,10 +34,10 @@ export const createProductService = async (formDataProduct) => {
         },
       };
     } else {
-      // Error al configurar la solicitu
-      console.log("Error setting up request:", error.message);
+      // Error al configurar la solicitud
+      console.log("Error setting up request:", error);
 
-      return { error: (error = "Error setting up request") };
+      return { error };
     }
   }
 };

@@ -1,19 +1,19 @@
-import { axiosInstance } from "../axios/axiosInstace";
+import { axiosInstance, axiosPublic } from "../axios/axiosInstace";
 
 const PATH = "mercadopago/create-preference";
 //const PATH = "create-preference";
 
 export const createPreferenceService = async (formDataProduct) => {
+  console.log(formDataProduct);
+
   try {
-    //en java
-    // const response = await axiosInstance.post(`${PATH}`, formDataProduct);
-    //const data = response;
-    //return { data };
+    const response = await axiosPublic.post(`${PATH}`, formDataProduct);
 
-    //en express
-    const response = await axiosInstance.post(`${PATH}`, formDataProduct);
+    const data = response.data;
 
-    return response.data;
+    console.log(data);
+
+    return data;
   } catch (error) {
     // Verificar si el error proviene de la respuesta del servidor
     if (error.response) {

@@ -1,8 +1,8 @@
 import { createProductService } from "../../providers/products/createProductService";
-import { deleteProductById } from "../../providers/products/deleteProductById";
-import { editProductById } from "../../providers/products/editProductById";
-import { loadProductService } from "../../providers/products/loadProduct";
-import { loadProductsService } from "../../providers/products/loadProducts";
+import { deleteProductByIdService } from "../../providers/products/deleteProductByIdService";
+import { editProductByIdService } from "../../providers/products/editProductByIdService";
+import { loadProductService } from "../../providers/products/loadProductService";
+import { loadProductsService } from "../../providers/products/loadProductsService";
 import {
   createProduct,
   deleteProduct,
@@ -11,97 +11,78 @@ import {
   loadProducts,
 } from "./productSilce";
 
-export const startLoadProducts = () => {
-  return async (dispatch) => {
-    const { data, error } = await loadProductsService();
-
-    const products = data.response;
-
-    const message = error
-      ? error.response
-      : "Products found and loaded successfully 😊";
-
-    dispatch(loadProducts({ products, message }));
-
-    return { products, message };
-  };
-};
-
-export const startLoadProduct = (productId) => {
-  return async (dispatch) => {
-    const { data, error } = await loadProductService(productId);
-
-    const product = data.response;
-    const message = error
-      ? error.response
-      : "Product found and load succesfully 😊";
-    dispatch(loadProduct({ product, message }));
-
-    return { product, message };
-  };
-};
-
 export const startCreateProduct = (formDataProduct) => {
   return async (dispatch) => {
-    const { data, error } = await createProductService(formDataProduct);
-
-    const productCreated = data ? data.response : null;
+    const { productCreated, timestamp, error, code } =
+      await createProductService(formDataProduct);
 
     const message = error
-      ? error
-      : { code: "201", message: "Product created Succesfully 😊" };
+      ? { error: { ...error } }
+      : { code, message: "Product created Succesfully 😊" };
 
-    console.log(message);
-
-    console.log(productCreated);
-
-    dispatch(createProduct({ productCreated, message }));
+    dispatch(createProduct({ productCreated, message, timestamp }));
 
     return { productCreated, message };
   };
 };
 
-export const startEditProduct = (id, product, files) => {
+export const startLoadProduct = (productId) => {
   return async (dispatch) => {
-    /*Creo un JSON del formState */
+    const { product, timestamp, error } = await loadProductService(productId);
 
-    const productJSON = JSON.stringify(product);
+    const message = error
+      ? { error: { ...error } }
+      : "Product found and load succesfully 😊";
 
-    /** Creo un BLOB del JSON anterior */
-    const produbtBLOB = new Blob([productJSON], {
-      type: "application/json",
-    });
+    dispatch(loadProduct({ product, message, timestamp }));
 
-    /** Creo un formData */
+    return { product, message, timestamp };
+  };
+};
 
-    const formDataProduct = new FormData();
+export const startEditProduct = (id, formDataProduct) => {
+  return async (dispatch) => {
+    const { productEdited, timestamp, error, code } =
+      await editProductByIdService(id, formDataProduct);
 
-    formDataProduct.append("product", produbtBLOB);
+    const message = error
+      ? { error: { ...error } }
+      : { code, message: "Product edited Succesfully 😊" };
 
-    if (files && files.length > 0) {
-      files.forEach((file) => {
-        formDataProduct.append("image", file);
-      });
-    }
+    dispatch(editProduct({ productEdited, message, timestamp }));
 
-    const { data, error } = await editProductById(id, formDataProduct);
-
-    const productEdited = data ? data.response : {};
-
-    const message = error ? error : "Product edited Succesfully 😊";
-
-    dispatch(editProduct({ productEdited, message }));
+    return { productEdited, message };
   };
 };
 
 export const startDeleteProduct = (id) => {
   return async (dispatch) => {
-    const { data, error } = await deleteProductById(id);
+    const { data, error } = await deleteProductByIdService(id);
 
     const productDeleted = { id };
 
     const message = error ? error : data.response;
 
     dispatch(deleteProduct({ productDeleted, message }));
+  };
+};
+
+export const startLoadProducts = () => {
+  return async (dispatch, getState) => {
+    const { products } = getState().products;
+
+    if (!products) {
+      const { products, timestamp, error } = await loadProductsService();
+
+      const message = error
+        ? { error: { ...error } }
+        : "Products found and loaded successfully 😊";
+
+      dispatch(loadProducts({ products, message, timestamp }));
+
+      return { products, message, timestamp };
+    }
+
+    return { products };
   };
 };

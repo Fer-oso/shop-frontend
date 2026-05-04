@@ -40,7 +40,7 @@ export const startAddProductToShoppingCart = (productSelected) => {
     try {
       const { products } = getState().shoppingCart;
 
-      const existingProduct = products.find(
+      const existingProduct = products.some(
         (item) => item.product.id === productSelected.id,
       );
 

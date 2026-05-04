@@ -1,40 +1,39 @@
 import React from "react";
 import { useProducts } from "../hooks/useProducts";
 import { useParams } from "react-router-dom";
-import { EditProductForm } from "./EditproductForm";
 import { ErrorMessage } from "../../../components/alerts/ErrorMessage";
 import { Loading } from "../../../components/loading/Loading";
+import { ProductForm } from "../components/form/ProductForm";
+import { useEditProductAlert } from "../components/buttons/useEditProductAlert";
+import { getProductEditModel } from "../models/productModel";
 
 export const EditProduct = () => {
   const { id } = useParams();
 
-  const { useGetProductDetails } = useProducts();
+  const { useGetProductDetails, useEditProduct } = useProducts();
 
   const { product, message } = useGetProductDetails(id);
 
-  if (product) {
-    return (
-      <div className="max-w-4xl mx-auto p-8 bg-white rounded-2xl shadow-xl transition-transform duration-300">
-        <h2 className="text-center text-2xl font-bold text-gray-800 mb-8 tracking-tight">
-          Editar Producto
-        </h2>
-        <EditProductForm product={product} message={message} />
-      </div>
-    );
-  }
+  const { showEditAlert } = useEditProductAlert();
+
+  if (message?.error) return <ErrorMessage {...message.error} />;
+
+  if (!product) return <Loading />;
+
+  const editFunction = async (product, files) => {
+    const { message } = await useEditProduct(product.id, product, files);
+    return { message };
+  };
+
+  const PRODUCT_EDIT_MODEL = getProductEditModel(product);
 
   return (
-    <>
-      {message?.error ? (
-        <ErrorMessage
-          message={message}
-          status={message}
-          code={message}
-          timestamp={message}
-        />
-      ) : (
-        <Loading />
-      )}
-    </>
+    <ProductForm
+      mode={"edit"}
+      initialFormState={PRODUCT_EDIT_MODEL}
+      userActionFunction={(product, files) => {
+        showEditAlert(() => editFunction(product, files));
+      }}
+    />
   );
 };

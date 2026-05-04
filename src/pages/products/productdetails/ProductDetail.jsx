@@ -14,22 +14,9 @@ export const ProductDetail = () => {
 
   const { product, message } = useGetProductDetails(id);
 
-  if (product) {
-    return <ProductInfo product={product} />;
-  }
+  if (message?.error) return <ErrorMessage {...message.error} />;
 
-  return (
-    <>
-      {message?.error ? (
-        <ErrorMessage
-          message={message}
-          status={message}
-          code={message}
-          timestamp={message}
-        />
-      ) : (
-        <Loading />
-      )}
-    </>
-  );
+  if (!product) return <Loading />;
+
+  return <ProductInfo product={product} />;
 };

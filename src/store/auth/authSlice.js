@@ -11,6 +11,8 @@ export const authslice = createSlice({
     login: (state, action) => {
       state.status = action.payload.status;
       state.userAuthenticated = action.payload.userAuthenticated;
+      state.timestamp = action.payload.timestamp;
+      state.message = action.payload.message;
     },
 
     logout: (state, action) => {

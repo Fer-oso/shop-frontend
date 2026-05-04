@@ -2,7 +2,7 @@ import axios from "axios";
 import { startRefreshToken } from "../../store/auth/authThunk";
 
 const API_URL =
-  "https://8c1b-2800-810-748-86f9-48ee-d53e-f98a-d6be.ngrok-free.app/api/shop/";
+  "https://1522-2800-810-748-86f9-48ee-d53e-f98a-d6be.ngrok-free.app/api/shop/";
 
 const API_URL_LOCALHOST = "http://localhost:8080/api/shop/";
 
@@ -38,6 +38,11 @@ const isTokenExpired = (token) => {
 
 export const setupInterceptors = (store) => {
   axiosInstance.interceptors.request.use(async (config) => {
+    // ✅ Solo agregá el token a requests de tu propia API
+    if (config.url.startsWith("https://api.mercadopago.com")) {
+      return config;
+    }
+
     const token = getToken();
 
     const username = store.getState().authentication.userAuthenticated.username;
@@ -83,10 +88,12 @@ export const setupInterceptors = (store) => {
   axiosInstance.interceptors.response.use(
     (response) => response,
     async (error) => {
-      const originalRequest = error.config;
+      const originalRequest = error;
+
+      console.log(error);
 
       // 🚫 Evitar loop infinito con refresh
-      if (originalRequest.url.includes("/auth/refresh")) {
+      if (originalRequest?.config?.url.includes("/auth/refresh")) {
         return Promise.reject(error);
       }
       const username =

@@ -22,9 +22,8 @@ export const useCreateProductAlert = () => {
       });
 
       if (result.isConfirmed) {
+        const { message } = await createFunction();
         try {
-          const { message } = await createFunction();
-
           if (message.code === 201) {
             await swalWithBootstrapButtons.fire({
               title: "Create!",
@@ -54,15 +53,6 @@ export const useCreateProductAlert = () => {
         await swalWithBootstrapButtons.fire({
           title: "Cancelled",
           text: "Your product has not created",
-          icon: "error",
-        });
-      } else if (
-        /* Read more about handling dismissals below */
-        result.dismiss === Swal.DismissReason.cancel
-      ) {
-        await swalWithBootstrapButtons.fire({
-          title: "Cancelled",
-          text: "Your user has not registered",
           icon: "error",
         });
       }

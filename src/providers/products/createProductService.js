@@ -9,7 +9,7 @@ export const createProductService = async (formDataProduct) => {
       formDataProduct,
     );
 
-    console.log();
+    console.log(data);
 
     const productCreated = data ? data.response : null;
     const timestamp = data ? data.timestamp : null;

@@ -10,7 +10,12 @@ import { Button } from "../../../../components/buttons/Button";
 import { useForm } from "../../../../components/hooks/useForm";
 import { ImageForm } from "../../../../components/forms/image/ImageForm";
 
-export const ProductForm = ({ mode, initialFormState, userActionFunction }) => {
+export const ProductForm = ({
+  mode,
+  initialFormState,
+  userActionFunction,
+  fieldErrors,
+}) => {
   const { formState, onCheckboxChange, onInputChange } =
     useForm(initialFormState);
 
@@ -19,8 +24,6 @@ export const ProductForm = ({ mode, initialFormState, userActionFunction }) => {
   const { images } = formState;
 
   const { files, messageError, handleFileChange, resetFiles } = useFileInput();
-
-  const title = mode === "edit" ? "Editar Producto" : "Crear Producto";
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -36,63 +39,71 @@ export const ProductForm = ({ mode, initialFormState, userActionFunction }) => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-8 bg-white rounded-2xl shadow-xl transition-transform duration-300">
-      <h2 className="text-center text-2xl font-bold text-gray-800 mb-8 tracking-tight">
-        {title}
-      </h2>
-
+    <>
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* GRID en pantallas grandes y columna en móviles */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {formFieldValues.map((values) => (
-            <React.Fragment key={values.name}>
-              {values.type === "textarea" ? (
-                <div className="col-span-2">
-                  <Label
-                    labelText={values.name}
-                    className="block mb-1 text-sm font-medium text-gray-700"
-                  />
-                  <TextArea
-                    name={values.name}
-                    value={values.value}
-                    placeholder={values.placeholder}
-                    onChange={onInputChange}
-                    className="w-full p-3 text-sm md:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                  />
-                </div>
-              ) : values.type === "checkbox" ? (
-                <div className="flex items-center space-x-3 md:col-span-2">
-                  <CheckBox
-                    id={values.name}
-                    type={values.type}
-                    name={values.name}
-                    value={values.value}
-                    onChange={onCheckboxChange}
-                    styles="w-5 h-5 text-blue-500 border-gray-300 rounded focus:ring-blue-500"
-                  />
-                  <Label
-                    labelText={values.name}
-                    className="text-sm font-medium text-gray-700"
-                  />
-                </div>
-              ) : (
-                <div>
-                  <Label
-                    labelText={values.name}
-                    className="block mb-1 text-sm font-medium text-gray-700"
-                  />
-                  <InputField
-                    type={values.type}
-                    name={values.name}
-                    value={values.value?.name || values.value}
-                    onChange={onInputChange}
-                    placeholder={values.placeholder}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-              )}
-            </React.Fragment>
-          ))}
+          {formFieldValues.map((value) => {
+            const inputClassName = fieldErrors?.[value.name]
+              ? "w-full px-3 py-2  border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-red-500 bg-red-100"
+              : "w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500";
+
+            return (
+              <React.Fragment key={value.name}>
+                {value.type === "textarea" ? (
+                  <div className="col-span-2">
+                    <Label
+                      labelText={value.name}
+                      className="block mb-1 text-sm font-medium text-gray-700"
+                    />
+                    <TextArea
+                      name={value.name}
+                      value={value.value}
+                      placeholder={value.placeholder}
+                      onChange={onInputChange}
+                      className="w-full p-3 text-sm md:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    />
+                  </div>
+                ) : value.type === "checkbox" ? (
+                  <div className="flex items-center space-x-3 md:col-span-2">
+                    <CheckBox
+                      id={value.name}
+                      type={value.type}
+                      name={value.name}
+                      value={value.value}
+                      onChange={onCheckboxChange}
+                      className="w-5 h-5 text-blue-500 border-gray-300 rounded focus:ring-blue-500"
+                    />
+                    <Label
+                      labelText={value.name}
+                      className="text-sm font-medium text-gray-700"
+                    />
+                  </div>
+                ) : (
+                  <div>
+                    <Label
+                      labelText={value.name}
+                      className="block mb-1 text-sm font-medium text-gray-700"
+                    />
+                    <InputField
+                      type={value.type}
+                      name={value.name}
+                      value={value.value?.name || value.value}
+                      onChange={onInputChange}
+                      placeholder={value.placeholder}
+                      required={value.required}
+                      className={inputClassName}
+                    />
+                    {fieldErrors?.[value.name] && (
+                      <p className="mt-1 text-xs text-red-500">
+                        {fieldErrors[value.name]}
+                      </p>
+                    )}
+                  </div>
+                )}
+              </React.Fragment>
+            );
+          })}
         </div>
 
         <div>
@@ -115,6 +126,6 @@ export const ProductForm = ({ mode, initialFormState, userActionFunction }) => {
           />
         </div>
       </form>
-    </div>
+    </>
   );
 };

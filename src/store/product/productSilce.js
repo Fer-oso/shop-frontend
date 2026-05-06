@@ -20,7 +20,6 @@ export const productSlice = createSlice({
     },
 
     createProduct: (state, action) => {
-      state.products.push(action.payload.productCreated);
       state.productCreated = action.payload.productCreated;
       state.message = action.payload.message;
       state.timestamp = action.payload.timestamp;

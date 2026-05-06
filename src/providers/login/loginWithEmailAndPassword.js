@@ -1,10 +1,10 @@
 import { axiosInstance } from "../axios/axiosInstace";
 
-const API_URL = "auth/login";
+const PATH_LOGIN = "auth/login";
 
 export const loginWithEmailAndPassword = async ({ username, password }) => {
   try {
-    const { data, status } = await axiosInstance.post(`${API_URL}`, {
+    const { data, status } = await axiosInstance.post(`${PATH_LOGIN}`, {
       username,
       password,
     });

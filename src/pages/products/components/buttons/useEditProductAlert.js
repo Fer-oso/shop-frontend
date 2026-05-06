@@ -28,7 +28,7 @@ export const useEditProductAlert = () => {
 
           if (message.code === 201) {
             await swalWithBootstrapButtons.fire({
-              title: "Create!",
+              title: "Edited!",
               text: "Your product has been edited succesfully.",
               icon: "success",
             });

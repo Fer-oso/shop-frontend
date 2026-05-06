@@ -30,8 +30,13 @@ export const startLoginUserWithUsernameAndPassword = ({
   };
 };
 
-export const startLogoutUser = (userAuthenticated, status) => {
+export const startLogoutUser = () => {
   return async (dispatch) => {
+    const status = "unauthenticated";
+    const userAuthenticated = {};
+
+    localStorage.setItem("auth", JSON.stringify({ status, userAuthenticated }));
+
     dispatch(logout({ status, userAuthenticated }));
     dispatch(resetShoppingCart());
     dispatch(resetProducts());
